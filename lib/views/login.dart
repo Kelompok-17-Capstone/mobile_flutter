@@ -34,7 +34,7 @@ class _loginState extends State<login> {
                     inputText: 'Create an Account!',
                   ),
                   SizedBox(
-                    height: 56,
+                    height: 32,
                   ),
                   Container(
                     child: Row(
@@ -144,43 +144,13 @@ class _loginState extends State<login> {
                       ),
                       onPressed: () {
                         showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Dialog(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        20.0)), //this right here
-                                child: Container(
-                                  height: 200,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Column(
-                                      children: [
-                                        Center(
-                                          child: AlertDialog(
-                                            title: const Text('Alamat Email Salah'),
-                                            content: const Text('Silahkan coba lagi dan isi dengan alamat email yang benar.'),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 320.0,
-                                          child: ElevatedButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text(
-                                              "OK",
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            });
+                          context: context,
+                          builder: (BuildContext context) {
+                            return NotificationEmail(
+                              content: 'Alamat email Anda tidak valid karena tanpa menggunakan karakter ‘@’',
+                            );
+                          },
+                        );
                       },
                       child: Text(
                         'Masuk Akun',
