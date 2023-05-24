@@ -113,7 +113,7 @@ class _loginState extends State<login> {
                         hintText: 'minimal 8 Karakter',
                         hintStyle: GoogleFonts.poppins(fontWeight: FontWeight.w400),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8)
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         suffixIcon: GestureDetector(
                           onTap: () {
@@ -121,8 +121,10 @@ class _loginState extends State<login> {
                               _isPasswordVisible = !_isPasswordVisible; // Toggle the state
                             });
                           },
-                          child: Icon(
-                            _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                          child: Image.asset(
+                            'assets/images/mataIcon.png',
+                            width: 24,
+                            height: 24,
                             color: Colors.grey,
                           ),
                         ),
@@ -151,21 +153,23 @@ class _loginState extends State<login> {
                   Container(
                     child: TextFormField(
                       controller: passwordConfirmation,
-                      obscureText: !_isPasswordVisible, 
+                      obscureText: !_isPasswordVisible, // Set the obscureText property based on the state
                       decoration: InputDecoration(
                         hintText: 'minimal 8 Karakter',
                         hintStyle: GoogleFonts.poppins(fontWeight: FontWeight.w400),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8)
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         suffixIcon: GestureDetector(
                           onTap: () {
                             setState(() {
-                              _isPasswordVisible = !_isPasswordVisible; 
+                              _isPasswordVisible = !_isPasswordVisible; // Toggle the state
                             });
                           },
-                          child: Icon(
-                            _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                          child: Image.asset(
+                            'assets/images/mataIcon.png',
+                            width: 24,
+                            height: 24,
                             color: Colors.grey,
                           ),
                         ),
@@ -175,6 +179,7 @@ class _loginState extends State<login> {
                   SizedBox(
                     height: 48,
                   ),
+                  Icon(icon)
                   Container(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
