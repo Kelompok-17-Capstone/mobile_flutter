@@ -147,6 +147,7 @@ class _loginState extends State<login> {
                           context: context,
                           builder: (BuildContext context) {
                             return NotificationEmail(
+                              judul: 'Data Tidak Valid',
                               content: 'Alamat email Anda tidak valid karena tanpa menggunakan karakter ‘@’',
                             );
                           },

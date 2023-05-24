@@ -57,13 +57,14 @@ class judulAtas extends StatelessWidget {
 
 class NotificationEmail extends StatelessWidget {
   final String content;
+  final String judul;
 
-  const NotificationEmail({required this.content});
+  const NotificationEmail({required this.content, required this.judul});
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final boxWidth = screenSize.width * 0.8;
-    final boxHeight = screenSize.height * 0.217;
+    final boxHeight = screenSize.height * 0.270;
 
     return Dialog(
       child: Container(
@@ -77,7 +78,7 @@ class NotificationEmail extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Data Tidak Valid',
+              judul,
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w500,
                 color: Color.fromRGBO(238, 46, 46, 1),
@@ -85,13 +86,16 @@ class NotificationEmail extends StatelessWidget {
               ),
             ),
             SizedBox(height: 4),
-            Text(
-              content,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w400,
-                color: Color.fromRGBO(153, 153, 153, 1),
-                fontSize: 14,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: Text(
+                content,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w400,
+                  color: Color.fromRGBO(153, 153, 153, 1),
+                  fontSize: 14,
+                ),
               ),
             ),
             SizedBox(height: 18),
