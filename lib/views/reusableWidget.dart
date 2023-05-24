@@ -35,16 +35,16 @@ class judulAtas extends StatelessWidget {
         Expanded(
           child: Center(
             child: Container(
-              // width: 358,
+              // width: 301,
               // height: 48,
-              // padding: EdgeInsets.fromLTRB(40, 0, 52, 0),
+              // padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
               child: Text(
                 inputText,
                 style: GoogleFonts.poppins(
-                  fontSize: 25,
+                  fontSize: 30,
                   letterSpacing: 1,
                   fontWeight: FontWeight.w600,
-                  color: Color.fromRGBO(38, 78, 202, 1),
+                  color: Color.fromRGBO(17, 17, 17, 1),
                 ),
               ),
             ),

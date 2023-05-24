@@ -17,6 +17,7 @@ class _loginState extends State<login> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordConfirmation = TextEditingController();
   bool _isPasswordVisible = false;
+  bool isIconVisible = false;
   bool _passwordsNotMatch = false;
 
   void register(String email, password) async {
@@ -51,7 +52,7 @@ class _loginState extends State<login> {
                     height: 14,
                   ),
                   judulAtas(
-                    inputText: 'Create an Account!',
+                    inputText: 'Pendaftaran Akun',
                   ),
                   SizedBox(
                     height: 32,
@@ -112,25 +113,25 @@ class _loginState extends State<login> {
                       obscureText: !_isPasswordVisible,
                       onChanged: (value) {
                         setState(() {
-                          _passwordsNotMatch =
-                              value != passwordConfirmation.text;
+                          _passwordsNotMatch = value != passwordConfirmation.text;
                         });
                       },
                       decoration: InputDecoration(
                         hintText: 'minimal 8 Karakter',
-                        hintStyle:
-                            GoogleFonts.poppins(fontWeight: FontWeight.w400),
+                        hintStyle: GoogleFonts.poppins(fontWeight: FontWeight.w400),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                         suffixIcon: GestureDetector(
                           onTap: () {
+                            
                             setState(() {
                               _isPasswordVisible = !_isPasswordVisible;
+                              isIconVisible = !isIconVisible;
                             });
                           },
                           child: Image.asset(
-                            'assets/images/mataIcon.png',
+                            isIconVisible ? 'assets/images/bukaMata.png' : 'assets/images/mataIcon.png',
                             width: 24,
                             height: 24,
                             color: Colors.grey,
@@ -164,24 +165,25 @@ class _loginState extends State<login> {
                       obscureText: !_isPasswordVisible,
                       onChanged: (value) {
                         setState(() {
-                          _passwordsNotMatch = value != passwordController.text;
+                          _passwordsNotMatch = value != passwordConfirmation.text;
                         });
                       },
                       decoration: InputDecoration(
                         hintText: 'minimal 8 Karakter',
-                        hintStyle:
-                            GoogleFonts.poppins(fontWeight: FontWeight.w400),
+                        hintStyle: GoogleFonts.poppins(fontWeight: FontWeight.w400),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                         suffixIcon: GestureDetector(
                           onTap: () {
+                            
                             setState(() {
                               _isPasswordVisible = !_isPasswordVisible;
+                              isIconVisible = !isIconVisible;
                             });
                           },
                           child: Image.asset(
-                            'assets/images/mataIcon.png',
+                            isIconVisible ? 'assets/images/bukaMata.png' : 'assets/images/mataIcon.png',
                             width: 24,
                             height: 24,
                             color: Colors.grey,
