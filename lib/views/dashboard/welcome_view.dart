@@ -14,7 +14,7 @@ class WelcomeView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: TextButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/home');
+                Navigator.pushReplacementNamed(context, '/dashboard');
               },
               child: const Text(
                 'Lewati', 

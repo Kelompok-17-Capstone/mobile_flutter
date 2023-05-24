@@ -337,15 +337,6 @@ class HomePageView extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey[500],
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Beranda'),
-          BottomNavigationBarItem(icon: Icon(Icons.devices_outlined), label: 'Produk'),
-          BottomNavigationBarItem(icon: Icon(Icons.card_membership_outlined), label: 'Member')
-        ],
-      ),
     );
   }
 }
