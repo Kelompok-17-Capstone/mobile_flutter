@@ -123,3 +123,42 @@ class NotificationEmail extends StatelessWidget {
     );
   }
 }
+
+class buttonSign extends StatelessWidget {
+  final String namaButton;
+
+  const buttonSign({required this.namaButton});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Color.fromRGBO(38, 78, 202, 1),
+          onPrimary: Colors.white,
+          shadowColor: Colors.greenAccent,
+          minimumSize: Size(380, 56),
+        ),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return NotificationEmail(
+                judul: 'Data Tidak Valid',
+                content:
+                    'Alamat email Anda tidak valid karena tanpa menggunakan karakter ‘@’',
+              );
+            },
+          );
+        },
+        child: Text(
+          namaButton,
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.w500,
+            fontSize: 16,
+          ),
+        ),
+      ),
+    );
+  }
+}

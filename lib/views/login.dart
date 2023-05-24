@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_flutter/views/reusableWidget.dart';
+import 'package:http/http.dart';
 
 class login extends StatefulWidget {
   const login({super.key});
@@ -13,6 +16,23 @@ class _loginState extends State<login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordConfirmation = TextEditingController();
+  bool _isPasswordVisible = false;
+
+  void register(String email, password) async {
+    try {
+      Response response = await post(Uri.parse('https://3.0.183.235/register'),
+          body: {'email': email, 'password': password});
+      if (response.statusCode == 200) {
+        var data = jsonEncode(response.body.toString());
+        print('Account Created');
+      } else {
+        print('Gagal e mbak');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,8 +45,7 @@ class _loginState extends State<login> {
             Center(
               child: Column(
                 children: [
-                  logoKecil(
-                  ),
+                  logoKecil(),
                   SizedBox(
                     height: 14,
                   ),
@@ -89,12 +108,24 @@ class _loginState extends State<login> {
                   Container(
                     child: TextFormField(
                       controller: passwordController,
+                      obscureText: !_isPasswordVisible, // Set the obscureText property based on the state
                       decoration: InputDecoration(
                         hintText: 'minimal 8 Karakter',
-                        hintStyle:
-                            GoogleFonts.poppins(fontWeight: FontWeight.w400),
+                        hintStyle: GoogleFonts.poppins(fontWeight: FontWeight.w400),
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8)),
+                          borderRadius: BorderRadius.circular(8)
+                        ),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible; // Toggle the state
+                            });
+                          },
+                          child: Icon(
+                            _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                            color: Colors.grey,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -119,15 +150,25 @@ class _loginState extends State<login> {
                   ),
                   Container(
                     child: TextFormField(
-                      controller: emailController,
+                      controller: passwordConfirmation,
+                      obscureText: !_isPasswordVisible, 
                       decoration: InputDecoration(
-                        hintText: 'minimal 8 karakter',
-                        hintStyle: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                        ),
+                        hintText: 'minimal 8 Karakter',
+                        hintStyle: GoogleFonts.poppins(fontWeight: FontWeight.w400),
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8)),
+                          borderRadius: BorderRadius.circular(8)
+                        ),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible; 
+                            });
+                          },
+                          child: Icon(
+                            _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                            color: Colors.grey,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -143,15 +184,8 @@ class _loginState extends State<login> {
                         minimumSize: Size(380, 56),
                       ),
                       onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return NotificationEmail(
-                              judul: 'Data Tidak Valid',
-                              content: 'Alamat email Anda tidak valid karena tanpa menggunakan karakter ‘@’',
-                            );
-                          },
-                        );
+                        register(emailController.text.toString(),
+                            passwordController.text.toString());
                       },
                       child: Text(
                         'Masuk Akun',
@@ -161,8 +195,7 @@ class _loginState extends State<login> {
                         ),
                       ),
                     ),
-                  ),
-                  
+                  )
                 ],
               ),
             ),
