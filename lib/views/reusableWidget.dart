@@ -55,11 +55,11 @@ class judulAtas extends StatelessWidget {
   }
 }
 
-class NotificationEmail extends StatelessWidget {
+class NotificationError extends StatelessWidget {
   final String content;
   final String judul;
 
-  const NotificationEmail({required this.content, required this.judul});
+  const NotificationError({required this.content, required this.judul});
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -140,16 +140,7 @@ class buttonSign extends StatelessWidget {
           minimumSize: Size(380, 56),
         ),
         onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return NotificationEmail(
-                judul: 'Data Tidak Valid',
-                content:
-                    'Alamat email Anda tidak valid karena tanpa menggunakan karakter ‘@’',
-              );
-            },
-          );
+          
         },
         child: Text(
           namaButton,

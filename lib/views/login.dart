@@ -17,6 +17,7 @@ class _loginState extends State<login> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordConfirmation = TextEditingController();
   bool _isPasswordVisible = false;
+  bool _passwordsNotMatch = false;
 
   void register(String email, password) async {
     try {
@@ -108,17 +109,24 @@ class _loginState extends State<login> {
                   Container(
                     child: TextFormField(
                       controller: passwordController,
-                      obscureText: !_isPasswordVisible, // Set the obscureText property based on the state
+                      obscureText: !_isPasswordVisible,
+                      onChanged: (value) {
+                        setState(() {
+                          _passwordsNotMatch =
+                              value != passwordConfirmation.text;
+                        });
+                      },
                       decoration: InputDecoration(
                         hintText: 'minimal 8 Karakter',
-                        hintStyle: GoogleFonts.poppins(fontWeight: FontWeight.w400),
+                        hintStyle:
+                            GoogleFonts.poppins(fontWeight: FontWeight.w400),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                         suffixIcon: GestureDetector(
                           onTap: () {
                             setState(() {
-                              _isPasswordVisible = !_isPasswordVisible; // Toggle the state
+                              _isPasswordVisible = !_isPasswordVisible;
                             });
                           },
                           child: Image.asset(
@@ -153,17 +161,23 @@ class _loginState extends State<login> {
                   Container(
                     child: TextFormField(
                       controller: passwordConfirmation,
-                      obscureText: !_isPasswordVisible, // Set the obscureText property based on the state
+                      obscureText: !_isPasswordVisible,
+                      onChanged: (value) {
+                        setState(() {
+                          _passwordsNotMatch = value != passwordController.text;
+                        });
+                      },
                       decoration: InputDecoration(
                         hintText: 'minimal 8 Karakter',
-                        hintStyle: GoogleFonts.poppins(fontWeight: FontWeight.w400),
+                        hintStyle:
+                            GoogleFonts.poppins(fontWeight: FontWeight.w400),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                         suffixIcon: GestureDetector(
                           onTap: () {
                             setState(() {
-                              _isPasswordVisible = !_isPasswordVisible; // Toggle the state
+                              _isPasswordVisible = !_isPasswordVisible;
                             });
                           },
                           child: Image.asset(
@@ -179,7 +193,6 @@ class _loginState extends State<login> {
                   SizedBox(
                     height: 48,
                   ),
-                  Icon(icon)
                   Container(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -189,8 +202,47 @@ class _loginState extends State<login> {
                         minimumSize: Size(380, 56),
                       ),
                       onPressed: () {
-                        register(emailController.text.toString(),
-                            passwordController.text.toString());
+                        String email = emailController.text;
+                        String password = passwordController.text;
+                        setState(() {
+                          _passwordsNotMatch = passwordConfirmation.text !=
+                              passwordController.text;
+                        });
+                        if (_passwordsNotMatch) {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return NotificationError(
+                                  content: 'Kata sandi Tidak sama!',
+                                  judul: 'Data Tidak Valid');
+                            },
+                          );
+                        }
+                        if (!email.contains('@')) {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return NotificationError(
+                                  content: 'Alamat email Anda tidak valid karena tanpa menggunakan karakter ‘@’',
+                                  judul: 'Data Tidak Valid');
+                            },
+                          );
+                        } if (password.length < 8) {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return NotificationError(
+                                  content: 'Kata sandi Anda tidak valid karena kurang dari 8 karakter',
+                                  judul: 'Data Tidak Valid');
+                            },
+                          );
+                        } 
+                        else {
+                          register(
+                            emailController.text.toString(),
+                            passwordController.text.toString(),
+                          );
+                        }
                       },
                       child: Text(
                         'Masuk Akun',
