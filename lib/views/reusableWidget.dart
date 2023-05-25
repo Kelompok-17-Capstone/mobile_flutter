@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:math' as math ;
 
 class logoKecil extends StatelessWidget {
   @override
@@ -124,32 +125,18 @@ class NotificationError extends StatelessWidget {
   }
 }
 
-class buttonSign extends StatelessWidget {
-  final String namaButton;
 
-  const buttonSign({required this.namaButton});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: Color.fromRGBO(38, 78, 202, 1),
-          onPrimary: Colors.white,
-          shadowColor: Colors.greenAccent,
-          minimumSize: Size(380, 56),
-        ),
-        onPressed: () {
-          
-        },
-        child: Text(
-          namaButton,
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w500,
-            fontSize: 16,
-          ),
-        ),
-      ),
-    );
-  }
+ElevatedButton fullWidthButton({required String label, required void Function() onPressed}) {
+  return ElevatedButton(
+    key: Key('$label-key'),
+    onPressed: onPressed,
+    style: ButtonStyle(
+      minimumSize: MaterialStateProperty.all(const Size.fromHeight(56)),
+      backgroundColor: MaterialStateProperty.all(const Color(0xFF264ECA))
+    ),
+    child: Text(label,style: GoogleFonts.poppins(
+      fontWeight: FontWeight.w500,
+      fontSize: 16
+    ),),
+  );
 }

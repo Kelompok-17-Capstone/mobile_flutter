@@ -22,26 +22,31 @@ class _loginState extends State<login> {
   bool _passwordsNotMatch = false;
 
   void register(String email, String password) async {
-  try {
-    Response response = await post(
-        Uri.parse('https://reqres.in/api/register'),
-        body: {'email': email, 'password': password});
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body.toString());
-      print(data);
-      if (passwordConfirmation.text == password) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+    try {
+      Response response = await post(
+          Uri.parse('https://reqres.in/api/register'),
+          body: {'email': email, 'password': password});
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body.toString());
+        print(data);
+        if (passwordConfirmation.text == password) {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => HomePage()));
+        } else {
+          print('Error: Passwords do not match');
+        }
       } else {
-        print('Error: Passwords do not match');
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return NotificationError(content: 'Alamat Email anda tidak ditemukan!', judul: 'Data Tidak Valid');
+          },
+        );
       }
-    } else {
-      print('Error Kack');
+    } catch (e) {
+      print(e.toString());
     }
-  } catch (e) {
-    print(e.toString());
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -207,17 +212,10 @@ class _loginState extends State<login> {
                     ),
                   ),
                   SizedBox(
-                    height: 48,
+                    height: 35,
                   ),
-                  Container(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Color.fromRGBO(38, 78, 202, 1),
-                        onPrimary: Colors.white,
-                        shadowColor: Colors.greenAccent,
-                        minimumSize: Size(380, 56),
-                      ),
-                      onPressed: () {
+                  fullWidthButton(
+                    label: 'Masuk Akun', onPressed: () {
                         String email = emailController.text;
                         String password = passwordController.text;
                         setState(() {
@@ -255,22 +253,14 @@ class _loginState extends State<login> {
                                   judul: 'Data Tidak Valid');
                             },
                           );
-                        } else {
+                        } 
+                        else {
                           register(
                             emailController.text.toString(),
                             passwordController.text.toString(),
                           );
                         }
-                      },
-                      child: Text(
-                        'Masuk Akun',
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  )
+                      },),
                 ],
               ),
             ),
