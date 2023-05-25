@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_flutter/views/HomePage.dart';
 import 'package:mobile_flutter/views/reusableWidget.dart';
 import 'package:http/http.dart';
 
@@ -20,20 +21,27 @@ class _loginState extends State<login> {
   bool isIconVisible = false;
   bool _passwordsNotMatch = false;
 
-  void register(String email, password) async {
-    try {
-      Response response = await post(Uri.parse('https://3.0.183.235/register'),
-          body: {'email': email, 'password': password});
-      if (response.statusCode == 200) {
-        var data = jsonEncode(response.body.toString());
-        print('Account Created');
+  void register(String email, String password) async {
+  try {
+    Response response = await post(
+        Uri.parse('https://reqres.in/api/register'),
+        body: {'email': email, 'password': password});
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body.toString());
+      print(data);
+      if (passwordConfirmation.text == password) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       } else {
-        print('Gagal e mbak');
+        print('Error: Passwords do not match');
       }
-    } catch (e) {
-      print(e.toString());
+    } else {
+      print('Error Kack');
     }
+  } catch (e) {
+    print(e.toString());
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -113,25 +121,28 @@ class _loginState extends State<login> {
                       obscureText: !_isPasswordVisible,
                       onChanged: (value) {
                         setState(() {
-                          _passwordsNotMatch = value != passwordConfirmation.text;
+                          _passwordsNotMatch =
+                              value != passwordConfirmation.text;
                         });
                       },
                       decoration: InputDecoration(
                         hintText: 'minimal 8 Karakter',
-                        hintStyle: GoogleFonts.poppins(fontWeight: FontWeight.w400),
+                        hintStyle:
+                            GoogleFonts.poppins(fontWeight: FontWeight.w400),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                         suffixIcon: GestureDetector(
                           onTap: () {
-                            
                             setState(() {
                               _isPasswordVisible = !_isPasswordVisible;
                               isIconVisible = !isIconVisible;
                             });
                           },
                           child: Image.asset(
-                            isIconVisible ? 'assets/images/bukaMata.png' : 'assets/images/mataIcon.png',
+                            isIconVisible
+                                ? 'assets/images/bukaMata.png'
+                                : 'assets/images/mataIcon.png',
                             width: 24,
                             height: 24,
                             color: Colors.grey,
@@ -165,25 +176,28 @@ class _loginState extends State<login> {
                       obscureText: !_isPasswordVisible,
                       onChanged: (value) {
                         setState(() {
-                          _passwordsNotMatch = value != passwordConfirmation.text;
+                          _passwordsNotMatch =
+                              value != passwordConfirmation.text;
                         });
                       },
                       decoration: InputDecoration(
                         hintText: 'minimal 8 Karakter',
-                        hintStyle: GoogleFonts.poppins(fontWeight: FontWeight.w400),
+                        hintStyle:
+                            GoogleFonts.poppins(fontWeight: FontWeight.w400),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                         suffixIcon: GestureDetector(
                           onTap: () {
-                            
                             setState(() {
                               _isPasswordVisible = !_isPasswordVisible;
                               isIconVisible = !isIconVisible;
                             });
                           },
                           child: Image.asset(
-                            isIconVisible ? 'assets/images/bukaMata.png' : 'assets/images/mataIcon.png',
+                            isIconVisible
+                                ? 'assets/images/bukaMata.png'
+                                : 'assets/images/mataIcon.png',
                             width: 24,
                             height: 24,
                             color: Colors.grey,
@@ -225,21 +239,23 @@ class _loginState extends State<login> {
                             context: context,
                             builder: (BuildContext context) {
                               return NotificationError(
-                                  content: 'Alamat email Anda tidak valid karena tanpa menggunakan karakter ‘@’',
+                                  content:
+                                      'Alamat email Anda tidak valid karena tanpa menggunakan karakter ‘@’',
                                   judul: 'Data Tidak Valid');
                             },
                           );
-                        } if (password.length < 8) {
+                        }
+                        if (password.length < 8) {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
                               return NotificationError(
-                                  content: 'Kata sandi Anda tidak valid karena kurang dari 8 karakter',
+                                  content:
+                                      'Kata sandi Anda tidak valid karena kurang dari 8 karakter',
                                   judul: 'Data Tidak Valid');
                             },
                           );
-                        } 
-                        else {
+                        } else {
                           register(
                             emailController.text.toString(),
                             passwordController.text.toString(),
