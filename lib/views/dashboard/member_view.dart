@@ -1,5 +1,8 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/shared/buttons.dart';
+import 'package:mobile_flutter/shared/customAppBar.dart';
+import 'package:mobile_flutter/shared/header.dart';
 
 class MemberView extends StatelessWidget {
   const MemberView({super.key});
@@ -8,54 +11,12 @@ class MemberView extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      appBar: customAppBar(title: 'Informasi Member'),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
             children: [
-              Container(
-                height: 200,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFF2649CA), Colors.black]
-                  )
-                ),
-                child: Stack(
-                  children: [
-                    Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: MediaQuery.of(context).size.width * 0.2,
-                            child: const Image(
-                              image: AssetImage('assets/icons/alta_icon.png'),
-                            ),
-                          ),
-                          const Text(
-                            'rania alatas',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      right: 10,
-                      top: 10,
-                      child: IconButton(
-                        onPressed: () {
-                          
-                        },
-                        icon: const Icon(Icons.manage_accounts_outlined, size: 32, color: Colors.white,),
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              profileHeader(context),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -73,19 +34,13 @@ class MemberView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 50),
-                    ElevatedButton(
-                      onPressed: () {
-                        
-                      },
-                      style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all(const Size.fromHeight(56)),
-                        backgroundColor: MaterialStateProperty.all(const Color(0xFF264ECA))
-                      ),
-                      child: const Text('Daftar Member'),
-                    ),
+                    fullWidthButton(label: 'Daftar Member', onPressed: () {
+                      
+                    }),
                   ],
                 ),
-              )
+              ),
+              const SizedBox(height: 20),
             ],
           ),
         ),

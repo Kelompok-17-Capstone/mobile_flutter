@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/shared/buttons.dart';
 
 class WelcomeView extends StatelessWidget {
   const WelcomeView({super.key});
@@ -52,16 +53,9 @@ class WelcomeView extends StatelessWidget {
               const Image(
                 image: AssetImage('assets/images/welcome.png'),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  
-                },
-                style: ButtonStyle(
-                  minimumSize: MaterialStateProperty.all(const Size.fromHeight(56)),
-                  backgroundColor: MaterialStateProperty.all(const Color(0xFF264ECA))
-                ),
-                child: const Text('Daftar Akun'),
-              ),
+              fullWidthButton(label: 'Daftar Akun', onPressed: () {
+                
+              }),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
