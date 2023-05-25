@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/shared/form_validator.dart';
 
 TextFormField emailForm({required TextEditingController controller}) {
   return TextFormField(
     controller: controller,
+    validator: (value) => FormValidator.validateEmail(email: value),
     decoration: InputDecoration(
       hintText: 'customer.id@altatech.com',
       hintStyle: const TextStyle(
@@ -19,6 +21,7 @@ TextFormField passwordForm({required TextEditingController controller, required 
 
   return TextFormField(
     controller: controller,
+    validator: (value) => FormValidator.validatePassword(password: value),
     obscureText: isPasswordVisible,
     decoration: InputDecoration(
       hintText: 'minimal 8 Karakter',

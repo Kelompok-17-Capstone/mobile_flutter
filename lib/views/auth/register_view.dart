@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/form.dart';
+import 'package:mobile_flutter/shared/popup_dialog.dart';
+import 'package:mobile_flutter/shared/snack_bar.dart';
+import 'package:mobile_flutter/views/auth/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -10,9 +14,12 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController passwordConfirmationController = TextEditingController();
+
+  final formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmationPasswordController = TextEditingController();
+
   bool isPasswordVisible = false;
 
   @override
@@ -48,6 +55,7 @@ class _RegisterViewState extends State<RegisterView> {
               const SizedBox(height: 20),
 
               Form(
+                key: formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -72,8 +80,8 @@ class _RegisterViewState extends State<RegisterView> {
                     //PASSWORD
                     passwordForm(
                       controller: passwordController, 
-                      isPasswordVisible: isPasswordVisible,
-                      icon: !isPasswordVisible ? const Icon(Icons.visibility_outlined) : const Icon(Icons.visibility_off_outlined),
+                      isPasswordVisible: !isPasswordVisible,
+                      icon: isPasswordVisible ? const Icon(Icons.visibility_outlined) : const Icon(Icons.visibility_off_outlined),
                       onPressed: () {
                         setState(() {
                           isPasswordVisible = !isPasswordVisible;
@@ -90,7 +98,7 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
                     const SizedBox(height: 5),
                     passwordForm(
-                      controller: passwordConfirmationController, 
+                      controller: confirmationPasswordController, 
                       isPasswordVisible: !isPasswordVisible,
                       icon: isPasswordVisible ? const Icon(Icons.visibility_outlined) : const Icon(Icons.visibility_off_outlined),
                       onPressed: () {
@@ -101,10 +109,27 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
                     const SizedBox(height: 25),
 
-                    fullWidthButton(label: 'Daftar Akun', onPressed: () {
+                    fullWidthButton(label: 'Daftar Akun', onPressed: () async {
 
+                      if (formKey.currentState!.validate()) {
+
+                        if (passwordController.text != confirmationPasswordController.text) {
+                          showDialog(context: context, builder:(context) {
+                            return popupMessageDialog(context, content: 'Pastikan password dan confirmation password sama', judul: 'Form Tidak Valid');
+                          });
+                        } else {
+                          String result = await Provider.of<AuthProvider>(context, listen: false).register(
+                            email: emailController.text.trim(), 
+                            password: passwordController.text, 
+                            confirmationPassword: confirmationPasswordController.text
+                          );
+                          if (result == 'register success') {
+                            if(!mounted) return;
+                            Navigator.pushReplacementNamed(context, '/dashboard');
+                          }
+                        }
+                      }
                     })
-
                   ],
                 ),
               ),

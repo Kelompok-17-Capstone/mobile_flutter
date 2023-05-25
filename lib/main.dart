@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:mobile_flutter/views/auth/register_view.dart';
 import 'package:mobile_flutter/views/dashboard/dashboard_view.dart';
 import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create:(context) => AuthProvider()),
         ChangeNotifierProvider(create:(context) => ProductProvider())
       ],
       child: MaterialApp(
