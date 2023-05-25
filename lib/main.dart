@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_flutter/views/login.dart';
+import 'package:mobile_flutter/views/auth/register_view.dart';
 import 'package:mobile_flutter/views/dashboard/dashboard_view.dart';
 import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
 import 'package:mobile_flutter/views/dashboard/welcome_view.dart';
@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => const SplashScreen(),
           '/welcome': (context) => const WelcomeView(),
+          '/register': (context) => const RegisterView(),
           '/dashboard': (context) => const DashboardView(),
         },
       ),

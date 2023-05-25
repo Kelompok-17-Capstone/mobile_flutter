@@ -54,7 +54,7 @@ class WelcomeView extends StatelessWidget {
                 image: AssetImage('assets/images/welcome.png'),
               ),
               fullWidthButton(label: 'Daftar Akun', onPressed: () {
-                
+                Navigator.pushNamed(context, '/register');
               }),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
