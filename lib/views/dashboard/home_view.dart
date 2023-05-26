@@ -12,6 +12,7 @@ class HomePageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<ProductModel> products = Provider.of<ProductProvider>(context).products;
+    print(products);
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
