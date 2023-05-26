@@ -11,6 +11,8 @@ class DashboardView extends StatefulWidget {
 
 class _DashboardViewState extends State<DashboardView> {
 
+  final pageConttroller = PageController();
+
   int currentIndex = 0;
 
   List<Widget> pageList = [
@@ -22,8 +24,9 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: currentIndex,
+      body: PageView(
+        controller: pageConttroller,
+        onPageChanged: (index) => setState(() => currentIndex = index),
         children: pageList,
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -33,6 +36,11 @@ class _DashboardViewState extends State<DashboardView> {
         onTap: (value) {
           setState(() {
             currentIndex = value;
+            pageConttroller.animateToPage(
+              value, 
+              duration: const Duration(milliseconds: 300), 
+              curve: Curves.easeInOut
+            );
           });
         },
         items: const [
