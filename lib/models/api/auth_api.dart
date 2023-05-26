@@ -29,4 +29,28 @@ class AuthAPI {
     }
     return 'register failed';
   }
+
+  Future<String> login(String email, String password) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try {
+      final url = Uri.parse('$api/login');
+      final data = {
+        "email": email,
+        "password": password,
+      };
+
+      final response = await http.post(url, body: data);
+      print(response.body);
+      if (response.statusCode == 200) {
+        final result = jsonDecode(response.body);
+        prefs.setString('token', result['token']);
+        return 'login success';
+      }
+
+    } catch (e) {
+      print(e.toString());
+    }
+    return 'login failed';
+  }
 }

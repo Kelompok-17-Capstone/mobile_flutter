@@ -115,7 +115,7 @@ class _RegisterViewState extends State<RegisterView> {
 
                         if (passwordController.text != confirmationPasswordController.text) {
                           showDialog(context: context, builder:(context) {
-                            return popupMessageDialog(context, content: 'Pastikan password dan confirmation password sama', judul: 'Form Tidak Valid');
+                            return popupMessageDialog(context, judul: 'Form Tidak Valid', content: 'Pastikan password dan confirmation password sama');
                           });
                         } else {
                           String result = await Provider.of<AuthProvider>(context, listen: false).register(

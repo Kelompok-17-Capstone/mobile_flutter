@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/form.dart';
+import 'package:mobile_flutter/shared/popup_dialog.dart';
+import 'package:mobile_flutter/views/auth/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -10,8 +13,10 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+
+  final formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   bool isPasswordVisible = false;
 
   @override
@@ -43,6 +48,7 @@ class _LoginViewState extends State<LoginView> {
               ),
               const SizedBox(height: 20),
               Form(
+                key: formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -77,10 +83,24 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     const SizedBox(height: 25),
 
-                    fullWidthButton(
-                      label: 'Masuk Akun',
-                      onPressed: () {},
-                    ),
+                    fullWidthButton(label: 'Masuk Akun', onPressed: () async {
+
+                      if (formKey.currentState!.validate()) {
+                        String result = await Provider.of<AuthProvider>(context, listen: false).login(
+                          email: emailController.text.trim(), 
+                          password: passwordController.text
+                        );
+                        if (result == 'login success') {
+                          if(!mounted) return;
+                          Navigator.pushReplacementNamed(context, '/dashboard');
+                        } else {
+                          if(!mounted) return;
+                          showDialog(context: context, builder:(context) {
+                            return popupMessageDialog(context, judul: 'Login Gagal', content: 'Pastikan email dan password sudah benar');
+                          });
+                        }
+                      }
+                    })
                   ],
                 ),
               ),

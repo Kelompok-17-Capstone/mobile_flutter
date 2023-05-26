@@ -22,4 +22,22 @@ class AuthProvider extends ChangeNotifier {
     return 'register failed';
   }
 
+  Future<String> login({required String email, required String password}) async {
+    final auth = AuthAPI();
+    String result = await auth.login(email, password);
+    if (result == 'login success') {
+      user = UserModel(
+        fullName: 'Full Name', 
+        email: 'Email', 
+        phone: '089500000000', 
+        address: 'Dago, Bandung, Jawa Barat'
+      );
+      return 'login success';
+    }
+
+    return 'login failed';
+  }
+
+
+
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Dialog popupMessageDialog(BuildContext context ,{required String content, required String judul}) {
+Dialog popupMessageDialog(BuildContext context ,{required String judul, required String content}) {
   final screenSize = MediaQuery.of(context).size;
   final boxWidth = screenSize.width * 0.8;
   final boxHeight = screenSize.height * 0.3;
