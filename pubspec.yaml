@@ -40,6 +40,7 @@ dependencies:
   shared_preferences: ^2.1.1
   provider: ^6.0.5
   barcode_widget: ^2.0.4
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,7 @@ flutter:
     # - images/a_dot_burr.jpeg
     # - images/a_dot_ham.jpeg
   assets:
+    - .env
     - assets/icons/
     - assets/fonts/
     - assets/images/
