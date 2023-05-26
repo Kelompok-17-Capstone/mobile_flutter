@@ -127,40 +127,26 @@ Container profileHeader(BuildContext context) {
         colors: [Color(0xFF2649CA), Colors.black]
       )
     ),
-    child: Stack(
-      children: [
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: MediaQuery.of(context).size.width * 0.2,
-                child: const Image(
-                  image: AssetImage('assets/icons/alta_icon.png'),
-                ),
-              ),
-              const Text(
-                'rania alatas',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20
-                ),
-              )
-            ],
+    child: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            backgroundColor: Colors.white,
+            radius: MediaQuery.of(context).size.width * 0.2,
+            child: const Image(
+              image: AssetImage('assets/icons/alta_icon.png'),
+            ),
           ),
-        ),
-        Positioned(
-          right: 10,
-          top: 10,
-          child: IconButton(
-            onPressed: () {
-              
-            },
-            icon: const Icon(Icons.manage_accounts_outlined, size: 32, color: Colors.white,),
-          ),
-        )
-      ],
+          const Text(
+            'rania alatas',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20
+            ),
+          )
+        ],
+      ),
     ),
   );
 }

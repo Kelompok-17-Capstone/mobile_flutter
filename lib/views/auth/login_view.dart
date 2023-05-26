@@ -20,6 +20,13 @@ class _LoginViewState extends State<LoginView> {
   bool isPasswordVisible = false;
 
   @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -73,8 +80,8 @@ class _LoginViewState extends State<LoginView> {
                     //PASSWORD
                     passwordForm(
                       controller: passwordController,
-                      isPasswordVisible: !isPasswordVisible,
-                      icon: !isPasswordVisible ? const Icon(Icons.visibility_outlined) : const Icon(Icons.visibility_off_outlined),
+                      isPasswordVisible: isPasswordVisible,
+                      // icon: !isPasswordVisible ? const Icon(Icons.visibility_outlined) : const Icon(Icons.visibility_off_outlined),
                       onPressed: () {
                         setState(() {
                           isPasswordVisible = !isPasswordVisible;
