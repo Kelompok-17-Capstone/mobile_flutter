@@ -17,13 +17,8 @@ class WelcomeView extends StatelessWidget {
               onPressed: () {
                 Navigator.pushReplacementNamed(context, '/dashboard');
               },
-              child: const Text(
-                'Lewati', 
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Color(0xFF264ECA)
-                )
-              ),
+              child: const Text('Lewati',
+                  style: TextStyle(fontSize: 12, color: Color(0xFF264ECA))),
             ),
           )
         ],
@@ -36,26 +31,24 @@ class WelcomeView extends StatelessWidget {
             children: [
               const Text(
                 'Selamat Datang!',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 32
-                ),
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 32),
               ),
               const Text(
                 'Silahkan daftar akun terlebih dahulu apabila Anda belum punya akun',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14,
-                  color: Color(0xFF999999)
-                ),
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    color: Color(0xFF999999)),
               ),
               const Image(
                 image: AssetImage('assets/images/welcome.png'),
               ),
-              fullWidthButton(label: 'Daftar Akun', onPressed: () {
-                
-              }),
+              fullWidthButton(
+                  label: 'Daftar Akun',
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/register');
+                  }),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -64,9 +57,12 @@ class WelcomeView extends StatelessWidget {
                   const Text('Masuk'),
                   TextButton(
                     onPressed: () {
-                    
+                      Navigator.pushNamed(context, '/login');
                     },
-                    child: const Text('di sini', style: TextStyle(color: Color(0xFF264ECA)),),
+                    child: const Text(
+                      'di sini',
+                      style: TextStyle(color: Color(0xFF264ECA)),
+                    ),
                   )
                 ],
               )
