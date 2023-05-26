@@ -1,22 +1,32 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthAPI {
   final String api = 'https://reqres.in/api';
 
-  void register(String email, String password) async {
-    try {
-      final url = Uri.parse('$api/login');
+  Future<String> register(String email, String password, String confirmationPassword) async {
 
-      final response = await http.post(Uri.parse('https://reqres.in/api/login'),
-          body: {'email': email, 'password': password});
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try {
+      final url = Uri.parse('$api/register');
+      final data = {
+        "email": email,
+        "password": password,
+        //"retype_password": confirmationPassword
+      };
+
+      final response = await http.post(url, body: data);
+      print(response.body);
       if (response.statusCode == 200) {
-        print("Succse");
-      } else {
-        print("gagal");
+        final result = jsonDecode(response.body);
+        prefs.setString('token', result['token']);
+        return 'register success';
       }
+
     } catch (e) {
       print(e.toString());
     }
+    return 'register failed';
   }
 }

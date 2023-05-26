@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 Dialog popupMessageDialog(BuildContext context ,{required String content, required String judul}) {
   final screenSize = MediaQuery.of(context).size;
   final boxWidth = screenSize.width * 0.8;
-  final boxHeight = screenSize.height * 0.270;
+  final boxHeight = screenSize.height * 0.3;
 
   return Dialog(
     child: Container(
@@ -20,34 +20,31 @@ Dialog popupMessageDialog(BuildContext context ,{required String content, requir
             judul,
             style: const TextStyle(
               fontWeight: FontWeight.w500,
-              color: Color.fromRGBO(238, 46, 46, 1),
+              color: Colors.redAccent,
               fontSize: 24,
             ),
           ),
           const SizedBox(height: 4),
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
               content,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.w400,
-                color: Color.fromRGBO(153, 153, 153, 1),
+                color: Colors.grey[500],
                 fontSize: 14,
               )
             ),
           ),
           const SizedBox(height: 18),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              primary: Color.fromRGBO(38, 78, 202, 1),
-              onPrimary: Colors.white,
-              shadowColor: Colors.greenAccent,
-              minimumSize: Size(190, 37),
-            ),
             onPressed: () {
               Navigator.pop(context);
             },
+            style: const ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(Color(0xFF264ECA))
+            ),
             child: const Text(
               'OK',
               style: TextStyle(
