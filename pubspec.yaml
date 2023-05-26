@@ -38,6 +38,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   provider: ^6.0.5
   barcode_widget: ^2.0.4
+  google_fonts: ^4.0.4
+  hexcolor: ^3.0.1
+  
+ 
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +73,9 @@ flutter:
     - assets/icons/
     - assets/fonts/
     - assets/images/
+    - assets/produk.png
+    - assets/produk1.png
+    - assets/produk2.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
