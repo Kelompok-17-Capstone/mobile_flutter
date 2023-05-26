@@ -4,6 +4,12 @@ import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:mobile_flutter/views/auth/register_view.dart';
 import 'package:mobile_flutter/views/dashboard/dashboard_view.dart';
 import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
+import 'package:mobile_flutter/views/dashboard/user_setting/setting_address_view.dart';
+import 'package:mobile_flutter/views/dashboard/user_setting/setting_email_view.dart';
+import 'package:mobile_flutter/views/dashboard/user_setting/setting_name_view.dart';
+import 'package:mobile_flutter/views/dashboard/user_setting/setting_password_view.dart';
+import 'package:mobile_flutter/views/dashboard/user_setting/setting_phone_view.dart';
+import 'package:mobile_flutter/views/dashboard/user_setting/setting_view.dart';
 import 'package:mobile_flutter/views/dashboard/welcome_view.dart';
 import 'package:mobile_flutter/views/splash_screen_view.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +38,12 @@ class MyApp extends StatelessWidget {
           '/register': (context) => const RegisterView(),
           '/login': (context) => const LoginView(),
           '/dashboard': (context) => const DashboardView(),
+          '/user_setting': (context) => const SettingView(),
+          '/setting_email': (context) => const SettingEmailView(),
+          '/setting_password': (context) => const SettingPasswordView(),
+          '/setting_name': (context) => const SettingNameView(),
+          '/setting_phone': (context) => const SettingPhoneView(),
+          '/setting_address': (context) => const SettingAddressView(),
         },
       ),
     );

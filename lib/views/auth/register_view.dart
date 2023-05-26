@@ -23,6 +23,14 @@ class _RegisterViewState extends State<RegisterView> {
   bool isPasswordVisible = false;
 
   @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmationPasswordController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -80,8 +88,8 @@ class _RegisterViewState extends State<RegisterView> {
                     //PASSWORD
                     passwordForm(
                       controller: passwordController, 
-                      isPasswordVisible: !isPasswordVisible,
-                      icon: isPasswordVisible ? const Icon(Icons.visibility_outlined) : const Icon(Icons.visibility_off_outlined),
+                      isPasswordVisible: isPasswordVisible,
+                      // icon: isPasswordVisible ? const Icon(Icons.visibility_outlined) : const Icon(Icons.visibility_off_outlined),
                       onPressed: () {
                         setState(() {
                           isPasswordVisible = !isPasswordVisible;
@@ -99,8 +107,8 @@ class _RegisterViewState extends State<RegisterView> {
                     const SizedBox(height: 5),
                     passwordForm(
                       controller: confirmationPasswordController, 
-                      isPasswordVisible: !isPasswordVisible,
-                      icon: isPasswordVisible ? const Icon(Icons.visibility_outlined) : const Icon(Icons.visibility_off_outlined),
+                      isPasswordVisible: isPasswordVisible,
+                      // icon: isPasswordVisible ? const Icon(Icons.visibility_outlined) : const Icon(Icons.visibility_off_outlined),
                       onPressed: () {
                         setState(() {
                           isPasswordVisible = !isPasswordVisible;

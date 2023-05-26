@@ -11,12 +11,26 @@ class MemberView extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: customAppBar(title: 'Informasi Member'),
+      appBar: customAppBar(context, title: 'Informasi Member', isElevated: false),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
             children: [
-              profileHeader(context),
+              Stack(
+                children: [
+                  profileHeader(context),
+                  Positioned(
+                    right: 10,
+                    top: 10,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/user_setting');
+                      },
+                      icon: const Icon(Icons.manage_accounts_outlined, size: 32, color: Colors.white),
+                    ),
+                  )
+                ],
+              ),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
