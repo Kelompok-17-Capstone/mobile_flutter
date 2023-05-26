@@ -11,16 +11,16 @@ class WelcomeView extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: TextButton(
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/dashboard');
-              },
-              child: const Text('Lewati',
-                  style: TextStyle(fontSize: 12, color: Color(0xFF264ECA))),
-            ),
-          )
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 10),
+          //   child: TextButton(
+          //     onPressed: () {
+          //       Navigator.pushReplacementNamed(context, '/dashboard');
+          //     },
+          //     child: const Text('Lewati',
+          //       style: TextStyle(fontSize: 12, color: Color(0xFF264ECA))),
+          //   ),
+          // )
         ],
       ),
       body: Padding(
