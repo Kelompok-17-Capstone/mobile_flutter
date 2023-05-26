@@ -104,7 +104,34 @@ class HomePageView extends StatelessWidget {
               const SizedBox(height: 10),
       
               // Products
-              productsGrid(products: products)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
+                          'Produk Terbaru',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14
+                          ),
+                        ),
+                        Text(
+                          'lihat semua',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                            color: Colors.grey
+                          ),
+                        )
+                      ],
+                    ),
+                    productsGrid(products: products)
+                  ],
+                ),
+              ),
             ],
           ),
         ),
