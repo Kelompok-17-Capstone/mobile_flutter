@@ -35,7 +35,6 @@ class _DashboardViewState extends State<DashboardView> {
         unselectedItemColor: Colors.grey[500],
         onTap: (value) {
           setState(() {
-            currentIndex = value;
             pageConttroller.animateToPage(
               value, 
               duration: const Duration(milliseconds: 300), 
