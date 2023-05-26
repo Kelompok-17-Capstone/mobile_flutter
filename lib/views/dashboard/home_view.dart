@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/models/product_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/header.dart';
 import 'package:mobile_flutter/shared/products_grid.dart';
+import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePageView extends StatelessWidget {
   const HomePageView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final List<ProductModel> products = Provider.of<ProductProvider>(context).products;
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -99,7 +103,7 @@ class HomePageView extends StatelessWidget {
               const SizedBox(height: 10),
       
               // Products
-              productsGrid()
+              productsGrid(products: products)
             ],
           ),
         ),

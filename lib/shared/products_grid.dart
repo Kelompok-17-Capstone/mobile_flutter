@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/models/product_model.dart';
 
-Padding productsGrid({bool isProductPage = false}) {
+Padding productsGrid({required List<ProductModel> products, bool isProductPage = false}) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 20),
     child: Column(
@@ -35,23 +36,24 @@ Padding productsGrid({bool isProductPage = false}) {
             crossAxisSpacing: 5,
             childAspectRatio: 1/1.2
           ),
-          itemCount: 6,
+          itemCount: products.length,
           itemBuilder: (context, index) {
+            final ProductModel product = products[index];
             return Column(
               children: [
                 Container(
                   width: !isProductPage ? MediaQuery.of(context).size.width * 0.25 : MediaQuery.of(context).size.width * 0.4,
                   height: !isProductPage ? MediaQuery.of(context).size.width * 0.25 : MediaQuery.of(context).size.width * 0.4,
                   color: Colors.white,
-                  child: const Image(image: AssetImage('assets/icons/alta_icon.png')),
+                  child: Image(image: NetworkImage(product.imgUrl)),
                 ),
-                const Expanded(
+                Expanded(
                   child: Text(
-                    '#PRODUCT_NAME',
+                    product.name,
                     maxLines: 2,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 8
                     ),
