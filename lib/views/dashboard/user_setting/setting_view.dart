@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
+import 'package:mobile_flutter/views/auth/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class SettingView extends StatelessWidget {
   const SettingView({super.key});
@@ -7,7 +9,39 @@ class SettingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context, title: 'Pengaturan', isBackButton: true),
+      appBar: customAppBar(context, title: 'Pengaturan', isBackButton: true, actions: [
+        IconButton(
+          onPressed: () {
+            showDialog<void>(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('Logout'),
+                  content: const Text(
+                    'Are you sure you want to logout?',
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Cancel', style: TextStyle(color: Colors.grey)),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Provider.of<AuthProvider>(context, listen: false).logout();
+                        Navigator.pushNamedAndRemoveUntil(context, '/welcome', (route) => false);
+                      },
+                      child: const Text('Logout', style: TextStyle(color: Color(0xFF264ECA))),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+          icon: Icon(Icons.logout_outlined, color: const Color(0xFF264ECA).withOpacity(0.8)),
+        )
+      ]),
       body: Column(
         children: [
           customListTile(

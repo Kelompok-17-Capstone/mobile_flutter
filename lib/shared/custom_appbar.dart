@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-AppBar customAppBar(BuildContext context, { required String title, bool isBackButton = false, bool isElevated = true }) {
+AppBar customAppBar(BuildContext context, { required String title, bool isBackButton = false, bool isElevated = true, List<Widget>? actions }) {
   return AppBar(
     leading: !isBackButton
     ? const SizedBox()
@@ -22,6 +22,7 @@ AppBar customAppBar(BuildContext context, { required String title, bool isBackBu
       ),
     ),
     title: Text(title),
+    actions: actions,
     titleTextStyle: TextStyle(
       color: Colors.black.withOpacity(0.9),
       fontWeight: FontWeight.w600,
