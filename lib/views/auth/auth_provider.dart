@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/api/auth_api.dart';
 import 'package:mobile_flutter/models/user/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider extends ChangeNotifier {
 
@@ -36,6 +37,11 @@ class AuthProvider extends ChangeNotifier {
     }
 
     return 'login failed';
+  }
+
+  void logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('TOKEN');
   }
 
 
