@@ -44,7 +44,7 @@ class _ProdukState extends State<Produk> with SingleTickerProviderStateMixin {
   List<String> detail = [
     'Blue Alien 2TB SSD Gaming PC',
     'Blue Alien Electric Standing Desk',
-    'Blue Alien Mechanical Keyborad'
+    'Blue Alien Mechanical Keyborad',
   ];
   List<String> harga = ['Rp.10.000.000', 'Rp.2.000.000', 'Rp.8.000.000'];
   @override
