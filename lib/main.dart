@@ -4,6 +4,7 @@ import 'package:mobile_flutter/views/auth/login_view.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:mobile_flutter/views/auth/register_view.dart';
 import 'package:mobile_flutter/views/dashboard/dashboard_view.dart';
+import 'package:mobile_flutter/views/dashboard/product/detail_product_view.dart';
 import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
 import 'package:mobile_flutter/views/dashboard/user_setting/setting_address_view.dart';
 import 'package:mobile_flutter/views/dashboard/user_setting/setting_email_view.dart';
@@ -46,6 +47,16 @@ class MyApp extends StatelessWidget {
           '/setting_name': (context) => const SettingNameView(),
           '/setting_phone': (context) => const SettingPhoneView(),
           '/setting_address': (context) => const SettingAddressView(),
+        },
+        onGenerateRoute: (settings) {
+          if (settings.name == '/detail_product') {
+            final args = settings.arguments as int;
+            return MaterialPageRoute(
+              builder: (context) {
+                return DetailProductView(index: args);
+              },
+            );
+          }
         },
       ),
     );

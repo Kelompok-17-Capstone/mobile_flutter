@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/views/dashboard/home_view.dart';
 import 'package:mobile_flutter/views/dashboard/member_view.dart';
+import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
+import 'package:provider/provider.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
@@ -20,6 +22,14 @@ class _DashboardViewState extends State<DashboardView> {
     const Center(child: Text('Products')), // Products Page
     const MemberView() 
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
+      Provider.of<ProductProvider>(context, listen: false).getAllProducts();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

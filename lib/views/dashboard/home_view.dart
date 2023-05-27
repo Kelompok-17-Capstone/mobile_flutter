@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/models/product_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/header.dart';
 import 'package:mobile_flutter/shared/products_grid.dart';
+import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePageView extends StatelessWidget {
   const HomePageView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final List<ProductModel> products = Provider.of<ProductProvider>(context).products;
+    print(products);
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -99,7 +104,34 @@ class HomePageView extends StatelessWidget {
               const SizedBox(height: 10),
       
               // Products
-              productsGrid()
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
+                          'Produk Terbaru',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14
+                          ),
+                        ),
+                        Text(
+                          'lihat semua',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                            color: Colors.grey
+                          ),
+                        )
+                      ],
+                    ),
+                    productsGrid(products: products)
+                  ],
+                ),
+              ),
             ],
           ),
         ),
