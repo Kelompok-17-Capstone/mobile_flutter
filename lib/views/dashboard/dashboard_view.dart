@@ -19,8 +19,8 @@ class _DashboardViewState extends State<DashboardView> {
 
   List<Widget> pageList = [
     const HomePageView(),
-    const Center(child: Text('Products')), // Products Page
-    const MemberView() 
+    const Produk(),
+    const MemberView()
   ];
 
   @override
@@ -53,9 +53,12 @@ class _DashboardViewState extends State<DashboardView> {
           });
         },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Beranda'),
-          BottomNavigationBarItem(icon: Icon(Icons.devices_outlined), label: 'Produk'),
-          BottomNavigationBarItem(icon: Icon(Icons.card_membership_outlined), label: 'Member')
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined), label: 'Beranda'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.devices_outlined), label: 'Produk'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.card_membership_outlined), label: 'Member')
         ],
       ),
     );
