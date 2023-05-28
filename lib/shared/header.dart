@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:mobile_flutter/views/dashboard/pengaturan_view.dart';
+
 Stack homeHeader(BuildContext context) {
   return Stack(
     children: [
@@ -8,12 +10,10 @@ Stack homeHeader(BuildContext context) {
         height: 253,
         width: double.infinity,
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFF2649CA), Colors.black]
-          )
-        ),
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Color(0xFF2649CA), Colors.black])),
         child: Padding(
           padding: const EdgeInsets.only(left: 20, top: 10),
           child: Column(
@@ -21,29 +21,30 @@ Stack homeHeader(BuildContext context) {
               Row(
                 children: [
                   Flexible(
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.search),
-                        hintText: 'Cari Produk',
-                        contentPadding: EdgeInsets.symmetric(vertical: 12),
-                        filled: true,
-                        fillColor: Colors.white,
-                        focusedBorder: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(6))),
-                        border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(6))),
-                      ),
-                    )
+                      child: TextFormField(
+                    decoration: const InputDecoration(
+                      prefixIcon: Icon(Icons.search),
+                      hintText: 'Cari Produk',
+                      contentPadding: EdgeInsets.symmetric(vertical: 12),
+                      filled: true,
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.all(Radius.circular(6))),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.all(Radius.circular(6))),
+                    ),
+                  )),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.notifications_outlined,
+                        color: Colors.white),
                   ),
                   IconButton(
-                    onPressed: () {
-                      
-                    },
-                    icon: const Icon(Icons.notifications_outlined, color: Colors.white),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      
-                    },
-                    icon: const Icon(Icons.shopping_cart_outlined, color: Colors.white),
+                    onPressed: () {},
+                    icon: const Icon(Icons.shopping_cart_outlined,
+                        color: Colors.white),
                   ),
                 ],
               ),
@@ -53,25 +54,25 @@ Stack homeHeader(BuildContext context) {
                   Expanded(
                     child: Column(
                       children: const [
-                        Text('Blue Alien Series Telah MENANTIMU!',
+                        Text(
+                          'Blue Alien Series Telah MENANTIMU!',
                           style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14
-                          ),
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14),
                         ),
-                        Text('Segera beli sekarang dan rasakan performa terbaik dengan tekonologi terbaru di ruang Anda',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 8
-                          ),
+                        Text(
+                          'Segera beli sekarang dan rasakan performa terbaik dengan tekonologi terbaru di ruang Anda',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 8),
                         )
                       ],
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width*0.5,
+                    width: MediaQuery.of(context).size.width * 0.5,
                     child: Stack(
                       children: [
                         Transform.translate(
@@ -123,10 +124,7 @@ Container profileHeader(BuildContext context) {
     height: 200,
     width: double.infinity,
     decoration: const BoxDecoration(
-      gradient: LinearGradient(
-        colors: [Color(0xFF2649CA), Colors.black]
-      )
-    ),
+        gradient: LinearGradient(colors: [Color(0xFF2649CA), Colors.black])),
     child: Stack(
       children: [
         Center(
@@ -142,10 +140,7 @@ Container profileHeader(BuildContext context) {
               ),
               const Text(
                 'rania alatas',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20
-                ),
+                style: TextStyle(color: Colors.white, fontSize: 20),
               )
             ],
           ),
@@ -155,9 +150,14 @@ Container profileHeader(BuildContext context) {
           top: 10,
           child: IconButton(
             onPressed: () {
-              
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PengaturanView()));
             },
-            icon: const Icon(Icons.manage_accounts_outlined, size: 32, color: Colors.white,),
+            icon: const Icon(
+              Icons.settings,
+              size: 32,
+              color: Colors.white,
+            ),
           ),
         )
       ],
