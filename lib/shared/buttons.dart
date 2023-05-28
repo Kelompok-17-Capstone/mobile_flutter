@@ -50,3 +50,19 @@ IconButton customBackButton(BuildContext context) {
     ),
   );
 }
+
+Container miniButton({required IconData icon, required void Function()? onPressed}) {
+  return Container(
+    margin: const EdgeInsets.all(8),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(4)
+    ),
+    child: FittedBox(
+      child: IconButton(
+        onPressed: onPressed,
+        icon: Icon(icon),
+      ),
+    ),
+  );
+}

@@ -27,7 +27,7 @@ class _DashboardViewState extends State<DashboardView> {
   void initState() {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
-      Provider.of<ProductProvider>(context, listen: false).getAllProducts();
+      //Provider.of<ProductProvider>(context, listen: false).getAllProducts();
     });
   }
 

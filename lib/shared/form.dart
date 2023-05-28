@@ -2,6 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_flutter/shared/form_validator.dart';
 
+Widget formLabel({required String label}) {
+  return Text(
+    label,
+    style: const TextStyle(
+      fontWeight: FontWeight.w500,
+      fontSize: 16,
+    ),
+  );
+}
+
 TextFormField customForm({required TextEditingController controller, required String hintText, bool enabled = true, bool isNumberOnly = false, int maxLines = 1}) {
   return TextFormField(
     controller: controller,

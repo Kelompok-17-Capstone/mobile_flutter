@@ -20,7 +20,7 @@ Dialog popupMessageDialog(BuildContext context ,{required String judul, required
             judul,
             style: const TextStyle(
               fontWeight: FontWeight.w500,
-              color: Colors.redAccent,
+              color: Colors.black,
               fontSize: 24,
             ),
           ),
