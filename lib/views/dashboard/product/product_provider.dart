@@ -13,7 +13,7 @@ class ProductProvider extends ChangeNotifier {
   List<ProductModel> _products = [
     const ProductModel(
       id: 'id-01',
-      name: 'Xiaomi Mi Desktop Monitor 27"',
+      name: 'Xiaomi Mi Desktop Monitor 27" Xiaomi Mi Desktop Monitor 27" ',
       description: '''
 Spesifikasi:
 

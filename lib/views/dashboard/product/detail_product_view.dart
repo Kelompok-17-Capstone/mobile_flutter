@@ -164,7 +164,7 @@ class _DetailProductViewState extends State<DetailProductView> {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        
+                        notAMember(context);
                       },
                       child: const Text('Beli Sekarang', style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)),
                     ),
@@ -175,6 +175,43 @@ class _DetailProductViewState extends State<DetailProductView> {
           )
         ],
       ),
+    );
+  }
+
+  Future<void> notAMember(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12)
+      ),
+      builder:(context) {
+        return Wrap(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  const Image(image: AssetImage('assets/images/sorry.png')),
+                  const Text(
+                    'Maaf, akun Anda belum terdaftar. Silahkan daftar akun untuk dapat melakukan pembelian produk.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.grey
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  fullWidthButton(label: 'Daftar Akun', onPressed:() {
+                    
+                  }),
+                  const SizedBox(height: 20)
+                ],
+              ),
+            ),
+            
+          ],
+        );
+      },
     );
   }
 
@@ -254,7 +291,8 @@ class _DetailProductViewState extends State<DetailProductView> {
               
                       const SizedBox(height: 40),
                       fullWidthButton(label: 'Beli Sekarang', onPressed: () {
-                        
+                        Navigator.pop(context);
+                        notAMember(context);
                       },)
                     ],
                   ),
