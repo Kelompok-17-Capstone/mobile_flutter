@@ -188,19 +188,143 @@ class _ProdukState extends State<Produk> with SingleTickerProviderStateMixin {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Column(
-                        children: const [
-                          Text("Tab2"),
-                        ],
+                      padding: const EdgeInsets.only(
+                        left: 24,
+                        top: 18,
+                        right: 24,
+                      ),
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisSpacing: 18,
+                          mainAxisSpacing: 90,
+                          crossAxisCount: 2,
+                        ),
+                        itemCount: produk.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {},
+                            child: Wrap(
+                              children: [
+                                ClipRRect(
+                                  child: Container(
+                                    padding: const EdgeInsets.only(
+                                        left: 30,
+                                        right: 30,
+                                        top: 22,
+                                        bottom: 22),
+                                    height: 164,
+                                    width: 180,
+                                    decoration: BoxDecoration(
+                                      color: HexColor('#FFFFFF'),
+                                    ),
+                                    child: Image.asset(
+                                      produk[index].assetName,
+                                      height: 120,
+                                      width: 120,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ListTile(
+                                          title: Text(
+                                            detail[index],
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                          subtitle: Text(
+                                            harga[index],
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                                color: HexColor('#264ECA')),
+                                          ))
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        },
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Column(
-                        children: const [
-                          Text("Tab3"),
-                        ],
+                      padding: const EdgeInsets.only(
+                        left: 24,
+                        top: 18,
+                        right: 24,
+                      ),
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisSpacing: 18,
+                          mainAxisSpacing: 90,
+                          crossAxisCount: 2,
+                        ),
+                        itemCount: produk.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {},
+                            child: Wrap(
+                              children: [
+                                ClipRRect(
+                                  child: Container(
+                                    padding: const EdgeInsets.only(
+                                        left: 30,
+                                        right: 30,
+                                        top: 22,
+                                        bottom: 22),
+                                    height: 164,
+                                    width: 180,
+                                    decoration: BoxDecoration(
+                                      color: HexColor('#FFFFFF'),
+                                    ),
+                                    child: Image.asset(
+                                      produk[index].assetName,
+                                      height: 120,
+                                      width: 120,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ListTile(
+                                          title: Text(
+                                            detail[index],
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                          subtitle: Text(
+                                            harga[index],
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                                color: HexColor('#264ECA')),
+                                          ))
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],
