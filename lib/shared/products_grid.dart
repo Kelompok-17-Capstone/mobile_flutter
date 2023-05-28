@@ -31,7 +31,10 @@ Widget productsGrid({required List<ProductModel> products, bool isProductPage = 
                   width: !isProductPage ? MediaQuery.of(context).size.width * 0.25 : MediaQuery.of(context).size.width * 0.4,
                   height: !isProductPage ? MediaQuery.of(context).size.width * 0.25 : MediaQuery.of(context).size.width * 0.4,
                   color: Colors.white,
-                  child: Image(image: NetworkImage(product.imgUrl)),
+                  child: Hero(
+                    tag: product.id,
+                    child: Image(image: NetworkImage(product.imgUrl))
+                  ),
                 ),
                 Expanded(
                   child: Text(
