@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/product_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
-import 'package:mobile_flutter/shared/header.dart';
+import 'package:mobile_flutter/shared/headers.dart';
 import 'package:mobile_flutter/shared/products_grid.dart';
 import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
 import 'package:provider/provider.dart';
