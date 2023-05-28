@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/product_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
+import 'package:mobile_flutter/shared/popup_dialog.dart';
 import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -56,7 +57,14 @@ class _DetailProductViewState extends State<DetailProductView> {
                             children: [
                               IconButton(
                                 onPressed: () {
-                                  
+                                  showDialog(
+                                    context: context,
+                                    builder:(context) => popupMessageDialog(
+                                      context,
+                                      judul: 'Maaf',
+                                      content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
+                                    ),
+                                  );
                                 },
                                 icon: const Icon(Icons.favorite_outline, color: Color(0xFF264ECA)),
                               ),
@@ -202,7 +210,7 @@ class _DetailProductViewState extends State<DetailProductView> {
                   ),
                   const SizedBox(height: 20),
                   fullWidthButton(label: 'Daftar Akun', onPressed:() {
-                    
+                    Navigator.pushNamedAndRemoveUntil(context, '/welcome', (route) => false);
                   }),
                   const SizedBox(height: 20)
                 ],
@@ -302,22 +310,6 @@ class _DetailProductViewState extends State<DetailProductView> {
           },
         );
       },
-    );
-  }
-
-  Container miniButton({required IconData icon, required void Function()? onPressed}) {
-    return Container(
-      margin: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(4)
-      ),
-      child: FittedBox(
-        child: IconButton(
-          onPressed: onPressed,
-          icon: Icon(icon),
-        ),
-      ),
     );
   }
 }
