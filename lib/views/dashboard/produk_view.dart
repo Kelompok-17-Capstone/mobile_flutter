@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../main.dart';
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  runApp(const MyApp());
-}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -27,14 +19,11 @@ class Produk extends StatefulWidget {
 
   @override
   // ignore: no_logic_in_create_state
-  State<Produk> createState() => _ProdukState('image');
+  State<Produk> createState() => _ProdukState();
 }
 
 class _ProdukState extends State<Produk> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  final String image;
-
-  _ProdukState(this.image);
 
   final List<AssetImage> produk = [
     const AssetImage("assets/produk.png"),
@@ -64,48 +53,49 @@ class _ProdukState extends State<Produk> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: HexColor('#F4F4F4'),
+        backgroundColor: const Color(0xffF4F4F4),
         body: Padding(
           padding: const EdgeInsets.all(0),
           child: Column(
             children: [
               Container(
-                color: HexColor('#FFFFFF'),
+                color: Colors.white,
                 padding: const EdgeInsets.only(top: 0),
                 height: 40,
                 child: TabBar(
                   controller: _tabController,
 
                   // HexColor('#FFFFFF'),
-                  labelColor: HexColor('#264ECA'), //<-- selected text color
-                  unselectedLabelColor: HexColor('#7D828C'),
-                  indicatorColor: HexColor('#264ECA'),
+
+                  labelColor: const Color(0xff264ECA), //<-- selected text color
+                  unselectedLabelColor: const Color(0xff7D828C),
+                  indicatorColor: const Color(0xff264ECA),
 
                   tabs: [
-                    Tab(
+                    const Tab(
                       child: Text('Terbaru',
-                          style: GoogleFonts.poppins(
+                          style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
                           )),
                     ),
-                    Tab(
+                    const Tab(
                       child: Text('Terlaris',
-                          style: GoogleFonts.poppins(
+                          style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
                           )),
                     ),
-                    Row(children: [
+                    Row(children: const [
                       Text(
                         'Harga',
-                        style: GoogleFonts.poppins(
+                        style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
-                      const SizedBox(width: 0),
-                      const Icon(
+                      SizedBox(width: 0),
+                      Icon(
                         Icons.unfold_more_rounded,
                         size: 18,
                       ),
@@ -145,8 +135,8 @@ class _ProdukState extends State<Produk> with SingleTickerProviderStateMixin {
                                         bottom: 22),
                                     height: 164,
                                     width: 180,
-                                    decoration: BoxDecoration(
-                                      color: HexColor('#FFFFFF'),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
                                     ),
                                     child: Image.asset(
                                       produk[index].assetName,
@@ -165,7 +155,7 @@ class _ProdukState extends State<Produk> with SingleTickerProviderStateMixin {
                                           title: Text(
                                             detail[index],
                                             textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
+                                            style: const TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w400,
                                             ),
@@ -173,10 +163,10 @@ class _ProdukState extends State<Produk> with SingleTickerProviderStateMixin {
                                           subtitle: Text(
                                             harga[index],
                                             textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
+                                            style: const TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w500,
-                                                color: HexColor('#264ECA')),
+                                                color: Color(0xff264ECA)),
                                           ))
                                     ],
                                   ),
@@ -188,145 +178,19 @@ class _ProdukState extends State<Produk> with SingleTickerProviderStateMixin {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(
-                        left: 24,
-                        top: 18,
-                        right: 24,
-                      ),
-                      child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisSpacing: 18,
-                          mainAxisSpacing: 90,
-                          crossAxisCount: 2,
+                        padding: const EdgeInsets.only(
+                          left: 24,
+                          top: 18,
+                          right: 24,
                         ),
-                        itemCount: produk.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {},
-                            child: Wrap(
-                              children: [
-                                ClipRRect(
-                                  child: Container(
-                                    padding: const EdgeInsets.only(
-                                        left: 30,
-                                        right: 30,
-                                        top: 22,
-                                        bottom: 22),
-                                    height: 164,
-                                    width: 180,
-                                    decoration: BoxDecoration(
-                                      color: HexColor('#FFFFFF'),
-                                    ),
-                                    child: Image.asset(
-                                      produk[index].assetName,
-                                      height: 120,
-                                      width: 120,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      ListTile(
-                                          title: Text(
-                                            detail[index],
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ),
-                                          subtitle: Text(
-                                            harga[index],
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500,
-                                                color: HexColor('#264ECA')),
-                                          ))
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                        child: Text('harga')),
                     Padding(
-                      padding: const EdgeInsets.only(
-                        left: 24,
-                        top: 18,
-                        right: 24,
-                      ),
-                      child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisSpacing: 18,
-                          mainAxisSpacing: 90,
-                          crossAxisCount: 2,
+                        padding: const EdgeInsets.only(
+                          left: 24,
+                          top: 18,
+                          right: 24,
                         ),
-                        itemCount: produk.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {},
-                            child: Wrap(
-                              children: [
-                                ClipRRect(
-                                  child: Container(
-                                    padding: const EdgeInsets.only(
-                                        left: 30,
-                                        right: 30,
-                                        top: 22,
-                                        bottom: 22),
-                                    height: 164,
-                                    width: 180,
-                                    decoration: BoxDecoration(
-                                      color: HexColor('#FFFFFF'),
-                                    ),
-                                    child: Image.asset(
-                                      produk[index].assetName,
-                                      height: 120,
-                                      width: 120,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      ListTile(
-                                          title: Text(
-                                            detail[index],
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ),
-                                          subtitle: Text(
-                                            harga[index],
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500,
-                                                color: HexColor('#264ECA')),
-                                          ))
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                        child: Text('terlaris')),
                   ],
                 ),
               ),
