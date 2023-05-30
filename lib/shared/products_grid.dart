@@ -12,7 +12,7 @@ Widget productsGrid({required List<ProductModel> products, bool isProductPage = 
           crossAxisCount: !isProductPage ? 3 : 2 ,
           mainAxisSpacing: 5,
           crossAxisSpacing: 5,
-          childAspectRatio: 1/1.2
+          childAspectRatio: 1/1.3
         ),
         itemCount: products.length,
         itemBuilder: (context, index) {
@@ -44,7 +44,19 @@ Widget productsGrid({required List<ProductModel> products, bool isProductPage = 
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontSize: 8
+                      fontSize: 10
+                    ),
+                  ),
+                ),
+                !isProductPage
+                ? const SizedBox()
+                : Expanded(
+                  child: Text(
+                    product.formatedPrice(),
+                    style: const TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF264ECA)
                     ),
                   ),
                 )
