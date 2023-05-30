@@ -145,41 +145,18 @@ class _DetailProductViewState extends State<DetailProductView> {
               ),
             ),
           ),
-          SizedBox(
-            width: double.infinity,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(width: 0.5, color: const Color(0xFF264ECA))
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        showBuyNowDialog(context, product);
-                      },
-                      icon: const Icon(Icons.shopping_cart_outlined, color: Color(0xFF264ECA),),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF264ECA),
-                      border: Border.all(width: 0.5, color: const Color(0xFF264ECA))
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        notAMember(context);
-                      },
-                      child: const Text('Beli Sekarang', style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)),
-                    ),
-                  ),
-                )
-              ],
+          buyNowButton(
+            context,
+            leftContent: IconButton(
+              onPressed: () {
+                showBuyNowDialog(context, product);
+              },
+              icon: const Icon(Icons.shopping_cart_outlined, color: Color(0xFF264ECA)),
             ),
+            labelButton: 'Beli Sekarang',
+            onPressed: () {
+              notAMember(context);
+            },
           )
         ],
       ),
@@ -193,7 +170,7 @@ class _DetailProductViewState extends State<DetailProductView> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12)
       ),
-      builder:(context) {
+      builder: (context) {
         return Wrap(
           children: [
             Padding(
