@@ -1,45 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import '../../main.dart';
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(theme: ThemeData());
-  }
-}
-
-class Produk extends StatefulWidget {
-  const Produk({
-    super.key,
-  });
+class ProductsView extends StatefulWidget {
+  const ProductsView({super.key});
 
   @override
-  // ignore: no_logic_in_create_state
-  State<Produk> createState() => _ProdukState('image');
+  State<ProductsView> createState() => _ProductsViewState();
 }
 
-class _ProdukState extends State<Produk> with SingleTickerProviderStateMixin {
+class _ProductsViewState extends State<ProductsView> with TickerProviderStateMixin{
   late TabController _tabController;
-  final String image;
-
-  _ProdukState(this.image);
 
   final List<AssetImage> produk = [
-    const AssetImage("assets/produk.png"),
-    const AssetImage("assets/produk1.png"),
-    const AssetImage("assets/produk2.png"),
+    const AssetImage("assets/images/produk.png"),
+    const AssetImage("assets/images/produk1.png"),
+    const AssetImage("assets/images/produk2.png"),
   ];
   List<String> detail = [
     'Blue Alien 2TB SSD Gaming PC',
@@ -64,48 +38,48 @@ class _ProdukState extends State<Produk> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: HexColor('#F4F4F4'),
+        backgroundColor: const Color(0xFFF4F4F4),
         body: Padding(
           padding: const EdgeInsets.all(0),
           child: Column(
             children: [
               Container(
-                color: HexColor('#FFFFFF'),
+                color: Colors.white,
                 padding: const EdgeInsets.only(top: 0),
                 height: 40,
                 child: TabBar(
                   controller: _tabController,
 
                   // HexColor('#FFFFFF'),
-                  labelColor: HexColor('#264ECA'), //<-- selected text color
-                  unselectedLabelColor: HexColor('#7D828C'),
-                  indicatorColor: HexColor('#264ECA'),
+                  labelColor: const Color(0xFF264ECA), //<-- selected text color
+                  unselectedLabelColor: const Color(0xFF7D828C),
+                  indicatorColor: const Color(0xFF264ECA),
 
                   tabs: [
-                    Tab(
+                    const Tab(
                       child: Text('Terbaru',
-                          style: GoogleFonts.poppins(
+                          style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
                           )),
                     ),
-                    Tab(
+                    const Tab(
                       child: Text('Terlaris',
-                          style: GoogleFonts.poppins(
+                          style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
                           )),
                     ),
-                    Row(children: [
+                    Row(children: const [
                       Text(
                         'Harga',
-                        style: GoogleFonts.poppins(
+                        style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
-                      const SizedBox(width: 0),
-                      const Icon(
+                      SizedBox(width: 0),
+                      Icon(
                         Icons.unfold_more_rounded,
                         size: 18,
                       ),
@@ -115,6 +89,7 @@ class _ProdukState extends State<Produk> with SingleTickerProviderStateMixin {
               ),
               Expanded(
                 child: TabBarView(
+                  physics: NeverScrollableScrollPhysics(),
                   controller: _tabController,
                   children: [
                     Padding(
@@ -145,8 +120,8 @@ class _ProdukState extends State<Produk> with SingleTickerProviderStateMixin {
                                         bottom: 22),
                                     height: 164,
                                     width: 180,
-                                    decoration: BoxDecoration(
-                                      color: HexColor('#FFFFFF'),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
                                     ),
                                     child: Image.asset(
                                       produk[index].assetName,
@@ -165,7 +140,7 @@ class _ProdukState extends State<Produk> with SingleTickerProviderStateMixin {
                                           title: Text(
                                             detail[index],
                                             textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
+                                            style: const TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w400,
                                             ),
@@ -173,10 +148,11 @@ class _ProdukState extends State<Produk> with SingleTickerProviderStateMixin {
                                           subtitle: Text(
                                             harga[index],
                                             textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
+                                            style: const TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w500,
-                                                color: HexColor('#264ECA')),
+                                                color: Color(0xFF264ECA)
+                                              ),
                                           ))
                                     ],
                                   ),
@@ -212,4 +188,4 @@ class _ProdukState extends State<Produk> with SingleTickerProviderStateMixin {
       ),
     );
   }
-}
+  }
