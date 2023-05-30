@@ -35,7 +35,9 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(fontFamily: 'Poppins'),
+        theme: ThemeData(
+          fontFamily: 'Poppins',
+        ),
         initialRoute: '/',
         routes: {
           '/': (context) => const SplashScreen(),
