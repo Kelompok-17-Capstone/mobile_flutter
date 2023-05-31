@@ -12,7 +12,7 @@ class MemberView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserModel user = Provider.of<AuthProvider>(context).user ?? UserModel(
+    final UserModel user = Provider.of<AuthProvider>(context, listen: false).user ?? UserModel(
       name: 'Guest',
       email: 'guest@gmail.com',
       phoneNumber: '081234000000',

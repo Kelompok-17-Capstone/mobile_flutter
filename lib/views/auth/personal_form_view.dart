@@ -67,15 +67,16 @@ class _PersonalFormViewState extends State<PersonalFormView> {
                       const SizedBox(height: 5),
                       customForm(controller: addressController, hintText: 'isi beserta kecamatan & kode pos', maxLines: 3),
                       const SizedBox(height: 20),
-                      fullWidthButton(label: 'Submit', onPressed: () {
+                      fullWidthButton(label: 'Submit', onPressed: () async {
                         if (formKey.currentState!.validate()) {
-                          Provider.of<AuthProvider>(context, listen: false).createProfile(
+                          await Provider.of<AuthProvider>(context, listen: false).createProfile(
                             name: nameController.text.trim(),
                             phoneNumber: phoneController.text,
                             city: cityController.text.trim(),
                             province: provinceController.text.trim(),
                             address: addressController.text.trim()
                           );
+                          if(!mounted) return;
                           Navigator.pushNamedAndRemoveUntil(context, '/dashboard', (route) => false);
                         }
                       }),
