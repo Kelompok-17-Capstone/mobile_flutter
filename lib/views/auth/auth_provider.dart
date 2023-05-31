@@ -9,6 +9,20 @@ class AuthProvider extends ChangeNotifier {
 
   UserModel get user => _user;
 
+  Future<bool> isLoggedIn() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString('TOKEN') != null) {
+      _user = UserModel(
+        fullName: 'Full Name', 
+        email: 'Email', 
+        phone: '089500000000', 
+        address: 'Dago, Bandung, Jawa Barat'
+      );
+      return true;
+    }
+    return false;
+  }
+
   Future<String> register({required String email, required String password, required String confirmationPassword}) async {
     final auth = AuthAPI();
     String result = await auth.register(email, password, confirmationPassword);

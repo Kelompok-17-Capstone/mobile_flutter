@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/models/item_cart_model.dart';
 import 'package:mobile_flutter/models/product_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
+import 'package:mobile_flutter/shared/format_rupiah.dart';
 import 'package:mobile_flutter/shared/popup_dialog.dart';
+import 'package:mobile_flutter/views/dashboard/product/cart_provider.dart';
 import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -41,8 +44,19 @@ class _DetailProductViewState extends State<DetailProductView> {
                       ),
                       Positioned(
                         top: 30,
-                        left: 10,
-                        child: customBackButton(context)
+                        left: -20,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(100)
+                          ),
+                          child: Row(
+                            children: [
+                              const SizedBox(width: 30),
+                              customBackButton(context),
+                            ],
+                          ),
+                        )
                       ),
                       Positioned(
                         top: 30,
@@ -107,7 +121,7 @@ class _DetailProductViewState extends State<DetailProductView> {
                             ),
                           ),
                           Text(
-                            product.formatedPrice(),
+                            formatRupiah(product.price),
                             style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w400,
@@ -155,7 +169,10 @@ class _DetailProductViewState extends State<DetailProductView> {
             ),
             labelButton: 'Beli Sekarang',
             onPressed: () {
-              notAMember(context);
+              //notAMember(context);
+              final ItemCartModel item = ItemCartModel(product: product, itemCount: 1);
+              Provider.of<CartProvider>(context, listen: false).addToCart(item);
+              Navigator.pushNamed(context, '/checkout');
             },
           )
         ],
@@ -228,7 +245,7 @@ class _DetailProductViewState extends State<DetailProductView> {
                           ),
                           Expanded(
                             child: Text(
-                              product.formatedPrice(),
+                              formatRupiah(product.price),
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
