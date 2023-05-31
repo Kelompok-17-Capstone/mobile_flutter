@@ -11,11 +11,13 @@ class ProductAPI {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     try {
-      final url = Uri.parse('$api/admin/products');
+      //final url = Uri.parse('$api/admin/products'); // Real API
+      final url = Uri.parse(dotenv.env['DUMMY']!);
       final Map<String, String> headers = {
         'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
       };
-      final response = await http.get(url, headers: headers);
+      // final response = await http.get(url, headers: headers); // Real Response
+      final response = await http.get(url);
       print(response.body);
       if (response.statusCode == 200) {
         final List result = jsonDecode(response.body)['products'];
