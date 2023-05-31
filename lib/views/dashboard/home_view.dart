@@ -7,7 +7,8 @@ import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
 import 'package:provider/provider.dart';
 
 class HomePageView extends StatelessWidget {
-  const HomePageView({super.key});
+  final PageController pageController;
+  const HomePageView({super.key, required this.pageController});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,6 @@ class HomePageView extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-      
               // Header
               homeHeader(context),
       
@@ -120,7 +120,11 @@ class HomePageView extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () {
-                            
+                            pageController.animateToPage(
+                              1, 
+                              duration: const Duration(milliseconds: 300), 
+                              curve: Curves.easeInOut
+                            );
                           },
                           child: const Text(
                             'lihat semua',

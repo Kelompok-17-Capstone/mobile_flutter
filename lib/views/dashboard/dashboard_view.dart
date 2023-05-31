@@ -14,12 +14,12 @@ class DashboardView extends StatefulWidget {
 
 class _DashboardViewState extends State<DashboardView> {
 
-  final pageConttroller = PageController();
+  final pageController = PageController();
 
   int currentIndex = 0;
 
   List<Widget> pageList = [
-    const HomePageView(),
+    const CircularProgressIndicator(),
     const ProductsView(),
     const MemberView()
   ];
@@ -27,6 +27,7 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   void initState() {
     super.initState();
+    pageList[0] = HomePageView(pageController: pageController);
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
       Provider.of<ProductProvider>(context, listen: false).getAllProducts();
     });
@@ -36,7 +37,7 @@ class _DashboardViewState extends State<DashboardView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-        controller: pageConttroller,
+        controller: pageController,
         onPageChanged: (index) => setState(() => currentIndex = index),
         children: pageList,
       ),
@@ -45,13 +46,11 @@ class _DashboardViewState extends State<DashboardView> {
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.grey[500],
         onTap: (value) {
-          setState(() {
-            pageConttroller.animateToPage(
-              value, 
-              duration: const Duration(milliseconds: 300), 
-              curve: Curves.easeInOut
-            );
-          });
+          pageController.animateToPage(
+            value, 
+            duration: const Duration(milliseconds: 300), 
+            curve: Curves.easeInOut
+          );
         },
         items: const [
           BottomNavigationBarItem(
