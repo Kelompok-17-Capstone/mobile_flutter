@@ -39,11 +39,6 @@ class _RegisterViewState extends State<RegisterView> {
         child: Center(
           child: Column(
             children: [
-              Column(
-                children: [
-                  
-                ],
-              ),
               const Image(
                 image: AssetImage('assets/icons/alta_icon.png'),
                 width: 19,
@@ -120,7 +115,7 @@ class _RegisterViewState extends State<RegisterView> {
                           );
                           if (result == 'register success') {
                             if(!mounted) return;
-                            Navigator.pushReplacementNamed(context, '/dashboard');
+                            Navigator.pushReplacementNamed(context, '/personal_form');
                           }
                         }
                       }

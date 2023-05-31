@@ -26,7 +26,7 @@ class _CheckoutViewState extends State<CheckoutView> {
   @override
   void initState() {
     super.initState();
-    user = Provider.of<AuthProvider>(context, listen: false).user;
+    user = Provider.of<AuthProvider>(context, listen: false).user!;
   }
 
   int countTotalPayment(int totalProduct, int shippingCost) {
@@ -60,7 +60,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('${user.fullName} | ${user.phone}', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
+                        Text('${user.name} | ${user.phoneNumber}', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
                         Text(user.address, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w300))
                       ],
                     ),

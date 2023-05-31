@@ -15,10 +15,13 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () async {
-      final bool result = await Provider.of<AuthProvider>(context, listen: false).isLoggedIn();
-      if (result) {
+      final String result = await Provider.of<AuthProvider>(context, listen: false).isLoggedIn();
+      if (result == 'validated') {
         if(!mounted) return;
         Navigator.pushNamedAndRemoveUntil(context, '/dashboard', (route) => false);
+      } else if (result == 'unvalidated') {
+        if(!mounted) return;
+        Navigator.pushReplacementNamed(context, '/personal_form');
       } else {
         if(!mounted) return;
         Navigator.pushReplacementNamed(context, '/welcome');

@@ -88,7 +88,11 @@ class _LoginViewState extends State<LoginView> {
                         if (result == 'login success') {
                           if(!mounted) return;
                           Navigator.pushReplacementNamed(context, '/dashboard');
-                        } else {
+                        } else if(result == 'user unvalidated') {
+                          if(!mounted) return;
+                          Navigator.pushReplacementNamed(context, '/personal_form');
+                        } 
+                        else {
                           if(!mounted) return;
                           showDialog(context: context, builder:(context) {
                             return popupMessageDialog(context, judul: 'Login Gagal', content: 'Pastikan email dan password sudah benar');

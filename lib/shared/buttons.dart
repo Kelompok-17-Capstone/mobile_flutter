@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_flutter/models/product_model.dart';
 
 ElevatedButton fullWidthButton({required String label, required void Function() onPressed}) {
   return ElevatedButton(
