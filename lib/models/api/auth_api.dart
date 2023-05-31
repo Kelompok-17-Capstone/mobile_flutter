@@ -22,6 +22,7 @@ class AuthAPI {
       if (response.statusCode == 200) {
         final result = jsonDecode(response.body);
         prefs.setString('TOKEN', result['token']);
+        prefs.setString('status_user', 'unvalidated');
         return 'register success';
       }
 
