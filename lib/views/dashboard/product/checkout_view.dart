@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/models/item_cart_model.dart';
+import 'package:mobile_flutter/models/user_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
 import 'package:mobile_flutter/shared/custom_colors.dart';
+import 'package:mobile_flutter/shared/format_rupiah.dart';
+import 'package:mobile_flutter/views/auth/auth_provider.dart';
+import 'package:mobile_flutter/views/dashboard/product/cart_provider.dart';
+import 'package:provider/provider.dart';
 
 class CheckoutView extends StatefulWidget {
   const CheckoutView({super.key});
@@ -12,10 +18,33 @@ class CheckoutView extends StatefulWidget {
 
 class _CheckoutViewState extends State<CheckoutView> {
 
+  late UserModel user;
+
+  final noteController = TextEditingController();
   bool isDiscount = false;
 
   @override
+  void initState() {
+    super.initState();
+    user = Provider.of<AuthProvider>(context, listen: false).user!;
+  }
+
+  int countTotalPayment(int totalProduct, int shippingCost) {
+    double discount = isDiscount ? totalProduct * 0.3 : 0;
+    return (totalProduct + shippingCost - discount).ceil();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    noteController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final List<ItemCartModel> items = Provider.of<CartProvider>(context).items;
+    final int amount = Provider.of<CartProvider>(context).amount;
+    final int totalProduct = Provider.of<CartProvider>(context).totalProduct;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: customAppBar(context, title: 'Rincian Pesanan', isBackButton: true),
@@ -30,79 +59,88 @@ class _CheckoutViewState extends State<CheckoutView> {
                     title: const Text('Alamat Pengiriman', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13)),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text('Rania | 0877-6554-3321', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
-                        Text('Kos Hadrol, Gang Depan Indomaret, Jl. Terusan SBY No.10, RT.2/RW.3, Kel. Gadingkasri, Kec. Klojen, Kota Malang, Jawa Timur, ID 65115', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300))
+                      children: [
+                        Text('${user.name} | ${user.phoneNumber}', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
+                        Text(user.address, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w300))
                       ],
                     ),
                     trailing: Icon(Icons.arrow_forward_ios_outlined, size: 16, color: CustomColors.primary),
                     isThreeLine: true,
                   ),
                   const Divider(),
-                  ListTile(
-                    dense: true,
-                    isThreeLine: true,
-                    leading: const Image(image: AssetImage('assets/icons/alta_icon.png'), height: 60),
-                    title: const Text(
-                      'Blue Alien Curved Monitor 34 Inch',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500
-                      ),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Jumlah: 1', style: TextStyle(color: Colors.grey[800])),
-                        const Text(
-                          'Rp12.000.000',
-                          style: TextStyle(
-                            color: Colors.grey
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  ListTile(
-                    dense: true,
-                    title: const Text(
-                      'Blue Alien Curved Monitor 34 Inch',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500
-                      ),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 65,
-                          child: Row(
-                            children: [
-                              Container(
-                                color: Colors.grey[100],
-                                child: const Image(image: AssetImage('assets/icons/alta_icon.png'), height: 60)
-                              ),
-                              const SizedBox(width: 20),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Spacer(),
-                                  Text('Jumlah: 1', style: TextStyle(color: Colors.grey[800]),),
-                                  const Text(
-                                    'Rp12.000.000',
-                                    style: TextStyle(
-                                      color: Colors.grey
-                                    ),
-                                  )
-                                ],
-                              )
-                            ],
+                  ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      final ItemCartModel item = items[index];
+                      return ListTile(
+                        dense: true,
+                        isThreeLine: true,
+                        leading: Image(image: NetworkImage(item.product.imgUrl), width: 60),
+                        title: Text(
+                          item.product.name,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500
                           ),
                         ),
-                      ],
-                    ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Jumlah: ${item.itemCount}', style: TextStyle(color: Colors.grey[800])),
+                            Text(
+                              formatRupiah(item.getSubTotal()),
+                              style: const TextStyle(
+                                color: Colors.grey
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                      
+                    },
                   ),
+                  // ListTile(
+                  //   dense: true,
+                  //   title: const Text(
+                  //     'Blue Alien Curved Monitor 34 Inch',
+                  //     style: TextStyle(
+                  //       fontSize: 12,
+                  //       fontWeight: FontWeight.w500
+                  //     ),
+                  //   ),
+                  //   subtitle: Column(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       SizedBox(
+                  //         height: 65,
+                  //         child: Row(
+                  //           children: [
+                  //             Container(
+                  //               color: Colors.grey[100],
+                  //               child: const Image(image: AssetImage('assets/icons/alta_icon.png'), height: 60)
+                  //             ),
+                  //             const SizedBox(width: 20),
+                  //             Column(
+                  //               crossAxisAlignment: CrossAxisAlignment.start,
+                  //               children: [
+                  //                 const Spacer(),
+                  //                 Text('Jumlah: 1', style: TextStyle(color: Colors.grey[800]),),
+                  //                 const Text(
+                  //                   'Rp12.000.000',
+                  //                   style: TextStyle(
+                  //                     color: Colors.grey
+                  //                   ),
+                  //                 )
+                  //               ],
+                  //             )
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   const Divider(),
                   ListTile(
                     dense: true,
@@ -122,6 +160,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                         const SizedBox(width: 10),
                         Expanded(
                           child: TextFormField(
+                            controller: noteController,
                             decoration: InputDecoration(
                               isDense: true,
                               hintText: 'Silahkan tinggalkan pesan...',
@@ -141,16 +180,16 @@ class _CheckoutViewState extends State<CheckoutView> {
                     dense: true,
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
+                      children: [
                         Text(
-                          'Total Pesanan (1 Produk):',
-                          style: TextStyle(
+                          'Total Pesanan ($amount Produk):',
+                          style: const TextStyle(
                             fontSize: 13,
                           ),
                         ),
                         Text(
-                          'Rp12.000.000',
-                          style: TextStyle(
+                          formatRupiah(totalProduct),
+                          style: const TextStyle(
                             color: Color(0xFF264ECA)
                           ),
                         )
@@ -190,9 +229,9 @@ class _CheckoutViewState extends State<CheckoutView> {
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text('Subtotal untuk produk'),
-                            Text('Rp12.000.000')
+                          children: [
+                            const Text('Subtotal untuk produk'),
+                            Text(formatRupiah(totalProduct))
                           ],
                         ),
                         Row(
@@ -202,18 +241,20 @@ class _CheckoutViewState extends State<CheckoutView> {
                             Text('Rp50.000')
                           ],
                         ),
-                        Row(
+                        !isDiscount
+                        ? const SizedBox()
+                        : Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text('Diskon 30% sebagai member'),
-                            Text('-Rp3.600.000')
+                          children: [
+                            const Text('Diskon 30% sebagai member'),
+                            Text(formatRupiah((totalProduct * 0.3).toInt()))
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text('Total Pembayaran', style: TextStyle(color: Colors.black)),
-                            Text('Rp8.450.000', style: TextStyle(color: Color(0xFF264ECA)),)
+                          children: [
+                            const Text('Total Pembayaran', style: TextStyle(color: Colors.black)),
+                            Text(formatRupiah(countTotalPayment(totalProduct, 50000)), style: const TextStyle(color: Color(0xFF264ECA)))
                           ],
                         )
                       ],
@@ -232,16 +273,16 @@ class _CheckoutViewState extends State<CheckoutView> {
                 },
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       'Total Pembayaran',
                       style: TextStyle(
                         color: Colors.grey
                       ),
                     ),
                     Text(
-                      'Rp8.450.000',
-                      style: TextStyle(
+                      formatRupiah(countTotalPayment(totalProduct, 50000)),
+                      style: const TextStyle(
                         color: Color(0xFF264ECA)
                       ),
                     )

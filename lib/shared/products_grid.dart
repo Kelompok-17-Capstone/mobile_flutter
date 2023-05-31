@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/arguments/detail_product_view_argument.dart';
 import 'package:mobile_flutter/models/product_model.dart';
+import 'package:mobile_flutter/shared/format_rupiah.dart';
 
 Widget productsGrid({required List<ProductModel> products, bool isProductPage = false}) {
   return Column(
     children: [
-      const SizedBox(height: 5),
       GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
@@ -22,7 +23,7 @@ Widget productsGrid({required List<ProductModel> products, bool isProductPage = 
               Navigator.pushNamed(
                 context, 
                 '/detail_product',
-                arguments: index
+                arguments: DetailProductViewArgument(index: index)
               );
             },
             child: Column(
@@ -52,7 +53,7 @@ Widget productsGrid({required List<ProductModel> products, bool isProductPage = 
                 ? const SizedBox()
                 : Expanded(
                   child: Text(
-                    product.formatedPrice(),
+                    formatRupiah(product.price),
                     style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w500,

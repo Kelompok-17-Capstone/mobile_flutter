@@ -101,7 +101,7 @@ class HomePageView extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
       
               // Products
               Padding(
@@ -110,22 +110,28 @@ class HomePageView extends StatelessWidget {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text(
+                      children: [
+                        const Text(
                           'Produk Terbaru',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 14
                           ),
                         ),
-                        Text(
-                          'lihat semua',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                            color: Colors.grey
-                          ),
-                        )
+                        TextButton(
+                          onPressed: () {
+                            
+                          },
+                          child: const Text(
+                            'lihat semua',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                              color: Colors.grey
+                            ),
+                          )
+                        ),
+                        
                       ],
                     ),
                     productsGrid(products: products)

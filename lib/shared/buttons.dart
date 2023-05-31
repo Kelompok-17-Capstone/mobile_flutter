@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_flutter/models/product_model.dart';
 
 ElevatedButton fullWidthButton({required String label, required void Function() onPressed}) {
   return ElevatedButton(
@@ -89,7 +88,7 @@ Widget buyNowButton(BuildContext context, {required Widget leftContent, required
           ),
           child: TextButton(
             onPressed: onPressed,
-            child: const Text('Beli Sekarang', style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)),
+            child: Text(labelButton, style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)),
           ),
         ),
       )

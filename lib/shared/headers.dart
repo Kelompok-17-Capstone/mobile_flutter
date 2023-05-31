@@ -146,7 +146,7 @@ Stack homeHeader(BuildContext context) {
   );
 }
 
-Container profileHeader(BuildContext context) {
+Container profileHeader(BuildContext context, {required String name}) {
   return Container(
     height: 200,
     width: double.infinity,
@@ -166,9 +166,9 @@ Container profileHeader(BuildContext context) {
               image: AssetImage('assets/icons/alta_icon.png'),
             ),
           ),
-          const Text(
-            'rania alatas',
-            style: TextStyle(
+          Text(
+            name,
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 20
             ),

@@ -2,20 +2,24 @@ import 'dart:convert';
 
 class UserModel {
 
-  final String fullName;
+  final String name;
   final String email;
-  final String phone;
+  final String phoneNumber;
   final String address;
+  final String? image;
+  final String? memberCode;
 
-  UserModel({required this.fullName, required this.email, required this.phone, required this.address});
+  UserModel({required this.name, required this.email, required this.phoneNumber, required this.address, this.image, this.memberCode});
 
   static UserModel fromJson({required json}) {
     final data = jsonDecode(json);
     return UserModel(
-      fullName: data['fullName'], 
+      name: data['name'], 
       email: data['email'], 
-      phone: data['phone'], 
-      address: data['address']
+      phoneNumber: data['phone_number'], 
+      address: data['address'],
+      image: data['image'],
+      memberCode: data['member_code']
     );
   }
 

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/form.dart';
 import 'package:mobile_flutter/shared/headers.dart';
+import 'package:mobile_flutter/views/auth/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class PersonalFormView extends StatefulWidget {
   const PersonalFormView({super.key});
@@ -12,9 +14,10 @@ class PersonalFormView extends StatefulWidget {
 
 class _PersonalFormViewState extends State<PersonalFormView> {
 
+  final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
-  final stateController = TextEditingController();
+  final provinceController = TextEditingController();
   final cityController = TextEditingController();
   final addressController = TextEditingController();
 
@@ -23,7 +26,7 @@ class _PersonalFormViewState extends State<PersonalFormView> {
     super.dispose();
     nameController.dispose();
     phoneController.dispose();
-    stateController.dispose();
+    provinceController.dispose();
     cityController.dispose();
     addressController.dispose();
   }
@@ -40,6 +43,7 @@ class _PersonalFormViewState extends State<PersonalFormView> {
                 customHeaderWithIcon(title: 'Data Pribadi'),
                 const SizedBox(height: 20),
                 Form(
+                  key: formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -49,23 +53,33 @@ class _PersonalFormViewState extends State<PersonalFormView> {
                       const SizedBox(height: 10),
                       formLabel(label: 'Nomor Telepon'),
                       const SizedBox(height: 5),
-                      customForm(controller: nameController, hintText: 'isi nomer yang aktif', isNumberOnly: true),
+                      customForm(controller: phoneController, hintText: 'isi nomer yang aktif', isNumberOnly: true),
                       const SizedBox(height: 10),
                       formLabel(label: 'Provinsi'),
                       const SizedBox(height: 5),
-                      customForm(controller: nameController, hintText: 'isi sesuai domisili'),
+                      customForm(controller: provinceController, hintText: 'isi sesuai domisili'),
                       const SizedBox(height: 10),
                       formLabel(label: 'Kabupaten/Kota'),
                       const SizedBox(height: 5),
-                      customForm(controller: nameController, hintText: 'isi sesuai domisili'),
+                      customForm(controller: cityController, hintText: 'isi sesuai domisili'),
                       const SizedBox(height: 10),
                       formLabel(label: 'Alamat'),
                       const SizedBox(height: 5),
-                      customForm(controller: nameController, hintText: 'isi beserta kecamatan & kode pos', maxLines: 3),
+                      customForm(controller: addressController, hintText: 'isi beserta kecamatan & kode pos', maxLines: 3),
                       const SizedBox(height: 20),
-                      fullWidthButton(label: 'Submit', onPressed: () {
-                        
-                      },),
+                      fullWidthButton(label: 'Submit', onPressed: () async {
+                        if (formKey.currentState!.validate()) {
+                          await Provider.of<AuthProvider>(context, listen: false).createProfile(
+                            name: nameController.text.trim(),
+                            phoneNumber: phoneController.text,
+                            city: cityController.text.trim(),
+                            province: provinceController.text.trim(),
+                            address: addressController.text.trim()
+                          );
+                          if(!mounted) return;
+                          Navigator.pushNamedAndRemoveUntil(context, '/dashboard', (route) => false);
+                        }
+                      }),
                     ],
                   ),
                 )
