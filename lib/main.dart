@@ -5,6 +5,7 @@ import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:mobile_flutter/views/auth/personal_form_view.dart';
 import 'package:mobile_flutter/views/auth/register_view.dart';
 import 'package:mobile_flutter/views/dashboard/dashboard_view.dart';
+import 'package:mobile_flutter/views/dashboard/product/checkout_view.dart';
 import 'package:mobile_flutter/views/dashboard/product/detail_product_view.dart';
 import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
 import 'package:mobile_flutter/views/dashboard/user_setting/setting_address_view.dart';
@@ -34,7 +35,9 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(fontFamily: 'Poppins'),
+        theme: ThemeData(
+          fontFamily: 'Poppins',
+        ),
         initialRoute: '/',
         routes: {
           '/': (context) => const SplashScreen(),
@@ -43,6 +46,7 @@ class MyApp extends StatelessWidget {
           '/login': (context) => const LoginView(),
           '/personal_form':(context) => const PersonalFormView(),
           '/dashboard': (context) => const DashboardView(),
+          '/checkout': (context) => const CheckoutView(),
           '/user_setting': (context) => const SettingView(),
           '/setting_email': (context) => const SettingEmailView(),
           '/setting_password': (context) => const SettingPasswordView(),
