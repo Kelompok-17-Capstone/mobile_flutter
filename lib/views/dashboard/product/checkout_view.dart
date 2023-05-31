@@ -20,6 +20,7 @@ class _CheckoutViewState extends State<CheckoutView> {
 
   late UserModel user;
 
+  final noteController = TextEditingController();
   bool isDiscount = false;
 
   @override
@@ -31,6 +32,12 @@ class _CheckoutViewState extends State<CheckoutView> {
   int countTotalPayment(int totalProduct, int shippingCost) {
     double discount = isDiscount ? totalProduct * 0.3 : 0;
     return (totalProduct + shippingCost - discount).ceil();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    noteController.dispose();
   }
 
   @override
@@ -153,6 +160,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                         const SizedBox(width: 10),
                         Expanded(
                           child: TextFormField(
+                            controller: noteController,
                             decoration: InputDecoration(
                               isDense: true,
                               hintText: 'Silahkan tinggalkan pesan...',

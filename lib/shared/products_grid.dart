@@ -6,7 +6,6 @@ import 'package:mobile_flutter/shared/format_rupiah.dart';
 Widget productsGrid({required List<ProductModel> products, bool isProductPage = false}) {
   return Column(
     children: [
-      const SizedBox(height: 5),
       GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,

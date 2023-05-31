@@ -90,19 +90,19 @@ class _ProductsViewState extends State<ProductsView> with TickerProviderStateMix
                 children: [
                   SingleChildScrollView(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                       child: productsGrid(products: products, isProductPage: true)
                     ),
                   ),
                   SingleChildScrollView(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                       child: productsGrid(products: products, isProductPage: true),
                     ),
                   ),
                   SingleChildScrollView(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                       child: productsGrid(products: products, isProductPage: true),
                     ),
                   ),
