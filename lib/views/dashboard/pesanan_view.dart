@@ -12,9 +12,12 @@ class MyApp extends StatelessWidget {
 }
 
 class Pesanan extends StatefulWidget {
-  const Pesanan({super.key});
+  const Pesanan({
+    super.key,
+  });
 
   @override
+  // ignore: no_logic_in_create_state
   State<Pesanan> createState() => _PesananState();
 }
 
@@ -93,39 +96,97 @@ class _PesananState extends State<Pesanan> with SingleTickerProviderStateMixin {
                   controller: _tabController,
                   children: [
                     Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           left: 24,
                           top: 18,
                           right: 24,
                         ),
                         child: Column(
-                          children: [
+                          children: const [
                             Image(
                               image: AssetImage('assets/images/pesanan.png'),
                             ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            Text(
+                              'Belum ada pesanan',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.grey),
+                            )
                           ],
                         )),
                     Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           left: 24,
                           top: 18,
                           right: 24,
                         ),
-                        child: Text('Dikirm')),
+                        child: Column(
+                          children: const [
+                            Image(
+                              image: AssetImage('assets/images/pesanan.png'),
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            Text(
+                              'Belum ada pesanan',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.grey),
+                            )
+                          ],
+                        )),
                     Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           left: 24,
                           top: 18,
                           right: 24,
                         ),
-                        child: Text('Diterima')),
+                        child: Column(
+                          children: const [
+                            Image(
+                              image: AssetImage('assets/images/pesanan.png'),
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            Text(
+                              'Belum ada pesanan',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.grey),
+                            )
+                          ],
+                        )),
                     Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           left: 24,
                           top: 18,
                           right: 24,
                         ),
-                        child: Text('Dibatalkan')),
+                        child: Column(
+                          children: const [
+                            Image(
+                              image: AssetImage('assets/images/pesanan.png'),
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            Text(
+                              'Belum ada pesanan',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.grey),
+                            )
+                          ],
+                        )),
                   ],
                 ),
               ),
