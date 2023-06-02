@@ -1,67 +1,71 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/arguments/detail_product_view_argument.dart';
+import 'package:mobile_flutter/models/product_model.dart';
+import 'package:mobile_flutter/shared/format_rupiah.dart';
 
-Padding productsGrid({bool isProductPage = false}) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 20),
-    child: Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text(
-              'Produk Terbaru',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 14
-              ),
-            ),
-            Text(
-              'lihat semua',
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 12,
-                color: Colors.grey
-              ),
-            )
-          ],
+Widget productsGrid({required List<ProductModel> products, bool isProductPage = false}) {
+  return Column(
+    children: [
+      GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: !isProductPage ? 3 : 2 ,
+          mainAxisSpacing: 5,
+          crossAxisSpacing: 5,
+          childAspectRatio: 1/1.3
         ),
-        const SizedBox(height: 5),
-        GridView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: !isProductPage ? 3 : 2 ,
-            mainAxisSpacing: 5,
-            crossAxisSpacing: 5,
-            childAspectRatio: 1/1.2
-          ),
-          itemCount: 6,
-          itemBuilder: (context, index) {
-            return Column(
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          final ProductModel product = products[index];
+          return GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(
+                context, 
+                '/detail_product',
+                arguments: DetailProductViewArgument(index: index)
+              );
+            },
+            child: Column(
               children: [
                 Container(
                   width: !isProductPage ? MediaQuery.of(context).size.width * 0.25 : MediaQuery.of(context).size.width * 0.4,
                   height: !isProductPage ? MediaQuery.of(context).size.width * 0.25 : MediaQuery.of(context).size.width * 0.4,
                   color: Colors.white,
-                  child: const Image(image: AssetImage('assets/icons/alta_icon.png')),
+                  child: Hero(
+                    tag: product.id,
+                    child: Image(image: NetworkImage(product.imgUrl))
+                  ),
                 ),
-                const Expanded(
+                Expanded(
                   child: Text(
-                    '#PRODUCT_NAME',
+                    product.name,
                     maxLines: 2,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontSize: 8
+                      fontSize: 10
+                    ),
+                  ),
+                ),
+                !isProductPage
+                ? const SizedBox()
+                : Expanded(
+                  child: Text(
+                    formatRupiah(product.price),
+                    style: const TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF264ECA)
                     ),
                   ),
                 )
               ],
-            );
-          },
-        )
-      ],
-    ),
+            ),
+          );
+        },
+      )
+    ],
   );
 }
