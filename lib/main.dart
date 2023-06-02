@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ProductProvider())
       ],
       child: MaterialApp(
-        theme: ThemeData(fontFamily: 'Poppins'),
+        theme: ThemeData(fontFamily: 'Poppins',),
         initialRoute: '/',
         routes: {
           '/': (context) => const SplashScreen(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/views/dashboard/cart_view.dart';
 import 'dart:math' as math;
 
 import 'package:mobile_flutter/views/dashboard/pengaturan_view.dart';
@@ -42,7 +43,12 @@ Stack homeHeader(BuildContext context) {
                         color: Colors.white),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CartView()));
+                    },
                     icon: const Icon(Icons.shopping_cart_outlined,
                         color: Colors.white),
                   ),
