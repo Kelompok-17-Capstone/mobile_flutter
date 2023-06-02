@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/views/dashboard/home_view.dart';
 import 'package:mobile_flutter/views/dashboard/member_view.dart';
-import 'package:mobile_flutter/views/dashboard/produk_view.dart';
+import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
+import 'package:mobile_flutter/views/dashboard/products_view.dart';
+import 'package:provider/provider.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
@@ -11,19 +13,31 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
+
+  final pageConttroller = PageController();
+
   int currentIndex = 0;
 
   List<Widget> pageList = [
     const HomePageView(),
-    const Produk(),
+    const ProductsView(),
     const MemberView()
   ];
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
+      Provider.of<ProductProvider>(context, listen: false).getAllProducts();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: currentIndex,
+      body: PageView(
+        controller: pageConttroller,
+        onPageChanged: (index) => setState(() => currentIndex = index),
         children: pageList,
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -32,7 +46,11 @@ class _DashboardViewState extends State<DashboardView> {
         unselectedItemColor: Colors.grey[500],
         onTap: (value) {
           setState(() {
-            currentIndex = value;
+            pageConttroller.animateToPage(
+              value, 
+              duration: const Duration(milliseconds: 300), 
+              curve: Curves.easeInOut
+            );
           });
         },
         items: const [

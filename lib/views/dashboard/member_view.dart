@@ -1,22 +1,45 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/models/user_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
-import 'package:mobile_flutter/shared/customAppBar.dart';
-import 'package:mobile_flutter/shared/header.dart';
+import 'package:mobile_flutter/shared/custom_appbar.dart';
+import 'package:mobile_flutter/shared/headers.dart';
+import 'package:mobile_flutter/views/auth/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class MemberView extends StatelessWidget {
   const MemberView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final UserModel user = Provider.of<AuthProvider>(context, listen: false).user ?? UserModel(
+      name: 'Guest',
+      email: 'guest@gmail.com',
+      phoneNumber: '081234000000',
+      address: 'Dago, Kota Bandung, Jawa Barat'
+    );
 
     return Scaffold(
-      appBar: customAppBar(title: 'Informasi Member'),
+      appBar: customAppBar(context, title: 'Informasi Member', isElevated: false),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
             children: [
-              profileHeader(context),
+              Stack(
+                children: [
+                  profileHeader(context, name: user.name),
+                  Positioned(
+                    right: 10,
+                    top: 10,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/user_setting');
+                      },
+                      icon: const Icon(Icons.manage_accounts_outlined, size: 32, color: Colors.white),
+                    ),
+                  )
+                ],
+              ),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
