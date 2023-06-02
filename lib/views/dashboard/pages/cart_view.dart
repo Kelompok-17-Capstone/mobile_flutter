@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_flutter/models/product/product_model.dart';
-import 'package:mobile_flutter/shared/customAppBar.dart';
 
 class CartView extends StatefulWidget {
   const CartView({Key? key});
