@@ -37,7 +37,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create:(context) => CartProvider())
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Poppins',
         ),
