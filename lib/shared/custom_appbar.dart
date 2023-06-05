@@ -1,26 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/shared/buttons.dart';
 
 AppBar customAppBar(BuildContext context, { required String title, bool isBackButton = false, bool isElevated = true, List<Widget>? actions }) {
   return AppBar(
     leading: !isBackButton
     ? const SizedBox()
-    : IconButton(
-      onPressed: () => Navigator.maybePop(context),
-      icon: Container(
-        padding: const EdgeInsets.all(4),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: const Color(0xFF264ECA)
-          ),
-          borderRadius: BorderRadius.circular(100)
-        ),
-        child: const Icon(
-          Icons.arrow_back_ios_new_outlined,
-          color: Color(0xFF264ECA),
-          size: 13,
-        ),
-      ),
-    ),
+    : customBackButton(context),
     title: Text(title),
     actions: actions,
     titleTextStyle: TextStyle(

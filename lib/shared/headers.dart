@@ -1,6 +1,34 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+Widget customHeaderWithIcon({required String title}) {
+  return Column(
+    children: [
+      const Image(
+        image: AssetImage('assets/icons/alta_icon.png'),
+        width: 19,
+      ),
+      const Text(
+        'AltaTech',
+        style: TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 12
+        ),
+      ),
+      const SizedBox(height: 16),
+      Text(
+        title,
+        style: const TextStyle(
+          fontSize: 28,
+          letterSpacing: 1,
+          fontWeight: FontWeight.w600,
+          color: Colors.black,
+        )
+      ),
+    ],
+  );
+}
+
 Stack homeHeader(BuildContext context) {
   return Stack(
     children: [
@@ -118,7 +146,7 @@ Stack homeHeader(BuildContext context) {
   );
 }
 
-Container profileHeader(BuildContext context) {
+Container profileHeader(BuildContext context, {String? name, String? imgUrl}) {
   return Container(
     height: 200,
     width: double.infinity,
@@ -132,15 +160,19 @@ Container profileHeader(BuildContext context) {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
-            backgroundColor: Colors.white,
             radius: MediaQuery.of(context).size.width * 0.2,
-            child: const Image(
-              image: AssetImage('assets/icons/alta_icon.png'),
+            child: imgUrl == null || imgUrl.isEmpty
+            ? Text(name != null ? name[0] : 'G', style: const TextStyle(fontSize: 48))
+            : ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: Image(
+                image: NetworkImage(imgUrl),
+              ),
             ),
           ),
-          const Text(
-            'rania alatas',
-            style: TextStyle(
+          Text(
+            name ?? 'Guest',
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 20
             ),
