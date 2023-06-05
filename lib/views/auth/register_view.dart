@@ -67,23 +67,11 @@ class _RegisterViewState extends State<RegisterView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Alamat Email',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                      ),
-                    ),
+                    formLabel(label: 'Alamat Email'),
                     const SizedBox(height: 5),
                     emailForm(controller: emailController),
                     const SizedBox(height: 10),
-                    const Text(
-                      'Kata Sandi',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                      ),
-                    ),
+                    formLabel(label: 'Kata Sandi'),
                     const SizedBox(height: 5),
                     //PASSWORD
                     passwordForm(
@@ -97,13 +85,7 @@ class _RegisterViewState extends State<RegisterView> {
                       },
                     ),
                     const SizedBox(height: 10),
-                    const Text(
-                      'Konfirmasi Kata Sandi',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                      ),
-                    ),
+                    formLabel(label: 'Konfirmasi Kata Sandi'),
                     const SizedBox(height: 5),
                     passwordForm(
                       controller: confirmationPasswordController, 
@@ -133,7 +115,7 @@ class _RegisterViewState extends State<RegisterView> {
                           );
                           if (result == 'register success') {
                             if(!mounted) return;
-                            Navigator.pushReplacementNamed(context, '/dashboard');
+                            Navigator.pushReplacementNamed(context, '/personal_form');
                           }
                         }
                       }

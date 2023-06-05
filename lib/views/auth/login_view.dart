@@ -59,23 +59,11 @@ class _LoginViewState extends State<LoginView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Alamat Email',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                      ),
-                    ),
+                    formLabel(label: 'Alamat Email'),
                     const SizedBox(height: 5),
                     emailForm(controller: emailController),
                     const SizedBox(height: 10),
-                    const Text(
-                      'Kata Sandi',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                      ),
-                    ),
+                    formLabel(label: 'Kata Sandi'),
                     const SizedBox(height: 5),
                     //PASSWORD
                     passwordForm(
@@ -100,7 +88,11 @@ class _LoginViewState extends State<LoginView> {
                         if (result == 'login success') {
                           if(!mounted) return;
                           Navigator.pushReplacementNamed(context, '/dashboard');
-                        } else {
+                        } else if(result == 'user unvalidated') {
+                          if(!mounted) return;
+                          Navigator.pushReplacementNamed(context, '/personal_form');
+                        } 
+                        else {
                           if(!mounted) return;
                           showDialog(context: context, builder:(context) {
                             return popupMessageDialog(context, judul: 'Login Gagal', content: 'Pastikan email dan password sudah benar');

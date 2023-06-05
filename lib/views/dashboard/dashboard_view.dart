@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/views/dashboard/home_view.dart';
 import 'package:mobile_flutter/views/dashboard/member_view.dart';
+import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
+import 'package:mobile_flutter/views/dashboard/products_view.dart';
+import 'package:provider/provider.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
@@ -17,9 +20,17 @@ class _DashboardViewState extends State<DashboardView> {
 
   List<Widget> pageList = [
     const HomePageView(),
-    const Center(child: Text('Products')), // Products Page
-    const MemberView() 
+    const ProductsView(),
+    const MemberView()
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
+      Provider.of<ProductProvider>(context, listen: false).getAllProducts();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +54,12 @@ class _DashboardViewState extends State<DashboardView> {
           });
         },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Beranda'),
-          BottomNavigationBarItem(icon: Icon(Icons.devices_outlined), label: 'Produk'),
-          BottomNavigationBarItem(icon: Icon(Icons.card_membership_outlined), label: 'Member')
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined), label: 'Beranda'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.devices_outlined), label: 'Produk'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.card_membership_outlined), label: 'Member')
         ],
       ),
     );

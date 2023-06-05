@@ -18,7 +18,7 @@ class WelcomeView extends StatelessWidget {
                 Navigator.pushReplacementNamed(context, '/dashboard');
               },
               child: const Text('Lewati',
-                  style: TextStyle(fontSize: 12, color: Color(0xFF264ECA))),
+                style: TextStyle(fontSize: 12, color: Color(0xFF264ECA))),
             ),
           )
         ],
