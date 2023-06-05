@@ -12,12 +12,7 @@ class MemberView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserModel user = Provider.of<AuthProvider>(context, listen: false).user ?? UserModel(
-      name: 'Guest',
-      email: 'guest@gmail.com',
-      phoneNumber: '081234000000',
-      address: 'Dago, Kota Bandung, Jawa Barat'
-    );
+    final UserModel? user = Provider.of<AuthProvider>(context).user;
 
     return Scaffold(
       appBar: customAppBar(context, title: 'Informasi Member', isElevated: false),
@@ -27,16 +22,27 @@ class MemberView extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  profileHeader(context, name: user.name),
+                  profileHeader(
+                    context,
+                    name: user?.name,
+                    imgUrl: user?.image
+                  ),
                   Positioned(
                     right: 10,
                     top: 10,
-                    child: IconButton(
+                    child: user != null
+                    ? IconButton(
                       onPressed: () {
                         Navigator.pushNamed(context, '/user_setting');
                       },
                       icon: const Icon(Icons.manage_accounts_outlined, size: 32, color: Colors.white),
-                    ),
+                    )
+                    : IconButton(
+                      onPressed: () {
+                        Navigator.pushNamedAndRemoveUntil(context, '/welcome', (route) => false);
+                      },
+                      icon: const Icon(Icons.login_outlined, size: 32, color: Colors.white),
+                    )
                   )
                 ],
               ),
@@ -48,18 +54,20 @@ class MemberView extends StatelessWidget {
                     const Text('Silahkan mendaftar sebagai member dan nikmati diskon 30% untuk setiap transaksi serta dapatkan keuntungan lainnya'),
                     const SizedBox(height: 30),
                     BarcodeWidget(
-                      color: Colors.grey,
+                      color: user == null || user.memberCode.isEmpty ? Colors.grey : Colors.black,
                       height: 100,
                       barcode: Barcode.code128(),
-                      data: '00000 000000',
-                      style: const TextStyle(
-                        color: Colors.grey
+                      data: user == null || user.memberCode.isEmpty ? '00000 000000' : user.memberCode,
+                      style: TextStyle(
+                        color: user == null || user.memberCode.isEmpty ? Colors.grey : Colors.black
                       ),
                     ),
                     const SizedBox(height: 50),
-                    fullWidthButton(label: 'Daftar Member', onPressed: () {
-                      
-                    }),
+                    user != null && user.memberCode.isEmpty
+                    ? fullWidthButton(label: 'Daftar Member', onPressed: () async {
+                      await Provider.of<AuthProvider>(context, listen: false).registerMember();
+                    })
+                    : const SizedBox() // Empty Widget
                   ],
                 ),
               ),

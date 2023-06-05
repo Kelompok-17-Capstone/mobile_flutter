@@ -6,10 +6,10 @@ class UserModel {
   final String email;
   final String phoneNumber;
   final String address;
-  final String? image;
-  final String? memberCode;
+  final String image;
+  final String memberCode;
 
-  UserModel({required this.name, required this.email, required this.phoneNumber, required this.address, this.image, this.memberCode});
+  UserModel({required this.name, required this.email, required this.phoneNumber, required this.address, required this.image, required this.memberCode});
 
   static UserModel fromJson({required json}) {
     final data = jsonDecode(json);

@@ -64,13 +64,20 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<String> registerMember() async {
+    final auth = AuthAPI();
+    final result = await auth.registerMember();
+    if (result == 'success') {
+      await getProfile();
+      notifyListeners();
+    }
+    return result;
+  }
+
   void logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
     _user = null;
-    notifyListeners();
   }
-
-
 
 }
