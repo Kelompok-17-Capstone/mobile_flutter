@@ -1,9 +1,11 @@
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/user_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
 import 'package:mobile_flutter/shared/headers.dart';
+import 'package:mobile_flutter/shared/snack_bar.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +27,34 @@ class MemberView extends StatelessWidget {
                   profileHeader(
                     context,
                     name: user?.name,
-                    imgUrl: user?.image
+                    imgUrl: user?.image,
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('Upload new profile picture?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () async {
+                                  await uploadPicture(context);
+                                  if (context.mounted) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                child: const Text('Yes')
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('No', style: TextStyle(color: Colors.redAccent))
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    },
                   ),
                   Positioned(
                     right: 10,
@@ -84,4 +113,18 @@ class MemberView extends StatelessWidget {
       ),
     );
   }
+
+  Future<void> uploadPicture(BuildContext context) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
+    if (result != null) {
+      if(context.mounted) {
+        Provider.of<AuthProvider>(context, listen: false).uploadPicture(imagePath: result.files.first.path!);
+      }
+    } else {
+      if (context.mounted) {
+        snackBar(context, 'Upload image canceled');
+      }
+    }
+  }
+
 }

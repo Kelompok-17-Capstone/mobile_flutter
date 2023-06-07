@@ -129,5 +129,30 @@ class AuthAPI {
     return 'failed';
   }
 
+  Future<String> uploadPicture({required String imagePath}) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    try {
+      final url = Uri.parse('$api/profile/photo');
+
+      final request = http.MultipartRequest('PUT', url);
+      request.headers['Authorization'] = 'Bearer ${prefs.getString('TOKEN')}';
+      request.files.add(
+        await http.MultipartFile.fromPath('image', imagePath)
+      );
+      
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        return 'success';
+      }
+
+    } catch (e) {
+      print(e);
+    }
+
+    return 'failed';
+  }
+
 
 }

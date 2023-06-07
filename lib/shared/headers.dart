@@ -146,7 +146,7 @@ Stack homeHeader(BuildContext context) {
   );
 }
 
-Container profileHeader(BuildContext context, {String? name, String? imgUrl}) {
+Container profileHeader(BuildContext context, {String? name, String? imgUrl, void Function()? onTap}) {
   return Container(
     height: 252,
     width: double.infinity,
@@ -159,17 +159,18 @@ Container profileHeader(BuildContext context, {String? name, String? imgUrl}) {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircleAvatar(
-            radius: MediaQuery.of(context).size.width * 0.2,
-            child: imgUrl == null || imgUrl.isEmpty
-            ? Text(name != null ? name[0] : 'G', style: const TextStyle(fontSize: 48))
-            : ClipRRect(
-              borderRadius: BorderRadius.circular(100),
-              child: Image(
-                image: NetworkImage(imgUrl),
-              ),
+          GestureDetector(
+            onTap: onTap,
+            child: CircleAvatar(
+              radius: MediaQuery.of(context).size.width * 0.2,
+              backgroundColor: Colors.white.withOpacity(0.2),
+              backgroundImage: imgUrl == null || imgUrl.isEmpty ? null : NetworkImage(imgUrl),
+              child: imgUrl == null || imgUrl.isEmpty
+              ? Text(name != null ? name[0] : 'G', style: const TextStyle(fontSize: 48))
+              : const SizedBox()
             ),
           ),
+          const SizedBox(height: 15),
           Text(
             name ?? 'Guest',
             style: const TextStyle(
