@@ -46,13 +46,19 @@ class MemberView extends StatelessWidget {
                   )
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
                   children: [
-                    const Text('Silahkan mendaftar sebagai member dan nikmati diskon 30% untuk setiap transaksi serta dapatkan keuntungan lainnya'),
-                    const SizedBox(height: 30),
+                    const Text(
+                      'Silahkan mendaftar sebagai member dan nikmati diskon 30% untuk setiap transaksi serta dapatkan keuntungan lainnya',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 16
+                      ),
+                    ),
+                    const SizedBox(height: 60),
                     BarcodeWidget(
                       color: user == null || user.memberCode.isEmpty ? Colors.grey : Colors.black,
                       height: 100,
@@ -62,7 +68,7 @@ class MemberView extends StatelessWidget {
                         color: user == null || user.memberCode.isEmpty ? Colors.grey : Colors.black
                       ),
                     ),
-                    const SizedBox(height: 50),
+                    const SizedBox(height: 70),
                     user != null && user.memberCode.isEmpty
                     ? fullWidthButton(label: 'Daftar Member', onPressed: () async {
                       await Provider.of<AuthProvider>(context, listen: false).registerMember();

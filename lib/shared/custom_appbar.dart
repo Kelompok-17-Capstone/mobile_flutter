@@ -9,9 +9,10 @@ AppBar customAppBar(BuildContext context, { required String title, bool isBackBu
     title: Text(title),
     actions: actions,
     titleTextStyle: TextStyle(
+      fontFamily: 'Poppins',
       color: Colors.black.withOpacity(0.9),
       fontWeight: FontWeight.w600,
-      fontSize: 18,
+      fontSize: 20,
       letterSpacing: 0.3
     ),
     backgroundColor: Colors.white,

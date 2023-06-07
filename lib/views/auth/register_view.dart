@@ -21,6 +21,7 @@ class _RegisterViewState extends State<RegisterView> {
   final confirmationPasswordController = TextEditingController();
 
   bool isPasswordVisible = false;
+  bool isConfirmationPasswordVisible = false;
 
   @override
   void dispose() {
@@ -54,13 +55,13 @@ class _RegisterViewState extends State<RegisterView> {
               const Text(
                 'Pendaftaran Akun',
                 style: TextStyle(
-                  fontSize: 28,
+                  fontSize: 32,
                   letterSpacing: 1,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 )
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
 
               Form(
                 key: formKey,
@@ -70,7 +71,7 @@ class _RegisterViewState extends State<RegisterView> {
                     formLabel(label: 'Alamat Email'),
                     const SizedBox(height: 5),
                     emailForm(controller: emailController),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     formLabel(label: 'Kata Sandi'),
                     const SizedBox(height: 5),
                     //PASSWORD
@@ -84,16 +85,16 @@ class _RegisterViewState extends State<RegisterView> {
                         });
                       },
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     formLabel(label: 'Konfirmasi Kata Sandi'),
                     const SizedBox(height: 5),
                     passwordForm(
                       controller: confirmationPasswordController, 
-                      isPasswordVisible: isPasswordVisible,
+                      isPasswordVisible: isConfirmationPasswordVisible,
                       // icon: isPasswordVisible ? const Icon(Icons.visibility_outlined) : const Icon(Icons.visibility_off_outlined),
                       onPressed: () {
                         setState(() {
-                          isPasswordVisible = !isPasswordVisible;
+                          isConfirmationPasswordVisible = !isConfirmationPasswordVisible;
                         });
                       },
                     ),

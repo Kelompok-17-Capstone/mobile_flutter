@@ -33,7 +33,7 @@ Dialog popupMessageDialog(BuildContext context ,{required String judul, required
               style: TextStyle(
                 fontWeight: FontWeight.w400,
                 color: Colors.grey[500],
-                fontSize: 14,
+                fontSize: 16,
               )
             ),
           ),

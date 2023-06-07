@@ -130,14 +130,14 @@ Stack homeHeader(BuildContext context) {
         ),
       ),
       Positioned(
-        left: 430, // Absolute Position
+        left: 470, // Absolute Position
         top: -150,
         child: Transform.rotate(
           angle: 125, // Roate
           child: Container(
             color: Colors.white.withOpacity(0.2),
             width: 415,
-            height: 190,
+            height: 210,
             transform: Matrix4.rotationY(math.pi), // Flip
           ),
         ),
@@ -148,7 +148,7 @@ Stack homeHeader(BuildContext context) {
 
 Container profileHeader(BuildContext context, {String? name, String? imgUrl}) {
   return Container(
-    height: 200,
+    height: 252,
     width: double.infinity,
     decoration: const BoxDecoration(
       gradient: LinearGradient(

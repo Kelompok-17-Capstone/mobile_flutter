@@ -5,7 +5,7 @@ import 'package:mobile_flutter/views/auth/login_view.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:mobile_flutter/views/auth/personal_form_view.dart';
 import 'package:mobile_flutter/views/auth/register_view.dart';
-import 'package:mobile_flutter/views/dashboard/dashboard_view.dart';
+import 'package:mobile_flutter/views/dashboard_view.dart';
 import 'package:mobile_flutter/views/dashboard/product/cart_provider.dart';
 import 'package:mobile_flutter/views/dashboard/product/checkout_view.dart';
 import 'package:mobile_flutter/views/dashboard/product/detail_product_view.dart';
@@ -16,7 +16,7 @@ import 'package:mobile_flutter/views/dashboard/user_setting/setting_name_view.da
 import 'package:mobile_flutter/views/dashboard/user_setting/setting_password_view.dart';
 import 'package:mobile_flutter/views/dashboard/user_setting/setting_phone_view.dart';
 import 'package:mobile_flutter/views/dashboard/user_setting/setting_view.dart';
-import 'package:mobile_flutter/views/dashboard/welcome_view.dart';
+import 'package:mobile_flutter/views/welcome_view.dart';
 import 'package:mobile_flutter/views/splash_screen_view.dart';
 import 'package:provider/provider.dart';
 

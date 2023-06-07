@@ -32,8 +32,10 @@ class _DetailProductViewState extends State<DetailProductView> {
                 children: [
                   Stack(
                     children: [
-                      SizedBox(
+                      Container(
+                        color: Colors.white,
                         width: double.infinity,
+                        height: 420,
                         child: Hero(
                           tag: product.id,
                           child: Image(
@@ -116,14 +118,14 @@ class _DetailProductViewState extends State<DetailProductView> {
                           Text(
                             product.name,
                             style: const TextStyle(
-                              fontSize: 20,
+                              fontSize: 24,
                               fontWeight: FontWeight.w400
                             ),
                           ),
                           Text(
                             formatRupiah(product.price),
                             style: const TextStyle(
-                              fontSize: 20,
+                              fontSize: 24,
                               fontWeight: FontWeight.w400,
                               color: Color(0xFF264ECA)
                             ),
@@ -131,7 +133,8 @@ class _DetailProductViewState extends State<DetailProductView> {
                           Text(
                             '100+ Terfavorit',
                             style: TextStyle(
-                              color: Colors.grey[500]
+                              color: Colors.grey[500],
+                              fontSize: 16
                             ),
                           ),
                         ],
@@ -147,9 +150,19 @@ class _DetailProductViewState extends State<DetailProductView> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Deskripsi'),
+                          const Text(
+                            'Deskripsi',
+                            style: TextStyle(
+                              fontSize: 16
+                            ),
+                          ),
                           const Divider(),
-                          Text(product.description),
+                          Text(
+                            product.description,
+                            style: const TextStyle(
+                              fontSize: 16
+                            ),
+                          ),
                           const SizedBox(height: 20)
                         ],
                       ),
@@ -199,14 +212,15 @@ class _DetailProductViewState extends State<DetailProductView> {
                     'Maaf, akun Anda belum terdaftar. Silahkan daftar akun untuk dapat melakukan pembelian produk.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.grey
+                      color: Colors.grey,
+                      fontSize: 16
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 50),
                   fullWidthButton(label: 'Daftar Akun', onPressed:() {
                     Navigator.pushNamedAndRemoveUntil(context, '/welcome', (route) => false);
                   }),
-                  const SizedBox(height: 20)
+                  const SizedBox(height: 50)
                 ],
               ),
             ),
@@ -247,7 +261,7 @@ class _DetailProductViewState extends State<DetailProductView> {
                             child: Text(
                               formatRupiah(product.price),
                               style: const TextStyle(
-                                fontSize: 20,
+                                fontSize: 24,
                                 fontWeight: FontWeight.w500,
                                 color: Color(0xFF264ECA)
                               ),
@@ -260,7 +274,7 @@ class _DetailProductViewState extends State<DetailProductView> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('Jumlah'),
+                          const Text('Jumlah', style: TextStyle(fontSize: 16),),
                           Container(
                             height: 36,
                             decoration: BoxDecoration(

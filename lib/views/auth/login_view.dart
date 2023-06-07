@@ -17,6 +17,7 @@ class _LoginViewState extends State<LoginView> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
   bool isPasswordVisible = false;
 
   @override
@@ -45,9 +46,9 @@ class _LoginViewState extends State<LoginView> {
               ),
               const SizedBox(height: 16),
               const Text(
-                'Pendaftaran Akun',
+                'Kembali Bergabung',
                 style: TextStyle(
-                  fontSize: 28,
+                  fontSize: 32,
                   letterSpacing: 1,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
@@ -62,7 +63,7 @@ class _LoginViewState extends State<LoginView> {
                     formLabel(label: 'Alamat Email'),
                     const SizedBox(height: 5),
                     emailForm(controller: emailController),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     formLabel(label: 'Kata Sandi'),
                     const SizedBox(height: 5),
                     //PASSWORD
@@ -76,10 +77,9 @@ class _LoginViewState extends State<LoginView> {
                         });
                       },
                     ),
-                    const SizedBox(height: 25),
+                    const SizedBox(height: 45),
 
                     fullWidthButton(label: 'Masuk Akun', onPressed: () async {
-
                       if (formKey.currentState!.validate()) {
                         String result = await Provider.of<AuthProvider>(context, listen: false).login(
                           email: emailController.text.trim(), 
