@@ -80,4 +80,11 @@ class AuthProvider extends ChangeNotifier {
     _user = null;
   }
 
+  Future<String> uploadPicture({required String imagePath}) async {
+    final auth = AuthAPI();
+    final result = await auth.uploadPicture(imagePath: imagePath);
+    getProfile();
+    return result;
+  }
+
 }
