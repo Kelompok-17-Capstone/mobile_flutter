@@ -81,14 +81,13 @@ Widget homeHeader(BuildContext context) {
                   ),
                   IconButton(
                     onPressed: () {
-                      print('notifications');
+                      
                     },
                     icon: const Icon(Icons.notifications_outlined, color: Colors.white),
                   ),
                   IconButton(
                     onPressed: () {
                       Navigator.pushNamed(context, '/cart');
-                      print('test');
                     },
                     icon: const Icon(Icons.shopping_cart_outlined, color: Colors.white),
                   ),
