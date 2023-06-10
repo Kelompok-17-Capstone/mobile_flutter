@@ -13,7 +13,6 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
-
   final pageConttroller = PageController();
 
   int currentIndex = 0;
@@ -27,9 +26,11 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   void initState() {
     super.initState();
-    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
-      Provider.of<ProductProvider>(context, listen: false).getAllProducts();
-    });
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback(
+      (timeStamp) {
+        Provider.of<ProductProvider>(context, listen: false).getAllProducts();
+      },
+    );
   }
 
   @override
@@ -45,21 +46,21 @@ class _DashboardViewState extends State<DashboardView> {
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.grey[500],
         onTap: (value) {
-          setState(() {
-            pageConttroller.animateToPage(
-              value, 
-              duration: const Duration(milliseconds: 300), 
-              curve: Curves.easeInOut
-            );
-          });
+          setState(
+            () {
+              pageConttroller.animateToPage(value,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut);
+            },
+          );
         },
-        items: const [
+        items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined), label: 'Beranda'),
+              icon: Image.asset('assets/icons/House.png'), label: 'Beranda'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.devices_outlined), label: 'Produk'),
+              icon: Image.asset('assets/icons/Devices.png'), label: 'Produk'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.card_membership_outlined), label: 'Member')
+              icon: Image.asset('assets/icons/CreditCard.png'), label: 'Member')
         ],
       ),
     );

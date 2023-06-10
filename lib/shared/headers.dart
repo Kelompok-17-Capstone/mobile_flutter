@@ -10,21 +10,16 @@ Widget customHeaderWithIcon({required String title}) {
       ),
       const Text(
         'AltaTech',
-        style: TextStyle(
-          fontWeight: FontWeight.w500,
-          fontSize: 12
-        ),
+        style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
       ),
       const SizedBox(height: 16),
-      Text(
-        title,
-        style: const TextStyle(
-          fontSize: 28,
-          letterSpacing: 1,
-          fontWeight: FontWeight.w600,
-          color: Colors.black,
-        )
-      ),
+      Text(title,
+          style: const TextStyle(
+            fontSize: 28,
+            letterSpacing: 1,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          )),
     ],
   );
 }
@@ -36,12 +31,10 @@ Stack homeHeader(BuildContext context) {
         height: 253,
         width: double.infinity,
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFF2649CA), Colors.black]
-          )
-        ),
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Color(0xFF2649CA), Colors.black])),
         child: Padding(
           padding: const EdgeInsets.only(left: 20, top: 10),
           child: Column(
@@ -49,29 +42,30 @@ Stack homeHeader(BuildContext context) {
               Row(
                 children: [
                   Flexible(
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.search),
-                        hintText: 'Cari Produk',
-                        contentPadding: EdgeInsets.symmetric(vertical: 12),
-                        filled: true,
-                        fillColor: Colors.white,
-                        focusedBorder: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(6))),
-                        border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(6))),
-                      ),
-                    )
+                      child: TextFormField(
+                    decoration: const InputDecoration(
+                      prefixIcon: Icon(Icons.search),
+                      hintText: 'Cari Produk',
+                      contentPadding: EdgeInsets.symmetric(vertical: 12),
+                      filled: true,
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.all(Radius.circular(6))),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.all(Radius.circular(6))),
+                    ),
+                  )),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Image.asset('assets/icons/Bell.png',
+                        color: Colors.white),
                   ),
                   IconButton(
-                    onPressed: () {
-                      
-                    },
-                    icon: const Icon(Icons.notifications_outlined, color: Colors.white),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      
-                    },
-                    icon: const Icon(Icons.shopping_cart_outlined, color: Colors.white),
+                    onPressed: () {},
+                    icon: Image.asset('assets/icons/ShoppingCart.png',
+                        color: Colors.white),
                   ),
                 ],
               ),
@@ -81,25 +75,25 @@ Stack homeHeader(BuildContext context) {
                   Expanded(
                     child: Column(
                       children: const [
-                        Text('Blue Alien Series Telah MENANTIMU!',
+                        Text(
+                          'Blue Alien Series Telah MENANTIMU!',
                           style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14
-                          ),
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14),
                         ),
-                        Text('Segera beli sekarang dan rasakan performa terbaik dengan tekonologi terbaru di ruang Anda',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 8
-                          ),
+                        Text(
+                          'Segera beli sekarang dan rasakan performa terbaik dengan tekonologi terbaru di ruang Anda',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 8),
                         )
                       ],
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width*0.5,
+                    width: MediaQuery.of(context).size.width * 0.5,
                     child: Stack(
                       children: [
                         Transform.translate(
@@ -146,15 +140,13 @@ Stack homeHeader(BuildContext context) {
   );
 }
 
-Container profileHeader(BuildContext context, {String? name, String? imgUrl, void Function()? onTap}) {
+Container profileHeader(BuildContext context,
+    {String? name, String? imgUrl, void Function()? onTap}) {
   return Container(
     height: 252,
     width: double.infinity,
     decoration: const BoxDecoration(
-      gradient: LinearGradient(
-        colors: [Color(0xFF2649CA), Colors.black]
-      )
-    ),
+        gradient: LinearGradient(colors: [Color(0xFF2649CA), Colors.black])),
     child: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -162,21 +154,20 @@ Container profileHeader(BuildContext context, {String? name, String? imgUrl, voi
           GestureDetector(
             onTap: onTap,
             child: CircleAvatar(
-              radius: MediaQuery.of(context).size.width * 0.2,
-              backgroundColor: Colors.white.withOpacity(0.2),
-              backgroundImage: imgUrl == null || imgUrl.isEmpty ? null : NetworkImage(imgUrl),
-              child: imgUrl == null || imgUrl.isEmpty
-              ? Text(name != null ? name[0] : 'G', style: const TextStyle(fontSize: 48))
-              : const SizedBox()
-            ),
+                radius: MediaQuery.of(context).size.width * 0.2,
+                backgroundColor: Colors.white.withOpacity(0.2),
+                backgroundImage: imgUrl == null || imgUrl.isEmpty
+                    ? null
+                    : NetworkImage(imgUrl),
+                child: imgUrl == null || imgUrl.isEmpty
+                    ? Text(name != null ? name[0] : 'G',
+                        style: const TextStyle(fontSize: 48))
+                    : const SizedBox()),
           ),
           const SizedBox(height: 15),
           Text(
             name ?? 'Guest',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20
-            ),
+            style: const TextStyle(color: Colors.white, fontSize: 20),
           )
         ],
       ),

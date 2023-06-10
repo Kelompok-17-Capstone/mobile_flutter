@@ -17,7 +17,8 @@ class MemberView extends StatelessWidget {
     final UserModel? user = Provider.of<AuthProvider>(context).user;
 
     return Scaffold(
-      appBar: customAppBar(context, title: 'Informasi Member', isElevated: false),
+      appBar:
+          customAppBar(context, title: 'Informasi Member', isElevated: false),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
@@ -36,20 +37,20 @@ class MemberView extends StatelessWidget {
                             title: const Text('Upload new profile picture?'),
                             actions: [
                               TextButton(
-                                onPressed: () async {
-                                  await uploadPicture(context);
-                                  if (context.mounted) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                child: const Text('Yes')
-                              ),
+                                  onPressed: () async {
+                                    await uploadPicture(context);
+                                    if (context.mounted) {
+                                      Navigator.pop(context);
+                                    }
+                                  },
+                                  child: const Text('Yes')),
                               TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text('No', style: TextStyle(color: Colors.redAccent))
-                              )
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('No',
+                                      style:
+                                          TextStyle(color: Colors.redAccent)))
                             ],
                           );
                         },
@@ -60,19 +61,22 @@ class MemberView extends StatelessWidget {
                     right: 10,
                     top: 10,
                     child: user != null
-                    ? IconButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/user_setting');
-                      },
-                      icon: const Icon(Icons.manage_accounts_outlined, size: 32, color: Colors.white),
-                    )
-                    : IconButton(
-                      onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(context, '/welcome', (route) => false);
-                      },
-                      icon: const Icon(Icons.login_outlined, size: 32, color: Colors.white),
-                    )
-                  )
+                        ? IconButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/user_setting');
+                            },
+                            icon: const Icon(Icons.manage_accounts_outlined,
+                                size: 32, color: Colors.white),
+                          )
+                        : IconButton(
+                            onPressed: () {
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, '/welcome', (route) => false);
+                            },
+                            icon: Image.asset('assets/icons/Gear.png',
+                                color: Colors.white),
+                          ),
+                  ),
                 ],
               ),
               const SizedBox(height: 40),
@@ -83,26 +87,33 @@ class MemberView extends StatelessWidget {
                     const Text(
                       'Silahkan mendaftar sebagai member dan nikmati diskon 30% untuk setiap transaksi serta dapatkan keuntungan lainnya',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 16
-                      ),
+                      style: TextStyle(fontSize: 16),
                     ),
                     const SizedBox(height: 60),
                     BarcodeWidget(
-                      color: user == null || user.memberCode.isEmpty ? Colors.grey : Colors.black,
+                      color: user == null || user.memberCode.isEmpty
+                          ? Colors.grey
+                          : Colors.black,
                       height: 100,
                       barcode: Barcode.code128(),
-                      data: user == null || user.memberCode.isEmpty ? '00000 000000' : user.memberCode,
+                      data: user == null || user.memberCode.isEmpty
+                          ? '00000 000000'
+                          : user.memberCode,
                       style: TextStyle(
-                        color: user == null || user.memberCode.isEmpty ? Colors.grey : Colors.black
-                      ),
+                          color: user == null || user.memberCode.isEmpty
+                              ? Colors.grey
+                              : Colors.black),
                     ),
                     const SizedBox(height: 70),
                     user != null && user.memberCode.isEmpty
-                    ? fullWidthButton(label: 'Daftar Member', onPressed: () async {
-                      await Provider.of<AuthProvider>(context, listen: false).registerMember();
-                    })
-                    : const SizedBox() // Empty Widget
+                        ? fullWidthButton(
+                            label: 'Daftar Member',
+                            onPressed: () async {
+                              await Provider.of<AuthProvider>(context,
+                                      listen: false)
+                                  .registerMember();
+                            })
+                        : const SizedBox() // Empty Widget
                   ],
                 ),
               ),
@@ -115,10 +126,12 @@ class MemberView extends StatelessWidget {
   }
 
   Future<void> uploadPicture(BuildContext context) async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(type: FileType.image);
     if (result != null) {
-      if(context.mounted) {
-        Provider.of<AuthProvider>(context, listen: false).uploadPicture(imagePath: result.files.first.path!);
+      if (context.mounted) {
+        Provider.of<AuthProvider>(context, listen: false)
+            .uploadPicture(imagePath: result.files.first.path!);
       }
     } else {
       if (context.mounted) {
@@ -126,5 +139,4 @@ class MemberView extends StatelessWidget {
       }
     }
   }
-
 }
