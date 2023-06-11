@@ -21,7 +21,7 @@ import 'package:mobile_flutter/views/splash_screen_view.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  await dotenv.load(fileName: ".env");
+  // await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
@@ -32,9 +32,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create:(context) => AuthProvider()),
-        ChangeNotifierProvider(create:(context) => ProductProvider()),
-        ChangeNotifierProvider(create:(context) => CartProvider())
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => ProductProvider()),
+        ChangeNotifierProvider(create: (context) => CartProvider())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -47,8 +47,9 @@ class MyApp extends StatelessWidget {
           '/welcome': (context) => const WelcomeView(),
           '/register': (context) => const RegisterView(),
           '/login': (context) => const LoginView(),
-          '/personal_form':(context) => const PersonalFormView(),
-          '/dashboard': (context) => const DashboardView(), // Dashboard / Homepage
+          '/personal_form': (context) => const PersonalFormView(),
+          '/dashboard': (context) =>
+              const DashboardView(), // Dashboard / Homepage
           '/checkout': (context) => const CheckoutView(),
           '/user_setting': (context) => const SettingView(),
           '/setting_email': (context) => const SettingEmailView(),

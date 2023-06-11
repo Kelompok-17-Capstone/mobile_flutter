@@ -5,7 +5,7 @@ import 'package:mobile_flutter/models/product_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductAPI {
-  final String api = dotenv.env['API']!;
+  // final String api = dotenv.env['API']!;
 
   Future<List<ProductModel>> getAllProducts() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -31,5 +31,4 @@ class ProductAPI {
     }
     return [];
   }
-
 }
