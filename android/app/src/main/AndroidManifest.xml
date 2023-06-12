@@ -2,7 +2,7 @@
     package="com.example.mobile_flutter">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="mobile_flutter"
+        android:label="Alta Tech"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
