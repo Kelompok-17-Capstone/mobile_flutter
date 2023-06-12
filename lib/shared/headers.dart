@@ -99,7 +99,7 @@ Widget homeHeader(BuildContext context) {
                   Expanded(
                     child: Column(
                       children: const [
-                        Text('Blue Alien Series Telah MENANTIMU!',
+                        Text('BLUE ALIEN SERIES TELAH MENANTIMU!',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
@@ -110,7 +110,7 @@ Widget homeHeader(BuildContext context) {
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w400,
-                            fontSize: 8
+                            fontSize: 10
                           ),
                         )
                       ],
