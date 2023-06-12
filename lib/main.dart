@@ -21,7 +21,7 @@ import 'package:mobile_flutter/views/splash_screen_view.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  // await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
