@@ -1,4 +1,7 @@
+// ignore_for_file: prefer_final_fields
+
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/models/api/product_api.dart';
 import 'package:mobile_flutter/models/item_cart_model.dart';
 
 class CartProvider extends ChangeNotifier {
@@ -10,6 +13,15 @@ class CartProvider extends ChangeNotifier {
   List<ItemCartModel> get items => _items;
   int get totalProduct => _totalProduct;
   int get amount => _amount;
+
+  void getCart() async {
+    final api = ProductAPI();
+    final List<ItemCartModel> result = await api.getCart();
+    if (result.isNotEmpty) {
+      _items = result;
+      notifyListeners();
+    }
+  }
 
   void addToCart(ItemCartModel item) {
     if (_items.contains(item)) {

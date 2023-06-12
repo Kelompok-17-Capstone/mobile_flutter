@@ -183,8 +183,8 @@ class _DetailProductViewState extends State<DetailProductView> {
             labelButton: 'Beli Sekarang',
             onPressed: () {
               //notAMember(context);
-              final ItemCartModel item = ItemCartModel(product: product, itemCount: 1);
-              Provider.of<CartProvider>(context, listen: false).addToCart(item);
+              // TODO: addToCart
+              //Provider.of<CartProvider>(context, listen: false).addToCart(item);
               Navigator.pushNamed(context, '/checkout');
             },
           )

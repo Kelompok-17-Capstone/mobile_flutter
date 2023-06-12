@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/models/item_cart_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
+import 'package:mobile_flutter/views/dashboard/product/cart_provider.dart';
+import 'package:provider/provider.dart';
 
 class CartView extends StatefulWidget {
   const CartView({super.key});
@@ -14,6 +17,8 @@ class _CartViewState extends State<CartView> {
   
   @override
   Widget build(BuildContext context) {
+    final List<ItemCartModel> items = Provider.of<CartProvider>(context).items;
+
     return Scaffold(
       appBar: customAppBar(context, title: 'Keranjang', isBackButton: true, isElevated: true),
       body: const CatalogProducts(),

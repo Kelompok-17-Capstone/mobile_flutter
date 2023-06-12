@@ -1,19 +1,25 @@
+import 'dart:convert';
 
-// ignore_for_file: must_be_immutable
-
-import 'package:equatable/equatable.dart';
 import 'package:mobile_flutter/models/product_model.dart';
 
-class ItemCartModel extends Equatable {
+class ItemCartModel {
+  final String cartId;
   final ProductModel product;
   int itemCount;
 
-  ItemCartModel({required this.product, required this.itemCount});
+  ItemCartModel({required this.cartId, required this.product,  this.itemCount = 1});
 
   int getSubTotal() {
     return product.price * itemCount;
   }
+
+  static ItemCartModel fromJson({required json, required ProductModel product}) {
+    final item = jsonDecode(json);
+    return ItemCartModel(
+      cartId: item['id'],
+      product: product,
+      itemCount: item['quantity']
+    );
+  }
   
-  @override
-  List<Object?> get props => [product];
 }
