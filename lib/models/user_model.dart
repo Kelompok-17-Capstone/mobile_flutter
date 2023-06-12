@@ -5,7 +5,7 @@ class UserModel {
   final String name;
   final String email;
   final String phoneNumber;
-  final String address;
+  final List address;
   final String image;
   final String memberCode;
 

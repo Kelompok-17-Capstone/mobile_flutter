@@ -61,7 +61,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('${user.name} | ${user.phoneNumber}', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
-                        Text(user.address, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w300))
+                        Text(user.address[0], style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w300))
                       ],
                     ),
                     trailing: Icon(Icons.arrow_forward_ios_outlined, size: 16, color: CustomColors.primary),
