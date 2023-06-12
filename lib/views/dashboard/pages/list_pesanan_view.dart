@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class PesananView extends StatefulWidget {
-  const PesananView({
+class ListPesananView extends StatefulWidget {
+  const ListPesananView({
     super.key,
   });
 
   @override
   // ignore: no_logic_in_create_state
-  State<PesananView> createState() => _PesananViewState();
+  State<ListPesananView> createState() => _ListPesananViewState();
 }
 
-class _PesananViewState extends State<PesananView> with SingleTickerProviderStateMixin {
+class _ListPesananViewState extends State<ListPesananView> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override

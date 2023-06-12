@@ -5,6 +5,7 @@ import 'package:mobile_flutter/views/auth/login_view.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:mobile_flutter/views/auth/personal_form_view.dart';
 import 'package:mobile_flutter/views/auth/register_view.dart';
+import 'package:mobile_flutter/views/dashboard/product/cart_view.dart';
 import 'package:mobile_flutter/views/dashboard_view.dart';
 import 'package:mobile_flutter/views/dashboard/product/cart_provider.dart';
 import 'package:mobile_flutter/views/dashboard/product/checkout_view.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
           '/login': (context) => const LoginView(),
           '/personal_form':(context) => const PersonalFormView(),
           '/dashboard': (context) => const DashboardView(), // Dashboard / Homepage
+          '/cart': (context) => const CartView(),
           '/checkout': (context) => const CheckoutView(),
           '/user_setting': (context) => const SettingView(),
           '/setting_email': (context) => const SettingEmailView(),
