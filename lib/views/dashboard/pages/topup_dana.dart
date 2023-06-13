@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
+import 'package:mobile_flutter/views/dashboard/home_view.dart';
 
 class TopupDana extends StatefulWidget {
   const TopupDana({Key? key});
@@ -22,18 +24,20 @@ class _TopupDanaState extends State<TopupDana> {
 
   Widget buildCard(int index, String amount) {
     bool isSelected = selectedCardIndex == index;
-    Color borderColor = isSelected ? Color.fromRGBO(38, 78, 202, 1) : Colors.black;
-    Color fontColor = isSelected ? Color.fromRGBO(38, 78, 202, 1) : Colors.black;
+    Color borderColor =
+        isSelected ? Color.fromRGBO(38, 78, 202, 1) : Colors.black;
+    Color fontColor =
+        isSelected ? Color.fromRGBO(38, 78, 202, 1) : Colors.black;
 
     return GestureDetector(
       onTap: () {
         setState(() {
           if (selectedCardIndex == index) {
             selectedCardIndex = -1;
-            amountController.text = ''; 
+            amountController.text = '';
           } else {
             selectedCardIndex = index;
-            amountController.text = amount; 
+            amountController.text = amount;
           }
         });
       },
@@ -69,8 +73,19 @@ class _TopupDanaState extends State<TopupDana> {
   @override
   Widget build(BuildContext context) {
     int topUp = 0;
+    int admin = 1000;
+    int amount = 0;
+    try {
+      amount = int.parse(amountController.text);
+    } catch (e) {
+      amount = 0;
+    }
+    bool isButtonEnabled = amountController.text.isNotEmpty;
+
+    int total = amount + admin;
     return Scaffold(
-      appBar: customAppBar(context, title: 'Top Up Dana', isBackButton: true, isElevated: true),
+      appBar: customAppBar(context,
+          title: 'Top Up', isBackButton: true, isElevated: true),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -147,8 +162,8 @@ class _TopupDanaState extends State<TopupDana> {
                       Flexible(
                         child: TextField(
                           controller: amountController,
-                          style: TextStyle( 
-                            color: Color.fromRGBO(38, 78, 202, 1), 
+                          style: TextStyle(
+                            color: Color.fromRGBO(38, 78, 202, 1),
                             fontSize: 24,
                             fontWeight: FontWeight.w500,
                           ),
@@ -182,20 +197,123 @@ class _TopupDanaState extends State<TopupDana> {
                 ),
               ),
             ),
+            SizedBox(
+              height: 10,
+            ),
             Container(
-              padding:EdgeInsets.fromLTRB(24,0,0,0),
+              padding: EdgeInsets.fromLTRB(24, 0, 0, 0),
               child: Row(
                 children: [
                   Image.asset('assets/icons/Dana.png'),
                   SizedBox(
                     width: 12,
                   ),
-                  const Text('Top Up dengan Dana',
-                    style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16),),
-                  SizedBox(width: 122,),
+                  const Text(
+                    'Top Up dengan Dana',
+                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+                  ),
+                  SizedBox(
+                    width: 122,
+                  ),
                 ],
               ),
             ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(24, 16, 0, 0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Jumlah Pembayaran',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(24, 16, 30, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Top Up Saldo',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    'Rp ${amountController.text}',
+                    style: TextStyle(fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(24, 16, 30, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Biaya Admin',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    'Rp ${admin}',
+                    style: TextStyle(fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(24, 16, 30, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Total',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    'Rp ${total}',
+                    style: TextStyle(
+                        color: Color.fromRGBO(38, 78, 202, 1),
+                        fontWeight: FontWeight.w500),
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 90,
+            ),
+            fullWidthButton(
+            label: 'Bayar Sekarang',
+            onPressed: () {Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomePageView()));
+                    },
+          ),
           ],
         ),
       ),
