@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/item_cart_model.dart';
 import 'package:mobile_flutter/models/product_model.dart';
+import 'package:mobile_flutter/models/user_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/format_rupiah.dart';
 import 'package:mobile_flutter/shared/popup_dialog.dart';
+import 'package:mobile_flutter/shared/snack_bar.dart';
+import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:mobile_flutter/views/dashboard/product/cart_provider.dart';
 import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
 import 'package:provider/provider.dart';
@@ -232,7 +235,9 @@ class _DetailProductViewState extends State<DetailProductView> {
   }
 
   Future<void> showBuyNowDialog(BuildContext context, ProductModel product) {
+    final bool guestMode = Provider.of<AuthProvider>(context, listen: false).user == null ? true : false;
     int itemCount = 1;
+
     return showModalBottomSheet<void>(
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
@@ -306,9 +311,16 @@ class _DetailProductViewState extends State<DetailProductView> {
                       ),
               
                       const SizedBox(height: 40),
-                      fullWidthButton(label: 'Beli Sekarang', onPressed: () {
-                        Navigator.pop(context);
-                        notAMember(context);
+                      fullWidthButton(label: 'Tambahkan ke Keranjang', onPressed: () async {
+                        if (guestMode) {
+                          Navigator.pop(context);
+                          notAMember(context);
+                        } else {
+                          final String result = await Provider.of<CartProvider>(context, listen: false).addToCart(product: product, itemCount: itemCount);
+                          if (!mounted) return;
+                          Navigator.pop(context);
+                          snackBar(context, '$result add to cart.');
+                        }
                       },)
                     ],
                   ),

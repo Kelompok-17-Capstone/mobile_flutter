@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/api/product_api.dart';
 import 'package:mobile_flutter/models/item_cart_model.dart';
+import 'package:mobile_flutter/models/product_model.dart';
 
 class CartProvider extends ChangeNotifier {
 
@@ -26,13 +27,14 @@ class CartProvider extends ChangeNotifier {
     }
   }
 
-  void addToCart(ItemCartModel item) {
-    if (_items.contains(item)) {
-      _items.elementAt(_items.indexOf(item)).itemCount += 1;
-    } else {
-      _items.add(item);
+  Future<String> addToCart({required ProductModel product, itemCount = 1}) async {
+    final api = ProductAPI();
+    final String result = await api.addToCart(product: product, itemCount: itemCount);
+    if (result == 'success') {
+      _globalCooldown = false;
+      getCart();
     }
-    countTotal();
+    return result;
   }
 
   Future<void> updateItemCount({required int index}) async {

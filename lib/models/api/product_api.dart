@@ -28,6 +28,33 @@ class ProductAPI {
     return [];
   }
 
+  Future<String> addToCart({required ProductModel product, itemCount = 1}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    try {
+      final url = Uri.parse('$api/cart');
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
+      };
+      final data = {
+        'product_id': product.id,
+        'quantity': itemCount
+      };
+
+      final response = await http.post(url, headers: headers, body: jsonEncode(data));
+      print(response.body);
+      if (response.statusCode == 200) {
+        return 'success';
+      }
+
+    } catch (e) {
+      print(e);
+    }
+
+    return 'failed';
+  }
+
   Future<List<ItemCartModel>> getCart() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 

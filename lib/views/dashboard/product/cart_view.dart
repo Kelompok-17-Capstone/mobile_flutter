@@ -176,6 +176,12 @@ class _CatalogProductCardState extends State<CatalogProductCard> {
                       style: const TextStyle(fontSize: 14),
                     ),
                     const Spacer(),
+                    IconButton(
+                      onPressed: () {
+                        print('delete');
+                      },
+                      icon: Icon(Icons.delete_outline, color: Colors.red[600],)
+                    ),
                     Container(
                       height: 36,
                       margin: const EdgeInsets.only(right: 20),
