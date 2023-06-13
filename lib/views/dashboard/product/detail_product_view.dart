@@ -22,7 +22,7 @@ class _DetailProductViewState extends State<DetailProductView> {
   Widget build(BuildContext context) {
     final ProductModel product = Provider.of<ProductProvider>(context).products[widget.index];
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.grey[50],
       body: Column(
         children: [
           Expanded(

@@ -75,11 +75,11 @@ class _TopupOVOState extends State<TopupOVO> {
     int topUp = 0;
     int admin = 1000;
     int amount = 0;
-    try {
-      amount = int.parse(amountController.text);
-    } catch (e) {
-      amount = 0;
-    }
+    // try {
+    //   amount = int.parse(amountController.text);
+    // } catch (e) {
+    //   amount = 0;
+    // }
     bool isButtonEnabled = amountController.text.isNotEmpty;
 
     int total = amount + admin;
