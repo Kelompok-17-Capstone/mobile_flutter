@@ -286,6 +286,7 @@ class _TopupDanaViewState extends State<TopupDanaView> {
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     print('success');
+                    Navigator.popUntil(context, ModalRoute.withName('/dashboard'));
                   }
                 },
               ),

@@ -3,25 +3,25 @@ import 'package:mobile_flutter/shared/custom_appbar.dart';
 import 'package:mobile_flutter/views/dashboard/pages/topup_dana_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/topup_ovo_view.dart';
 
-class PilihanTopupView extends StatefulWidget {
-  const PilihanTopupView({super.key});
+class TopupView extends StatefulWidget {
+  const TopupView({super.key});
 
   @override
-  State<PilihanTopupView> createState() => _PilihanTopupViewState();
+  State<TopupView> createState() => _TopupViewState();
 }
 
-class _PilihanTopupViewState extends State<PilihanTopupView> {
+class _TopupViewState extends State<TopupView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(context, title: 'Top Up', isBackButton: true, isElevated: true),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
           children: [
             ListTile(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> const TopupDanaView()));
+                Navigator.pushNamed(context, '/topup_dana');
               },
               leading: const Image(image: AssetImage('assets/icons/Dana.png')),
               title: const Text('Top Up dengan Dana'),
@@ -43,7 +43,7 @@ class _PilihanTopupViewState extends State<PilihanTopupView> {
 
             ListTile(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> const TopupOvoView()));
+                Navigator.pushNamed(context, '/topup_ovo');
               },
               leading: const Image(image: AssetImage('assets/icons/OVO.png')),
               title: const Text('Top Up dengan OVO'),

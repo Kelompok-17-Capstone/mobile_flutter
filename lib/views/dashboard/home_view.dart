@@ -3,7 +3,6 @@ import 'package:mobile_flutter/models/product_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/headers.dart';
 import 'package:mobile_flutter/shared/products_grid.dart';
-import 'package:mobile_flutter/views/dashboard/pages/pilihan_topup_view.dart';
 import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -56,11 +55,7 @@ class HomePageView extends StatelessWidget {
                           const VerticalDivider(color: Color(0xFF264ECA)),
                           ElevatedButton(
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          PilihanTopupView()));
+                              Navigator.pushNamed(context, '/topup');
                             },
                             style: ButtonStyle(
                                 elevation: MaterialStateProperty.all(0),
