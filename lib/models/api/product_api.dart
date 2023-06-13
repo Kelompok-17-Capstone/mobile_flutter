@@ -39,13 +39,13 @@ class ProductAPI {
       final response = await http.get(Uri.parse('$api/cart'), headers: headers);
       if (response.statusCode == 200) {
         final List result = jsonDecode(response.body)['data']['detail_cart_item'];
-        final List<Future<ItemCartModel>> cart = result.map((item) async {
+        final List<ItemCartModel> cart = await Future.wait(result.map((item) async {
           final json = jsonEncode(item);
           final getProductDetail = await http.get(Uri.parse('$api/products/${item['product_id']}'));
           final ProductModel product = ProductModel.fromJson(json: jsonEncode(jsonDecode(getProductDetail.body)['data']));
-
           return ItemCartModel.fromJson(json: json, product: product);
-        }).toList();
+        }).toList());
+        return cart;
       }
       
     } catch (e) {
@@ -53,6 +53,32 @@ class ProductAPI {
     }
 
     return [];
+  }
+
+  Future<String> updateItemCount({required int cartId, required int count}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    
+    try {
+      final url = Uri.parse('$api/cart/$cartId');
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
+      };
+      final data = {
+        'quantity': count
+      };
+
+      final response = await http.put(url, headers: headers, body: jsonEncode(data));
+      print(response.body);
+      if (response.statusCode == 200) {
+        return 'success';
+      }
+      
+    } catch (e) {
+      print(e);
+    }
+
+    return 'failed';
   }
 
 }
