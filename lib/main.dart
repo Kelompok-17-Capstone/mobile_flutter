@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mobile_flutter/arguments/detail_product_view_argument.dart';
+import 'package:mobile_flutter/models/api/favorite_api.dart';
 import 'package:mobile_flutter/views/auth/login_view.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:mobile_flutter/views/auth/personal_form_view.dart';
 import 'package:mobile_flutter/views/auth/register_view.dart';
+import 'package:mobile_flutter/views/dashboard/product/favorite_view.dart';
 import 'package:mobile_flutter/views/dashboard_view.dart';
 import 'package:mobile_flutter/views/dashboard/product/cart_provider.dart';
 import 'package:mobile_flutter/views/dashboard/product/checkout_view.dart';
@@ -34,7 +36,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(create: (context) => ProductProvider()),
-        ChangeNotifierProvider(create: (context) => CartProvider())
+        ChangeNotifierProvider(create: (context) => CartProvider()),
+        ChangeNotifierProvider(create: (context) => FavoriteProvider())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -57,6 +60,7 @@ class MyApp extends StatelessWidget {
           '/setting_name': (context) => const SettingNameView(),
           '/setting_phone': (context) => const SettingPhoneView(),
           '/setting_address': (context) => const SettingAddressView(),
+          '/favorite_page': (context) => const Favorite()
         },
         onGenerateRoute: (settings) {
           if (settings.name == '/detail_product') {
