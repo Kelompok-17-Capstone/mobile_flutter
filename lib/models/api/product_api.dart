@@ -65,7 +65,10 @@ class ProductAPI {
 
       final response = await http.get(Uri.parse('$api/cart'), headers: headers);
       if (response.statusCode == 200) {
-        final List result = jsonDecode(response.body)['data']['detail_cart_item'];
+        final List? result = jsonDecode(response.body)['data']['detail_cart_item'];
+        if (result == null) {
+          return [];
+        }
         final List<ItemCartModel> cart = await Future.wait(result.map((item) async {
           final json = jsonEncode(item);
           final getProductDetail = await http.get(Uri.parse('$api/products/${item['product_id']}'));
@@ -105,6 +108,27 @@ class ProductAPI {
       print(e);
     }
 
+    return 'failed';
+  }
+
+  Future<String> deleteCartItem({required int cartId}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    try {
+      final url = Uri.parse('$api/cart/$cartId');
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
+      };
+
+      final response = await http.delete(url, headers: headers);
+      if (response.statusCode == 200) {
+        return 'success';
+      }
+      
+    } catch (e) {
+      print(e);
+    }
     return 'failed';
   }
 

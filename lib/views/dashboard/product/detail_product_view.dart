@@ -90,7 +90,7 @@ class _DetailProductViewState extends State<DetailProductView> {
                               const SizedBox(width: 10),
                               IconButton(
                                 onPressed: () {
-                                  
+                                  Navigator.pushNamed(context, '/cart');
                                 },
                                 icon: const Icon(Icons.shopping_cart_outlined, color: Color(0xFF264ECA)),
                               )

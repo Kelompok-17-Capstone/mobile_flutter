@@ -20,16 +20,23 @@ class CartProvider extends ChangeNotifier {
       return;
     }
     final api = ProductAPI();
-    final List<ItemCartModel> result = await api.getCart();
-    if (result.isNotEmpty) {
-      _items = result;
-      countTotal();
-    }
+    _items = await api.getCart();
+    countTotal();
   }
 
   Future<String> addToCart({required ProductModel product, itemCount = 1}) async {
     final api = ProductAPI();
     final String result = await api.addToCart(product: product, itemCount: itemCount);
+    if (result == 'success') {
+      _globalCooldown = false;
+      getCart();
+    }
+    return result;
+  }
+
+  Future<String> deleteCartItem({required int cartId}) async {
+    final api = ProductAPI();
+    final String result = await api.deleteCartItem(cartId: cartId);
     if (result == 'success') {
       _globalCooldown = false;
       getCart();

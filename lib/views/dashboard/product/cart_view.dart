@@ -3,6 +3,7 @@ import 'package:mobile_flutter/models/item_cart_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
 import 'package:mobile_flutter/shared/format_rupiah.dart';
+import 'package:mobile_flutter/shared/snack_bar.dart';
 import 'package:mobile_flutter/views/dashboard/product/cart_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +31,11 @@ class _CartViewState extends State<CartView> {
 
     return Scaffold(
       appBar: customAppBar(context, title: 'Keranjang', isBackButton: true, isElevated: true),
-      body: ListView.builder(
+      body: items.isEmpty
+      ? const Center(
+        child: Text('Cart is Empty'),
+      )
+      : ListView.builder(
         itemCount: items.length,
         itemBuilder: (context, index) {
           return CatalogProductCard(index: index);
@@ -150,10 +155,10 @@ class _CatalogProductCardState extends State<CatalogProductCard> {
               });
             },
           ),
-          const SizedBox(
+          SizedBox(
             width: 100,
             height: 100, 
-            child: Image(image: AssetImage('assets/icons/alta_icon.png'))
+            child: Image(image: NetworkImage(item.product.imgUrl))
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -177,8 +182,10 @@ class _CatalogProductCardState extends State<CatalogProductCard> {
                     ),
                     const Spacer(),
                     IconButton(
-                      onPressed: () {
-                        print('delete');
+                      onPressed: () async {
+                        final String result = await Provider.of<CartProvider>(context, listen: false).deleteCartItem(cartId: item.cartId);
+                        if(!mounted) return;
+                        snackBar(context, '$result delete cart');
                       },
                       icon: Icon(Icons.delete_outline, color: Colors.red[600],)
                     ),
