@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/item_cart_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
+import 'package:mobile_flutter/shared/format_rupiah.dart';
 import 'package:mobile_flutter/views/dashboard/product/cart_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,14 @@ class CartView extends StatefulWidget {
 
 class _CartViewState extends State<CartView> {
   bool isCheckedall = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
+      Provider.of<CartProvider>(context, listen: false).getCart();
+    });
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -21,7 +30,12 @@ class _CartViewState extends State<CartView> {
 
     return Scaffold(
       appBar: customAppBar(context, title: 'Keranjang', isBackButton: true, isElevated: true),
-      body: const CatalogProducts(),
+      body: ListView.builder(
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return CatalogProductCard(index: index);
+        },
+      ),
       bottomNavigationBar: BottomAppBar(
         child: Container(
           decoration: BoxDecoration(
@@ -57,9 +71,9 @@ class _CartViewState extends State<CartView> {
                 fontWeight: FontWeight.w500
               ),),
               const SizedBox(width:4),
-              const Text(
-                'Rp 50000000',
-                  style: TextStyle(
+              Text(
+                formatRupiah(Provider.of<CartProvider>(context).totalProduct),
+                  style: const TextStyle(
                   color: Color.fromRGBO(0, 49, 123, 1),
                   fontWeight: FontWeight.w500
                 ),
@@ -93,20 +107,6 @@ class _CartViewState extends State<CartView> {
   }
 }
 
-class CatalogProducts extends StatelessWidget {
-  const CatalogProducts({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 40,
-      itemBuilder: (BuildContext context, int index) {
-        return CatalogProductCard(index: index);
-      },
-    );
-  }
-}
-
 class CatalogProductCard extends StatefulWidget {
   final int index;
   const CatalogProductCard({Key? key, required this.index}) : super(key: key);
@@ -118,10 +118,11 @@ class CatalogProductCard extends StatefulWidget {
 class _CatalogProductCardState extends State<CatalogProductCard> {
   bool isChecked = false;
 
-  int itemCount = 1;
-
   @override
   Widget build(BuildContext context) {
+
+    final ItemCartModel item = Provider.of<CartProvider>(context).items[widget.index];
+
     return Container(
       margin: const EdgeInsets.only(top: 20),
       decoration: BoxDecoration(
@@ -159,19 +160,20 @@ class _CatalogProductCardState extends State<CatalogProductCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  '#PRODUCT NAME#PRODUCT NAME#PRODUCT NAME',
+                Text(
+                  item.product.name,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 16,
-                  fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 16,
+                    fontWeight: FontWeight.bold
+                  ),
                 ),
                 const Spacer(),
                 Row(
                   children: [
-                    const Text(
-                      "Rp. 20.000",
-                      style: TextStyle(fontSize: 14),
+                    Text(
+                      formatRupiah(item.product.price),
+                      style: const TextStyle(fontSize: 14),
                     ),
                     const Spacer(),
                     Container(
@@ -184,20 +186,16 @@ class _CatalogProductCardState extends State<CatalogProductCard> {
                       child: Row(
                         children: [
                           miniButton(icon: Icons.remove, onPressed: () {
-                            if (itemCount > 1) {
-                              setState(() {
-                                itemCount--;
-                              });
+                            if (item.itemCount > 1) {
+                              Provider.of<CartProvider>(context, listen: false).localItemCount(index: widget.index, count: -1);
                             }
                           }),
                           SizedBox(
                             width: 30,
-                            child: Text(itemCount.toString(), textAlign: TextAlign.center,),
+                            child: Text(item.itemCount.toString(), textAlign: TextAlign.center,),
                           ),
                           miniButton(icon: Icons.add, onPressed: () {
-                            setState(() {
-                              itemCount++;
-                            });
+                            Provider.of<CartProvider>(context, listen: false).localItemCount(index: widget.index, count: 1);
                           },)
                         ],
                       ),
