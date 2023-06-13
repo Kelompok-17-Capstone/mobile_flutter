@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
-import 'package:mobile_flutter/views/dashboard/pages/topup_dana.dart';
-import 'package:mobile_flutter/views/dashboard/pages/topup_ovo.dart';
+import 'package:mobile_flutter/views/dashboard/pages/topup_dana_view.dart';
+import 'package:mobile_flutter/views/dashboard/pages/topup_ovo_view.dart';
 
 class PilihanTopupView extends StatefulWidget {
   const PilihanTopupView({super.key});
@@ -16,46 +16,52 @@ class _PilihanTopupViewState extends State<PilihanTopupView> {
     return Scaffold(
       appBar: customAppBar(context, title: 'Top Up', isBackButton: true, isElevated: true),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(24,19,0,0),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
-          children: <Widget> [
-            GestureDetector(
+          children: [
+            ListTile(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> TopupDana()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> const TopupDanaView()));
               },
-              child: Row(
-                children: [
-                  Image.asset('assets/icons/Dana.png'),
-                  SizedBox(
-                    width: 12,
+              leading: const Image(image: AssetImage('assets/icons/Dana.png')),
+              title: const Text('Top Up dengan Dana'),
+              trailing: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFF264ECA).withOpacity(0.1),
+                  border: Border.all(
+                    color: const Color(0xFF264ECA)
                   ),
-                  const Text('Top Up dengan Dana',
-                    style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16),),
-                    SizedBox(width: 122,),
-                  Image.asset('assets/icons/next.png')
-                ],
+                  borderRadius: BorderRadius.circular(100)
+                ),
+                child: const Icon(
+                  Icons.arrow_right_alt_outlined, 
+                  color: Color(0xFF264ECA),
+                  size: 15,
+                )
               ),
             ),
-            Container(
-              height: 20,
-            ),
-            GestureDetector(
+
+            ListTile(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> TopupOVO()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> const TopupOvoView()));
               },
-              child: Row(
-                children: [
-                  Image.asset('assets/icons/OVO.png'),
-                  SizedBox(
-                    width: 12,
+              leading: const Image(image: AssetImage('assets/icons/OVO.png')),
+              title: const Text('Top Up dengan OVO'),
+              trailing: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFF264ECA).withOpacity(0.1),
+                  border: Border.all(
+                    color: const Color(0xFF264ECA)
                   ),
-                  const Text('Top Up dengan OVO',
-                    style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16),),
-                    SizedBox(width: 130,),
-                  Image.asset('assets/icons/next.png')
-                ],
+                  borderRadius: BorderRadius.circular(100)
+                ),
+                child: const Icon(
+                  Icons.arrow_right_alt_outlined, 
+                  color: Color(0xFF264ECA),
+                  size: 15,
+                )
               ),
-            )
+            ),
           ],
         ),
       ),
