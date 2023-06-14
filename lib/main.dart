@@ -20,7 +20,7 @@ import 'package:mobile_flutter/views/dashboard/user_setting/setting_name_view.da
 import 'package:mobile_flutter/views/dashboard/user_setting/setting_password_view.dart';
 import 'package:mobile_flutter/views/dashboard/user_setting/setting_phone_view.dart';
 import 'package:mobile_flutter/views/dashboard/user_setting/setting_view.dart';
-import 'package:mobile_flutter/views/onboarding_view.dart';
+import 'package:mobile_flutter/views/dashboard/onboarding/onboarding_view.dart';
 import 'package:mobile_flutter/views/welcome_view.dart';
 import 'package:mobile_flutter/views/splash_screen_view.dart';
 import 'package:provider/provider.dart';

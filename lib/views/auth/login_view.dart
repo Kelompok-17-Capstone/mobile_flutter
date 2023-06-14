@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/form.dart';
+import 'package:mobile_flutter/shared/logo.dart';
 import 'package:mobile_flutter/shared/popup_dialog.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:provider/provider.dart';
@@ -36,14 +37,7 @@ class _LoginViewState extends State<LoginView> {
         child: Center(
           child: Column(
             children: [
-              const Image(
-                image: AssetImage('assets/icons/alta_icon.png'),
-                width: 19,
-              ),
-              const Text(
-                'AltaTech',
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
-              ),
+              altaTechLogo(),
               const SizedBox(height: 16),
               const Text(
                 'Kembali Bergabung',
