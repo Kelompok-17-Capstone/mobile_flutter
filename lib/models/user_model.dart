@@ -24,7 +24,7 @@ class UserModel {
 
   static UserModel fromJson({required json}) {
     final data = jsonDecode(json);
-    final List address = data['address'];
+    final List address = data['address'] ?? [];
     return UserModel(
       name: data['name'], 
       email: data['email'], 
