@@ -43,7 +43,7 @@ class _CheckoutViewState extends State<CheckoutView> {
   @override
   Widget build(BuildContext context) {
     final List<ItemCartModel> items = Provider.of<CartProvider>(context).items;
-    final int amount = Provider.of<CartProvider>(context).amount;
+    //final int amount = Provider.of<CartProvider>(context).amount;
     final int totalProduct = Provider.of<CartProvider>(context).totalProduct;
     return Scaffold(
       backgroundColor: Colors.white,
@@ -181,9 +181,9 @@ class _CheckoutViewState extends State<CheckoutView> {
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Total Pesanan ($amount Produk):',
-                          style: const TextStyle(
+                        const Text(
+                          'Total Pesanan (amount Produk):',
+                          style: TextStyle(
                             fontSize: 13,
                           ),
                         ),
