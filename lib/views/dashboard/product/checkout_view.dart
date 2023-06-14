@@ -22,7 +22,7 @@ class _CheckoutViewState extends State<CheckoutView> {
   late UserModel user;
 
   final noteController = TextEditingController();
-  bool isDiscount = false;
+  bool isCoinEnabled = false;
 
   @override
   void initState() {
@@ -30,8 +30,8 @@ class _CheckoutViewState extends State<CheckoutView> {
     user = Provider.of<AuthProvider>(context, listen: false).user!;
   }
 
-  int countTotalPayment(int totalProduct, int shippingCost) {
-    double discount = isDiscount ? totalProduct * 0.3 : 0;
+  int countTotalPayment({required int totalProduct, required int shippingCost}) {
+    int discount = isCoinEnabled ? user.coin : 0;
     return (totalProduct + shippingCost - discount).ceil();
   }
 
@@ -215,7 +215,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text('Saldo Anda', style: TextStyle(fontWeight: FontWeight.w500)),
-                          Text(formatRupiah(totalProduct()), style: const TextStyle(fontWeight: FontWeight.w500, color: Color(0xFF264ECA)))
+                          Text(formatRupiah(user.balance), style: const TextStyle(fontWeight: FontWeight.w500, color: Color(0xFF264ECA)))
                         ],
                       ),
                     ),
@@ -223,14 +223,14 @@ class _CheckoutViewState extends State<CheckoutView> {
                     ListTile(
                       dense: true,
                       leading: Icon(Icons.percent_outlined, color: CustomColors.primary),
-                      title: const Text('Tukarkan (\'jumlah koin\') koin', style: TextStyle(fontWeight: FontWeight.w500)),
+                      title: Text('Tukarkan ${user.coin} koin', style: const TextStyle(fontWeight: FontWeight.w500)),
                       trailing: Switch(
                         activeColor: const Color(0xFF33DF3A),
                         inactiveTrackColor: Colors.grey[300],
-                        value: isDiscount,
+                        value: isCoinEnabled,
                         onChanged: (value) {
                           setState(() {
-                            isDiscount = value;
+                            isCoinEnabled = value;
                           });
                         },
                       ),
@@ -260,24 +260,24 @@ class _CheckoutViewState extends State<CheckoutView> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: const [
-                              Text('Subtotal biaya pengiriman'),
-                              Text('Rp50.000')
+                              Text('Subtotal biaya pengiriman (gratis ongkir)'),
+                              Text('Rp0')
                             ],
                           ),
-                          !isDiscount
+                          !isCoinEnabled
                           ? const SizedBox()
                           : Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text('Tukar Koin'),
-                              Text(formatRupiah((totalProduct() * 0.3).toInt()))
+                              Text(formatRupiah(user.coin))
                             ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text('Total Pembayaran', style: TextStyle(color: Colors.black)),
-                              Text(formatRupiah(countTotalPayment(totalProduct(), 50000)), style: const TextStyle(color: Color(0xFF264ECA)))
+                              Text(formatRupiah(countTotalPayment(totalProduct: totalProduct(), shippingCost: 0)), style: const TextStyle(color: Color(0xFF264ECA)))
                             ],
                           )
                         ],
@@ -305,7 +305,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                       ),
                     ),
                     Text(
-                      formatRupiah(countTotalPayment(totalProduct(), 50000)),
+                      formatRupiah(countTotalPayment(totalProduct: totalProduct(), shippingCost: 0)),
                       style: const TextStyle(
                         color: Color(0xFF264ECA)
                       ),
