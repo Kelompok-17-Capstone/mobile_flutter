@@ -148,7 +148,7 @@ class _TopupOvoViewState extends State<TopupOvoView> {
                       ],
                       onChanged: (value) {
                         setState(() {
-                          // empty setState
+                          selectedCardIndex = -1;
                         });
                       },
                       validator: (value) {
