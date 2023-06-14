@@ -20,6 +20,7 @@ import 'package:mobile_flutter/views/dashboard/user_setting/setting_name_view.da
 import 'package:mobile_flutter/views/dashboard/user_setting/setting_password_view.dart';
 import 'package:mobile_flutter/views/dashboard/user_setting/setting_phone_view.dart';
 import 'package:mobile_flutter/views/dashboard/user_setting/setting_view.dart';
+import 'package:mobile_flutter/views/dashboard/onboarding/onboarding_view.dart';
 import 'package:mobile_flutter/views/welcome_view.dart';
 import 'package:mobile_flutter/views/splash_screen_view.dart';
 import 'package:provider/provider.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
           '/register': (context) => const RegisterView(),
           '/login': (context) => const LoginView(),
           '/personal_form':(context) => const PersonalFormView(),
+          '/onboarding': (context) => const OnboardingView(),
           '/dashboard': (context) => const DashboardView(), // Dashboard / Homepage
           '/topup':(context) => const TopupView(),
           '/topup_dana':(context) => const TopupDanaView(),
