@@ -8,8 +8,19 @@ class UserModel {
   final List<UserAddress> address;
   final String image;
   final String memberCode;
+  final int balance;
+  final int coin;
 
-  const UserModel({required this.name, required this.email, required this.phoneNumber, required this.address, required this.image, required this.memberCode});
+  const UserModel({
+    required this.name,
+    required this.email,
+    required this.phoneNumber,
+    required this.address,
+    required this.image,
+    required this.memberCode,
+    required this.balance,
+    required this.coin
+  });
 
   static UserModel fromJson({required json}) {
     final data = jsonDecode(json);
@@ -26,7 +37,9 @@ class UserModel {
         );
       }).toList(),
       image: data['image'],
-      memberCode: data['member_code']
+      memberCode: data['member_code'],
+      balance: data['balance'],
+      coin: data['coin']
     );
   }
 
