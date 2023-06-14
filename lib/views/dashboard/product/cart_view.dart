@@ -161,7 +161,8 @@ class _CatalogProductCardState extends State<CatalogProductCard> {
               });
             },
           ),
-          SizedBox(
+          Container(
+            color: Colors.grey[100],
             width: 100,
             height: 100, 
             child: Image(image: NetworkImage(item.product.imgUrl))
