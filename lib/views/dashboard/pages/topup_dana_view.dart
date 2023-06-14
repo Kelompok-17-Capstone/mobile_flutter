@@ -148,7 +148,7 @@ class _TopupDanaViewState extends State<TopupDanaView> {
                       ],
                       onChanged: (value) {
                         setState(() {
-                          // empty setState
+                          selectedCardIndex = -1;
                         });
                       },
                       validator: (value) {
