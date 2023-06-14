@@ -32,88 +32,76 @@ class _CartViewState extends State<CartView> {
 
     return Scaffold(
       appBar: customAppBar(context, title: 'Keranjang', isBackButton: true, isElevated: true),
-      body: items.isEmpty
-      ? const Center(
-        child: Text('Cart is Empty'),
-      )
-      : ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return CatalogProductCard(index: index);
-        },
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 1, 
-                blurRadius: 1, 
-                offset: const Offset(0, 2), 
-              ),
-            ]
+      body: Column(
+        children: [
+          Expanded(
+            child: items.isEmpty
+            ? const Center(
+              child: Text('Cart is Empty'),
+            )
+            : ListView.builder(
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                return CatalogProductCard(index: index);
+              },
+            ),
           ),
-          width: 428,
-          height: 66,
-          child: Row(
-            children: [
-              Checkbox(
-                value: isCheckedall,
-                onChanged: (bool? value) {
-                  setState(() {
-                    isCheckedall = value ?? false;
-                  });
-                },
-              ),
-              const Text('Semua', style: TextStyle(
-                color: Colors.grey,
-                fontWeight: FontWeight.w500
-              ),),
-              const SizedBox(width:27),
-              const Text('Total', style: TextStyle(
-                color: Colors.grey,
-                fontWeight: FontWeight.w500
-              ),),
-              const SizedBox(width:4),
-              Text(
-                formatRupiah(Provider.of<CartProvider>(context).totalProduct),
-                  style: const TextStyle(
-                  color: Color.fromRGBO(0, 49, 123, 1),
-                  fontWeight: FontWeight.w500
+          Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3), // changes position of shadow
                 ),
-              ),
-              const SizedBox(width:8),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      '/checkout',
-                      ModalRoute.withName('/dashboard'),
-                      arguments: CheckoutViewArgument(cart: items)
-                    );
-                  } ,
+              ],
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF264ECA)
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'Bayar',
-                        style: TextStyle(
-                          color: Colors.white
+                    color: Colors.white,
+                    child: Row(
+                      children: [
+                        Checkbox(
+                          value: isCheckedall,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              isCheckedall = value ?? false;
+                            });
+                          },
                         ),
-                      ),
-                    ),     
+                        const Text('Semua', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500)),
+                        const Spacer(),
+                        const Text('Total  ', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500)),
+                        const Text('Rp5.000.000', style: TextStyle(color: Color(0xFF00317B), fontWeight: FontWeight.w500)),
+                        const SizedBox(width: 10)
+                      ],
+                    )
                   ),
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF264ECA),
+                      border: Border.all(width: 0.5, color: const Color(0xFF264ECA))
+                    ),
+                    child: TextButton(
+                      key: const Key('buy-button-key'),
+                      onPressed: () {
+          
+                      },
+                      child: const Text('Bayar', style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+      )
     );
   }
 }
