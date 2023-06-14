@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:mobile_flutter/arguments/checkout_view_argument.dart';
 import 'package:mobile_flutter/arguments/detail_product_view_argument.dart';
 import 'package:mobile_flutter/views/auth/login_view.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
@@ -59,7 +60,6 @@ class MyApp extends StatelessWidget {
           '/topup_dana':(context) => const TopupDanaView(),
           '/topup_ovo':(context) => const TopupOvoView(),
           '/cart': (context) => const CartView(),
-          '/checkout': (context) => const CheckoutView(),
           '/user_setting': (context) => const SettingView(),
           '/setting_email': (context) => const SettingEmailView(),
           '/setting_password': (context) => const SettingPasswordView(),
@@ -73,6 +73,15 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(
               builder: (context) {
                 return DetailProductView(index: args.index);
+              },
+            );
+          }
+
+          if (settings.name == '/checkout') {
+            final args = settings.arguments as CheckoutViewArgument;
+            return MaterialPageRoute(
+              builder: (context) {
+                return CheckoutView(cart: args.cart);
               },
             );
           }

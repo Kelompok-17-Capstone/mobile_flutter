@@ -46,7 +46,7 @@ class CartProvider extends ChangeNotifier {
 
   Future<void> updateItemCount({required int index}) async {
     final api = ProductAPI();
-    await api.updateItemCount(cartId: _items[index].cartId, count: _items[index].itemCount);
+    await api.updateItemCount(cartId: _items[index].cartId!, count: _items[index].itemCount);
     countTotal();
   }
 

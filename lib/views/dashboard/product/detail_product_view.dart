@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/arguments/checkout_view_argument.dart';
 import 'package:mobile_flutter/models/item_cart_model.dart';
 import 'package:mobile_flutter/models/product_model.dart';
 import 'package:mobile_flutter/models/user_model.dart';
@@ -179,7 +180,7 @@ class _DetailProductViewState extends State<DetailProductView> {
             context,
             leftContent: IconButton(
               onPressed: () {
-                showBuyNowDialog(context, product);
+                showBuyNowDialog(context, product: product);
               },
               icon: const Icon(Icons.shopping_cart_outlined, color: Color(0xFF264ECA)),
             ),
@@ -187,8 +188,7 @@ class _DetailProductViewState extends State<DetailProductView> {
             onPressed: () {
               //notAMember(context);
               // TODO: addToCart
-              //Provider.of<CartProvider>(context, listen: false).addToCart(item);
-              Navigator.pushNamed(context, '/checkout');
+              showBuyNowDialog(context, product: product, isDirectCheckout: true);
             },
           )
         ],
@@ -234,7 +234,7 @@ class _DetailProductViewState extends State<DetailProductView> {
     );
   }
 
-  Future<void> showBuyNowDialog(BuildContext context, ProductModel product) {
+  Future<void> showBuyNowDialog(BuildContext context, {required ProductModel product, bool isDirectCheckout = false}) {
     final bool guestMode = Provider.of<AuthProvider>(context, listen: false).user == null ? true : false;
     int itemCount = 1;
 
@@ -316,12 +316,17 @@ class _DetailProductViewState extends State<DetailProductView> {
                           Navigator.pop(context);
                           notAMember(context);
                         } else {
-                          final String result = await Provider.of<CartProvider>(context, listen: false).addToCart(product: product, itemCount: itemCount);
-                          if (!mounted) return;
-                          Navigator.pop(context);
-                          snackBar(context, '$result add to cart.');
+                          if (isDirectCheckout) {
+                            Navigator.pop(context);
+                            Navigator.pushNamed(context, '/checkout', arguments: CheckoutViewArgument(cart: [ItemCartModel(cartId: null, product: product, itemCount: itemCount)]));
+                          } else {
+                            final String result = await Provider.of<CartProvider>(context, listen: false).addToCart(product: product, itemCount: itemCount);
+                            if (!mounted) return;
+                            Navigator.pop(context);
+                            snackBar(context, '$result add to cart.');
+                          }
                         }
-                      },)
+                      })
                     ],
                   ),
                 ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/arguments/checkout_view_argument.dart';
 import 'package:mobile_flutter/models/item_cart_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
@@ -87,7 +88,12 @@ class _CartViewState extends State<CartView> {
               Expanded(
                 child: GestureDetector(
                   onTap: () {
-                   
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/checkout',
+                      ModalRoute.withName('/dashboard'),
+                      arguments: CheckoutViewArgument(cart: items)
+                    );
                   } ,
                   child: Container(
                     decoration: const BoxDecoration(
@@ -183,7 +189,7 @@ class _CatalogProductCardState extends State<CatalogProductCard> {
                     const Spacer(),
                     IconButton(
                       onPressed: () async {
-                        final String result = await Provider.of<CartProvider>(context, listen: false).deleteCartItem(cartId: item.cartId);
+                        final String result = await Provider.of<CartProvider>(context, listen: false).deleteCartItem(cartId: item.cartId!);
                         if(!mounted) return;
                         snackBar(context, '$result delete cart');
                       },

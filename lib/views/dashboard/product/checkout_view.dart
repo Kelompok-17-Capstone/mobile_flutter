@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/item_cart_model.dart';
+import 'package:mobile_flutter/models/product_model.dart';
 import 'package:mobile_flutter/models/user_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
 import 'package:mobile_flutter/shared/custom_colors.dart';
 import 'package:mobile_flutter/shared/format_rupiah.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
-import 'package:mobile_flutter/views/dashboard/product/cart_provider.dart';
 import 'package:provider/provider.dart';
 
 class CheckoutView extends StatefulWidget {
-  const CheckoutView({super.key});
+  final List<ItemCartModel> cart;
+  const CheckoutView({super.key, required this.cart});
 
   @override
   State<CheckoutView> createState() => _CheckoutViewState();
@@ -42,9 +43,17 @@ class _CheckoutViewState extends State<CheckoutView> {
 
   @override
   Widget build(BuildContext context) {
-    final List<ItemCartModel> items = Provider.of<CartProvider>(context).items;
-    //final int amount = Provider.of<CartProvider>(context).amount;
-    final int totalProduct = Provider.of<CartProvider>(context).totalProduct;
+    // final List<ItemCartModel> items = Provider.of<CartProvider>(context).items;
+    // final int amount = Provider.of<CartProvider>(context).amount;
+    // final int totalProduct = Provider.of<CartProvider>(context).totalProduct;
+    int totalProduct() {
+      int result = 0;
+      for (var item in widget.cart) {
+        result += item.product.price * item.itemCount;
+      }
+      return result;
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: customAppBar(context, title: 'Rincian Pesanan', isBackButton: true),
@@ -61,7 +70,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('${user.name} | ${user.phoneNumber}', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
-                        Text(user.address[0], style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w300))
+                        Text(user.address.where((element) => element.selected = true).first.address, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w300))
                       ],
                     ),
                     trailing: Icon(Icons.arrow_forward_ios_outlined, size: 16, color: CustomColors.primary),
@@ -71,9 +80,9 @@ class _CheckoutViewState extends State<CheckoutView> {
                   ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: items.length,
+                    itemCount: widget.cart.length,
                     itemBuilder: (context, index) {
-                      final ItemCartModel item = items[index];
+                      final ItemCartModel item = widget.cart[index];
                       return ListTile(
                         dense: true,
                         isThreeLine: true,
@@ -88,7 +97,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Jumlah: ${item.itemCount}', style: TextStyle(color: Colors.grey[800])),
+                            Text('Jumlah: ${item.product.price}', style: TextStyle(color: Colors.grey[800])),
                             Text(
                               formatRupiah(item.getSubTotal()),
                               style: const TextStyle(
@@ -188,7 +197,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                           ),
                         ),
                         Text(
-                          formatRupiah(totalProduct),
+                          formatRupiah(totalProduct()),
                           style: const TextStyle(
                             color: Color(0xFF264ECA)
                           ),
@@ -231,7 +240,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text('Subtotal untuk produk'),
-                            Text(formatRupiah(totalProduct))
+                            Text(formatRupiah(totalProduct()))
                           ],
                         ),
                         Row(
@@ -247,14 +256,14 @@ class _CheckoutViewState extends State<CheckoutView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text('Diskon 30% sebagai member'),
-                            Text(formatRupiah((totalProduct * 0.3).toInt()))
+                            Text(formatRupiah((totalProduct() * 0.3).toInt()))
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text('Total Pembayaran', style: TextStyle(color: Colors.black)),
-                            Text(formatRupiah(countTotalPayment(totalProduct, 50000)), style: const TextStyle(color: Color(0xFF264ECA)))
+                            Text(formatRupiah(countTotalPayment(totalProduct(), 50000)), style: const TextStyle(color: Color(0xFF264ECA)))
                           ],
                         )
                       ],
@@ -281,7 +290,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                       ),
                     ),
                     Text(
-                      formatRupiah(countTotalPayment(totalProduct, 50000)),
+                      formatRupiah(countTotalPayment(totalProduct(), 50000)),
                       style: const TextStyle(
                         color: Color(0xFF264ECA)
                       ),

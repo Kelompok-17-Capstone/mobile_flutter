@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:mobile_flutter/models/product_model.dart';
 
 class ItemCartModel {
-  final int cartId;
+  final int? cartId;
   final ProductModel product;
   int itemCount;
 
