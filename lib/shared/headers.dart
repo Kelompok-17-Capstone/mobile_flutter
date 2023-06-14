@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/models/user_model.dart';
 import 'dart:math' as math;
+
+import 'package:mobile_flutter/shared/snack_bar.dart';
+import 'package:mobile_flutter/views/auth/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 Widget customHeaderWithIcon({required String title}) {
   return Column(
@@ -30,6 +35,7 @@ Widget customHeaderWithIcon({required String title}) {
 }
 
 Widget homeHeader(BuildContext context) {
+  final UserModel? user = Provider.of<AuthProvider>(context).user;
   return Stack(
     children: [
       Stack(
@@ -87,7 +93,11 @@ Widget homeHeader(BuildContext context) {
                   ),
                   IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/cart');
+                      if (user == null) {
+                        snackBar(context, 'Login untuk melihat keranjang');
+                      } else {
+                        Navigator.pushNamed(context, '/cart');
+                      }
                     },
                     icon: const Icon(Icons.shopping_cart_outlined, color: Colors.white),
                   ),
