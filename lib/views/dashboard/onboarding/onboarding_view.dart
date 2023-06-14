@@ -54,7 +54,9 @@ class _OnboardingViewState extends State<OnboardingView> with TickerProviderStat
         elevation: 0,
         backgroundColor: Colors.transparent,
         actions: [
-          Padding(
+          currentIndex == 2
+          ? const SizedBox()
+          : Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: TextButton(
               onPressed: () {
