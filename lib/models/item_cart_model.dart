@@ -6,8 +6,9 @@ class ItemCartModel {
   final int? cartId;
   final ProductModel product;
   int itemCount;
+  bool isChecked;
 
-  ItemCartModel({required this.cartId, required this.product,  this.itemCount = 1});
+  ItemCartModel({required this.cartId, required this.product,  this.itemCount = 1, this.isChecked = false});
 
   int getSubTotal() {
     return product.price * itemCount;

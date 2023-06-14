@@ -17,14 +17,6 @@ class CartView extends StatefulWidget {
 
 class _CartViewState extends State<CartView> {
   bool isCheckedall = false;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
-      Provider.of<CartProvider>(context, listen: false).getCart();
-    });
-  }
   
   @override
   Widget build(BuildContext context) {
@@ -67,10 +59,14 @@ class _CartViewState extends State<CartView> {
                       children: [
                         Checkbox(
                           value: isCheckedall,
+                          fillColor: MaterialStatePropertyAll(const Color(0xFF264ECA).withOpacity(0.9)),
                           onChanged: (bool? value) {
-                            setState(() {
-                              isCheckedall = value ?? false;
-                            });
+                            if (value != null) {
+                              setState(() {
+                                isCheckedall = value;
+                              });
+                              Provider.of<CartProvider>(context, listen: false).checkAll(checkAll: isCheckedall);
+                            }
                           },
                         ),
                         const Text('Semua', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500)),
@@ -91,7 +87,18 @@ class _CartViewState extends State<CartView> {
                     child: TextButton(
                       key: const Key('buy-button-key'),
                       onPressed: () {
-          
+                        final List<ItemCartModel> products = List.from(items.where((element) => element.isChecked == true));
+                        if (products.isEmpty) {
+                          snackBar(context, 'Silahkan pilih produk');
+                        } else {
+                          Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          '/checkout',
+                          ModalRoute.withName('/dashboard'),
+                          arguments: CheckoutViewArgument(cart: products)
+                        );
+                        }
+                        
                       },
                       child: const Text('Bayar', style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)),
                     ),
@@ -115,7 +122,6 @@ class CatalogProductCard extends StatefulWidget {
 }
 
 class _CatalogProductCardState extends State<CatalogProductCard> {
-  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -142,11 +148,12 @@ class _CatalogProductCardState extends State<CatalogProductCard> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Checkbox(
-            value: isChecked,
+            value: item.isChecked,
+            fillColor: MaterialStatePropertyAll(const Color(0xFF264ECA).withOpacity(0.9)),
             onChanged: (bool? value) {
-              setState(() {
-                isChecked = value ?? false;
-              });
+              if (value != null) {
+                Provider.of<CartProvider>(context, listen: false).checkItem(cartId: item.cartId!, isChecked: value);
+              }
             },
           ),
           Container(

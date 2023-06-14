@@ -74,4 +74,16 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void checkItem({required int cartId, required bool isChecked}) {
+    _items.where((element) => element.cartId == cartId).first.isChecked = isChecked;
+    notifyListeners();
+  }
+
+  void checkAll({required bool checkAll}) {
+    for (var element in _items) {
+      element.isChecked = checkAll;
+    }
+    notifyListeners();
+  }
+
 }
