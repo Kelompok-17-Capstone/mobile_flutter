@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/arguments/setting_address_form_view_argument.dart';
 import 'package:mobile_flutter/models/user_model.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
@@ -38,6 +39,13 @@ class _SettingAddressViewState extends State<SettingAddressView> {
                     child: Column(
                       children: [
                         ListTile(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/setting_address_form',
+                              arguments: SettingAddressFormViewArgument(isEditAddress: true, address: address)
+                            );
+                          },
                           title: Text(
                             address.status ? 'Alamat Utama' : 'Alamat Lainnya',
                             style: const TextStyle(
@@ -66,7 +74,11 @@ class _SettingAddressViewState extends State<SettingAddressView> {
                 color: Colors.white,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder:(context) => SettingAddressFormView(title: 'Edit Alamat', address: userAddress.first)));
+                    Navigator.pushNamed(
+                      context,
+                      '/setting_address_form',
+                      arguments: SettingAddressFormViewArgument(isEditAddress: false, address: UserAddress(id: 0, address: '', status: false))
+                    );
                   },
                   style: const ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(Colors.white),

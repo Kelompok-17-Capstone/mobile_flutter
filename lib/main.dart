@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mobile_flutter/arguments/checkout_view_argument.dart';
 import 'package:mobile_flutter/arguments/detail_product_view_argument.dart';
+import 'package:mobile_flutter/arguments/setting_address_form_view_argument.dart';
 import 'package:mobile_flutter/views/auth/login_view.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:mobile_flutter/views/auth/personal_form_view.dart';
@@ -11,6 +12,7 @@ import 'package:mobile_flutter/views/dashboard/pages/topup/topup_ovo_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/topup/topup_success_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/topup/topup_view.dart';
 import 'package:mobile_flutter/views/dashboard/product/cart_view.dart';
+import 'package:mobile_flutter/views/dashboard/user_setting/setting_address_form_view.dart';
 import 'package:mobile_flutter/views/dashboard_view.dart';
 import 'package:mobile_flutter/views/dashboard/product/cart_provider.dart';
 import 'package:mobile_flutter/views/dashboard/product/checkout_view.dart';
@@ -85,6 +87,15 @@ class MyApp extends StatelessWidget {
               builder: (context) {
                 return CheckoutView(cart: args.cart);
               },
+            );
+          }
+
+          if (settings.name == '/setting_address_form') {
+            final args = settings.arguments as SettingAddressFormViewArgument;
+            return MaterialPageRoute(
+              builder: (context) {
+                return SettingAddressFormView(isEditAddress: args.isEditAddress, address: args.address);
+              }
             );
           }
           return null;

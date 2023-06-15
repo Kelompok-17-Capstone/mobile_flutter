@@ -4,9 +4,9 @@ import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
 
 class SettingAddressFormView extends StatefulWidget {
-  final String title;
+  final bool isEditAddress;
   final UserAddress address;
-  const SettingAddressFormView({super.key, required this.title, required this.address});
+  const SettingAddressFormView({super.key, required this.isEditAddress, required this.address});
 
   @override
   State<SettingAddressFormView> createState() => _SettingAddressFormViewState();
@@ -29,12 +29,14 @@ class _SettingAddressFormViewState extends State<SettingAddressFormView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context, title: widget.title, isBackButton: true),
+      appBar: customAppBar(context, title: widget.isEditAddress ? 'Edit Alamat' : 'Alamat Baru', isBackButton: true),
       body: Form(
         key: formKey,
         child: Column(
           children: [
-            Container(
+            !widget.isEditAddress
+            ? const SizedBox()
+            : Container(
               margin: const EdgeInsets.only(top: 20),
               padding: const EdgeInsets.symmetric(vertical: 10),
               decoration: BoxDecoration(
