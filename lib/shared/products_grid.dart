@@ -15,7 +15,7 @@ Widget productsGrid({required List<ProductModel> products, bool isProductPage = 
           crossAxisSpacing: 5,
           childAspectRatio: 1/1.3
         ),
-        itemCount: products.length,
+        itemCount: !isProductPage && products.length > 6 ? 6 : products.length,
         itemBuilder: (context, index) {
           final ProductModel product = products[index];
           return GestureDetector(
