@@ -228,7 +228,9 @@ class _CheckoutViewState extends State<CheckoutView> {
                         ? formatRupiah(totalProduct())
                         : formatRupiah(user.coin)
                       } koin', style: const TextStyle(fontWeight: FontWeight.w500)),
-                      trailing: Switch(
+                      trailing: user.coin <= 0
+                      ? const SizedBox()
+                      : Switch(
                         activeColor: const Color(0xFF33DF3A),
                         inactiveTrackColor: Colors.grey[300],
                         value: isCoinEnabled,
@@ -242,53 +244,56 @@ class _CheckoutViewState extends State<CheckoutView> {
                     const Divider(),
                     ListTile(
                       dense: true,
-                      leading: Icon(Icons.credit_card_outlined, color: CustomColors.primary),
-                      title: const Text('Pilih Metode Pembayaran', style: TextStyle(fontWeight: FontWeight.w500)),
-                      trailing: Icon(Icons.arrow_forward_ios_outlined, size: 16, color: CustomColors.primary),
-                    ),
-                    const Divider(),
-                    ListTile(
-                      dense: true,
                       isThreeLine: true,
-                      leading: Icon(Icons.receipt_long_outlined, color: CustomColors.primary),
-                      title: const Text('Rincian Pembayaran', style: TextStyle(fontWeight: FontWeight.w500)),
-                      subtitle: Column(
+                      title: Row(
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text('Subtotal untuk produk'),
-                              Text(formatRupiah(totalProduct()))
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Text('Subtotal biaya pengiriman (gratis ongkir)'),
-                              Text('Rp0')
-                            ],
-                          ),
-                          !isCoinEnabled
-                          ? const SizedBox()
-                          : Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text('Tukar Koin'),
-                              Text(
-                                user.coin >= totalProduct()
-                                ? formatRupiah(totalProduct())
-                                : formatRupiah(user.coin)
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text('Total Pembayaran', style: TextStyle(color: Colors.black)),
-                              Text(formatRupiah(countTotalPayment(totalProduct: totalProduct(), shippingCost: 0)), style: const TextStyle(color: Color(0xFF264ECA)))
-                            ],
-                          )
+                          Icon(Icons.receipt_long_outlined, color: CustomColors.primary),
+                          const SizedBox(width: 10),
+                          const Text('Rincian Pembayaran', style: TextStyle(fontWeight: FontWeight.w500)),
                         ],
+                      ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text('Subtotal untuk produk'),
+                                Text(formatRupiah(totalProduct()))
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: const [
+                                Text('Subtotal biaya pengiriman (gratis ongkir)'),
+                                Text('Rp0')
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            !isCoinEnabled
+                            ? const SizedBox()
+                            : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text('Tukar Koin'),
+                                Text(
+                                  user.coin >= totalProduct()
+                                  ? formatRupiah(totalProduct())
+                                  : formatRupiah(user.coin)
+                                )
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text('Total Pembayaran', style: TextStyle(color: Colors.black)),
+                                Text(formatRupiah(countTotalPayment(totalProduct: totalProduct(), shippingCost: 0)), style: const TextStyle(color: Color(0xFF264ECA)))
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     )
                   ],
