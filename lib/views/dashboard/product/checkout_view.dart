@@ -31,7 +31,7 @@ class _CheckoutViewState extends State<CheckoutView> {
   }
 
   int countTotalPayment({required int totalProduct, required int shippingCost}) {
-    int discount = isCoinEnabled ? user.coin : 0;
+    int discount = isCoinEnabled ? user.coin >= totalProduct ? totalProduct : user.coin : 0;
     return (totalProduct + shippingCost - discount).ceil();
   }
 
@@ -223,7 +223,11 @@ class _CheckoutViewState extends State<CheckoutView> {
                     ListTile(
                       dense: true,
                       leading: Icon(Icons.percent_outlined, color: CustomColors.primary),
-                      title: Text('Tukarkan ${user.coin} koin', style: const TextStyle(fontWeight: FontWeight.w500)),
+                      title: Text('Tukarkan ${
+                        user.coin >= totalProduct()
+                        ? formatRupiah(totalProduct())
+                        : formatRupiah(user.coin)
+                      } koin', style: const TextStyle(fontWeight: FontWeight.w500)),
                       trailing: Switch(
                         activeColor: const Color(0xFF33DF3A),
                         inactiveTrackColor: Colors.grey[300],
@@ -270,7 +274,11 @@ class _CheckoutViewState extends State<CheckoutView> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text('Tukar Koin'),
-                              Text(formatRupiah(user.coin))
+                              Text(
+                                user.coin >= totalProduct()
+                                ? formatRupiah(totalProduct())
+                                : formatRupiah(user.coin)
+                              )
                             ],
                           ),
                           Row(
