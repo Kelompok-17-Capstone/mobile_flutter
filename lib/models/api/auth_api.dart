@@ -125,7 +125,6 @@ class AuthAPI {
     } catch (e) {
       print(e);
     }
-
     return 'failed';
   }
 
@@ -150,7 +149,6 @@ class AuthAPI {
     } catch (e) {
       print(e);
     }
-
     return 'failed';
   }
 
@@ -175,7 +173,6 @@ class AuthAPI {
     } catch (e) {
       print(e);
     }
-
     return 'failed';
   }
 
@@ -189,22 +186,78 @@ class AuthAPI {
         'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
       };
       final Map data = {
-        "address" : address,
-        "city" : city,
-        "province" : province
+        'address' : address,
+        'city' : city,
+        'province' : province
       };
 
       final response = await http.post(url, headers: headers, body: jsonEncode(data));
       if (response.statusCode == 200) {
         return 'success';
       }
-
     } catch (e) {
       print(e);
     }
-
     return 'failed';
   }
 
+  Future<String> editAddress({required int addressId, required String province, required String city, required String address, required bool isPrimaryAddress}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    try {
+      final url = Uri.parse('$api/profile/address/$addressId');
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
+      };
+      final Map data = {
+        'status': isPrimaryAddress
+      };
+      if (province.isNotEmpty) {
+        data.addEntries({'province': province}.entries); 
+      }
+      if (city.isNotEmpty) {
+        data.addEntries({'city': city}.entries);
+      }
+      if (address.isNotEmpty) {
+        data.addEntries({'address': address}.entries);
+      }
+
+      final response = await http.put(url, headers: headers, body: jsonEncode(data));
+      if (response.statusCode == 200) {
+        return 'success';
+      } else {
+        return jsonDecode(response.body)['message'];
+      }
+    } catch (e) {
+      print(e);
+      
+    }
+    return 'failed';
+  }
+
+  Future<String> deleteAddress({required int addressId}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    try {
+      final url = Uri.parse('$api/profile/address/$addressId');
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
+      };
+
+
+      final response = await http.delete(url, headers: headers);
+      if (response.statusCode == 200) {
+        return 'success';
+      } else {
+        return jsonDecode(response.body)['message'];
+      }
+    } catch (e) {
+      print(e);
+      
+    }
+    return 'failed';
+  }
 
 }

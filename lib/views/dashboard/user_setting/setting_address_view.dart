@@ -3,7 +3,6 @@ import 'package:mobile_flutter/arguments/setting_address_form_view_argument.dart
 import 'package:mobile_flutter/models/user_model.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
-import 'package:mobile_flutter/views/dashboard/user_setting/setting_address_form_view.dart';
 import 'package:provider/provider.dart';
 
 class SettingAddressView extends StatefulWidget {
@@ -17,7 +16,7 @@ class _SettingAddressViewState extends State<SettingAddressView> {
 
   @override
   Widget build(BuildContext context) {
-    final List<UserAddress> userAddress = Provider.of<AuthProvider>(context, listen: false).user!.address;
+    final List<UserAddress> userAddress = Provider.of<AuthProvider>(context).user!.address;
 
     return Scaffold(
       appBar: customAppBar(context, title: 'Alamat Pengiriman', isBackButton: true),

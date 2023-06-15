@@ -83,20 +83,45 @@ class AuthProvider extends ChangeNotifier {
   Future<String> uploadPicture({required String imagePath}) async {
     final auth = AuthAPI();
     final result = await auth.uploadPicture(imagePath: imagePath);
-    getProfile();
+    if (result == 'success') {
+      getProfile(); 
+    }
     return result;
   }
 
   Future<String> topupBalance({required int balance}) async {
     final api = AuthAPI();
     final String result = await api.topupBalance(balance: balance);
-    getProfile();
+    if (result == 'success') {
+      getProfile(); 
+    }
     return result;
   }
 
   Future<String> addAddress({required String province, required String city, required String address}) async {
     final api = AuthAPI();
     final String result = await api.addAddress(province: province, city: city, address: address);
+    if (result == 'success') {
+      getProfile(); 
+    }
+    return result;
+  }
+
+  Future<String> editAddress({required int addressId, required String province, required String city, required String address, required bool isPrimaryAddress}) async {
+    final api = AuthAPI();
+    final String result = await api.editAddress(addressId: addressId, province: province, city: city, address: address, isPrimaryAddress: isPrimaryAddress);
+    if (result == 'success') {
+      getProfile();
+    }
+    return result;
+  }
+
+  Future<String> deleteAddress({required int addressId}) async {
+    final api = AuthAPI();
+    final String result = await api.deleteAddress(addressId: addressId);
+    if (result == 'success') {
+      getProfile();
+    }
     return result;
   }
 

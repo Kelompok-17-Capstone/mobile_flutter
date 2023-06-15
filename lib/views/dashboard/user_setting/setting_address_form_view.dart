@@ -89,7 +89,7 @@ class _SettingAddressFormViewState extends State<SettingAddressFormView> {
                 children: [
                   TextFormField(
                     controller: provinceController,
-                    validator: (value) {
+                    validator: widget.isEditAddress ? (value) => null : (value) {
                       if (value!.isEmpty) {
                         return 'Isi provinsi terlebih dahulu';
                       }
@@ -108,7 +108,7 @@ class _SettingAddressFormViewState extends State<SettingAddressFormView> {
                   ),
                   TextFormField(
                     controller: cityController,
-                    validator: (value) {
+                    validator: widget.isEditAddress ? (value) => null : (value) {
                       if (value!.isEmpty) {
                         return 'Isi kota/kabupaten terlebih dahulu';
                       }
@@ -127,7 +127,7 @@ class _SettingAddressFormViewState extends State<SettingAddressFormView> {
                   ),
                   TextFormField(
                     controller: addressController,
-                    validator: (value) {
+                    validator: widget.isEditAddress ? (value) => null : (value) {
                       if (value!.isEmpty) {
                         return 'Isi alamat lengkap terlebih dahulu';
                       }
@@ -195,8 +195,16 @@ class _SettingAddressFormViewState extends State<SettingAddressFormView> {
                 ],
               ),
               child: TextButton(
-                onPressed: () {
-                  
+                onPressed: () async {
+                  final String result = await Provider.of<AuthProvider>(context, listen: false).deleteAddress(addressId: widget.address.id);
+                  if (result == 'success') {
+                    if(!mounted) return;
+                    snackBar(context, 'Hapus alamat success');
+                    Navigator.pop(context);
+                  } else {
+                    if(!mounted) return;
+                    snackBar(context, result);
+                  }
                 },
                 style: const ButtonStyle(
                   minimumSize: MaterialStatePropertyAll(Size.fromHeight(56))
@@ -216,7 +224,21 @@ class _SettingAddressFormViewState extends State<SettingAddressFormView> {
               child: fullWidthButton(label: 'Simpan', onPressed: () async {
                 if (formKey.currentState!.validate()) {
                   if (widget.isEditAddress) {
-                    
+                    final String result = await Provider.of<AuthProvider>(context, listen: false).editAddress(
+                      addressId: widget.address.id,
+                      province: provinceController.text.trim(),
+                      city: cityController.text.trim(),
+                      address: addressController.text.trim(),
+                      isPrimaryAddress: isPrimaryAddress
+                    );
+                    if (result == 'success') {
+                      if(!mounted) return;
+                      snackBar(context, 'Edit alamat berhasil.');
+                      Navigator.pop(context);
+                    } else {
+                      if(!mounted) return;
+                      snackBar(context, result);
+                    }
                   } else {
                     final String result = await Provider.of<AuthProvider>(context, listen: false).addAddress(
                       province: provinceController.text.trim(),
@@ -225,11 +247,11 @@ class _SettingAddressFormViewState extends State<SettingAddressFormView> {
                     );
                     if (result == 'success') {
                       if(!mounted) return;
-                      snackBar(context, 'Tambah alamat berhasil');
+                      snackBar(context, 'Tambah alamat berhasil.');
                       Navigator.pop(context);
                     } else {
                       if(!mounted) return;
-                      snackBar(context, 'Tambah alamat gagal, silahkan coba lagi');
+                      snackBar(context, 'Tambah alamat gagal, silahkan coba lagi.');
                     }
                   }
                 }
