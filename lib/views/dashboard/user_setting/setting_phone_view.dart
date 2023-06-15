@@ -57,7 +57,7 @@ class _SettingPhoneViewState extends State<SettingPhoneView> {
                 ),
               ),
               const SizedBox(height: 5),
-              customForm(controller: phoneController, hintText: 'your phone number', isNumberOnly: true),
+              customForm(controller: phoneController, hintText: 'isi nomer telepon baru Anda', isNumberOnly: true),
               const SizedBox(height: 30),
               fullWidthButton(label: 'Perbarui', onPressed: () {
                 

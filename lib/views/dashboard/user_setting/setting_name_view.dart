@@ -56,7 +56,7 @@ class _SettingNameViewState extends State<SettingNameView> {
                 ),
               ),
               const SizedBox(height: 5),
-              customForm(controller: nameController, hintText: 'your name'),
+              customForm(controller: nameController, hintText: 'isi nama lengkap baru Anda'),
               const SizedBox(height: 30),
               fullWidthButton(label: 'Perbarui', onPressed: () {
                 
