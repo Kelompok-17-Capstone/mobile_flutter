@@ -3,15 +3,18 @@ import 'package:flutter/services.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
 import 'package:mobile_flutter/shared/format_rupiah.dart';
+import 'package:mobile_flutter/shared/snack_bar.dart';
+import 'package:mobile_flutter/views/auth/auth_provider.dart';
+import 'package:provider/provider.dart';
 
-class TopupDanaView extends StatefulWidget {
-  const TopupDanaView({super.key});
+class TopupOvoView extends StatefulWidget {
+  const TopupOvoView({super.key});
 
   @override
-  State<TopupDanaView> createState() => _TopupDanaViewState();
+  State<TopupOvoView> createState() => _TopupOvoViewState();
 }
 
-class _TopupDanaViewState extends State<TopupDanaView> {
+class _TopupOvoViewState extends State<TopupOvoView> {
 
   int selectedCardIndex = -1;
 
@@ -206,10 +209,10 @@ class _TopupDanaViewState extends State<TopupDanaView> {
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      Image.asset('assets/icons/Dana.png'),
+                      Image.asset('assets/icons/OVO.png'),
                       const SizedBox(width: 12),
                       const Text(
-                        'Top Up dengan Dana',
+                        'Top Up dengan OVO',
                         style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
                       ),
                     ],
@@ -283,10 +286,16 @@ class _TopupDanaViewState extends State<TopupDanaView> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: fullWidthButton(
                 label: 'Bayar Sekarang',
-                onPressed: () {
+                onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                    print('success');
-                    Navigator.popUntil(context, ModalRoute.withName('/dashboard'));
+                    final String result = await Provider.of<AuthProvider>(context, listen: false).topupBalance(balance: int.parse(amountController.text));
+                    if (result == 'success') {
+                      if(!mounted) return;
+                      snackBar(context, 'Topup success');
+                      Future.delayed(const Duration(seconds: 2), () {
+                        Navigator.popUntil(context, ModalRoute.withName('/dashboard'));
+                      });
+                    }
                   }
                 },
               ),

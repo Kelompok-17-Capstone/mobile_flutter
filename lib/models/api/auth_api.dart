@@ -154,5 +154,30 @@ class AuthAPI {
     return 'failed';
   }
 
+  Future<String> topupBalance({required int balance}) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    try {
+      final url = Uri.parse('$api/topup');
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
+      };
+      final Map data = {
+        'total': balance
+      };
+
+      final response = await http.post(url, headers: headers, body: jsonEncode(data));
+      if (response.statusCode == 200) {
+        return 'success';
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    return 'failed';
+  }
+
 
 }

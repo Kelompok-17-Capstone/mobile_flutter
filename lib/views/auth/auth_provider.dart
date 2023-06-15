@@ -87,4 +87,11 @@ class AuthProvider extends ChangeNotifier {
     return result;
   }
 
+  Future<String> topupBalance({required int balance}) async {
+    final api = AuthAPI();
+    final String result = await api.topupBalance(balance: balance);
+    getProfile();
+    return result;
+  }
+
 }
