@@ -20,13 +20,14 @@ class _DashboardViewState extends State<DashboardView> {
   int currentIndex = 0;
 
   List<Widget> pageList = [
-    const HomePageView(),
+    const CircularProgressIndicator(),
     const ProductsView(),
     const MemberView()
   ];
 
   @override
   void initState() {
+    pageList[0] = HomeView(pageController: pageConttroller);
     super.initState();
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
       Provider.of<ProductProvider>(context, listen: false).getAllProducts();

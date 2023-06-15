@@ -10,8 +10,9 @@ import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
 import 'package:provider/provider.dart';
 
-class HomePageView extends StatelessWidget {
-  const HomePageView({super.key});
+class HomeView extends StatelessWidget {
+  final PageController pageController;
+  const HomeView({super.key, required this.pageController});
 
   @override
   Widget build(BuildContext context) {
@@ -139,13 +140,16 @@ class HomePageView extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            pageController.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                          },
                           child: const Text(
                             'lihat semua',
                             style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                                color: Colors.grey),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                              color: Colors.grey
+                            ),
                           )
                         ),
                       ],
