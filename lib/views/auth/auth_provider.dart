@@ -125,4 +125,40 @@ class AuthProvider extends ChangeNotifier {
     return result;
   }
 
+  Future<String> updateEmail({required String email}) async {
+    final api = AuthAPI();
+    final String result = await api.updateEmail(email: email);
+    if (result == 'success') {
+      getProfile();
+    }
+    return result;
+  }
+
+  Future<String> updateName({required String name}) async {
+    final api = AuthAPI();
+    final String result = await api.updateName(name: name);
+    if (result == 'success') {
+      getProfile();
+    }
+    return result;
+  }
+
+  Future<String> updatePhoneNumber({required String phoneNumber}) async {
+    final api = AuthAPI();
+    final String result = await api.updatePhoneNumber(phoneNumber: phoneNumber);
+    if (result == 'success') {
+      getProfile();
+    }
+    return result;
+  }
+
+  Future<String> changePassword({required String currentPassword, required String newPassword, required String newConfirmationPassword}) async {
+    final api = AuthAPI();
+    final String result = await api.changePassword(currentPassword: currentPassword, newPassword: newPassword, newConfirmationPassword: newConfirmationPassword);
+    if (result == 'success') {
+      getProfile();
+    }
+    return result;
+  }
+
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
 import 'package:mobile_flutter/shared/form.dart';
+import 'package:mobile_flutter/shared/snack_bar.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -58,8 +59,18 @@ class _SettingNameViewState extends State<SettingNameView> {
               const SizedBox(height: 5),
               customForm(controller: nameController, hintText: 'isi nama lengkap baru Anda'),
               const SizedBox(height: 30),
-              fullWidthButton(label: 'Perbarui', onPressed: () {
-                
+              fullWidthButton(label: 'Perbarui', onPressed: () async {
+                if (formKey.currentState!.validate()) {
+                  final String result = await Provider.of<AuthProvider>(context, listen: false).updateName(name: nameController.text.trim());
+                  if (result == 'success') {
+                    if(!mounted) return;
+                    snackBar(context, 'Update name sukses');
+                    Navigator.pop(context);
+                  } else {
+                    if(!mounted) return;
+                    snackBar(context, result);
+                  }
+                }
               })
             ],
           ),

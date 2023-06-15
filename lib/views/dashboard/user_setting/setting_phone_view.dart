@@ -3,6 +3,7 @@ import 'package:mobile_flutter/models/user_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
 import 'package:mobile_flutter/shared/form.dart';
+import 'package:mobile_flutter/shared/snack_bar.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -59,8 +60,18 @@ class _SettingPhoneViewState extends State<SettingPhoneView> {
               const SizedBox(height: 5),
               customForm(controller: phoneController, hintText: 'isi nomer telepon baru Anda', isNumberOnly: true),
               const SizedBox(height: 30),
-              fullWidthButton(label: 'Perbarui', onPressed: () {
-                
+              fullWidthButton(label: 'Perbarui', onPressed: () async {
+                if (formKey.currentState!.validate()) {
+                  final String result = await Provider.of<AuthProvider>(context, listen: false).updatePhoneNumber(phoneNumber: phoneController.text.trim());
+                  if (result == 'success') {
+                    if(!mounted) return;
+                    snackBar(context, 'Update nomor telepon sukses');
+                    Navigator.pop(context);
+                  } else {
+                    if(!mounted) return;
+                    snackBar(context, result);
+                  }
+                }                
               })
             ],
           ),

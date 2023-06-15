@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
 import 'package:mobile_flutter/shared/form.dart';
+import 'package:mobile_flutter/shared/snack_bar.dart';
+import 'package:mobile_flutter/views/auth/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class SettingPasswordView extends StatefulWidget {
   const SettingPasswordView({super.key});
@@ -82,8 +85,26 @@ class _SettingPasswordViewState extends State<SettingPasswordView> {
               }),
               const SizedBox(height: 15),
               const SizedBox(height: 30),
-              fullWidthButton(label: 'Perbarui', onPressed: () {
-                
+              fullWidthButton(label: 'Perbarui', onPressed: () async {
+                if (formKey.currentState!.validate()) {
+                  if (passwordController.text.trim() != confirmationPasswordController.text.trim()) {
+                    snackBar(context, 'Pastikan password dan konfirmasi password sama');
+                  } else {
+                    final String result = await Provider.of<AuthProvider>(context, listen: false).changePassword(
+                      currentPassword: currentPasswordController.text.trim(),
+                      newPassword: passwordController.text.trim(),
+                      newConfirmationPassword: confirmationPasswordController.text.trim()
+                    );
+                    if (result == 'success') {
+                      if(!mounted) return;
+                      snackBar(context, 'Ganti password berhasil');
+                      Navigator.pop(context);
+                    } else {
+                      if(!mounted) return;
+                      snackBar(context, result);
+                    }
+                  }
+                }
               })
             ],
           ),

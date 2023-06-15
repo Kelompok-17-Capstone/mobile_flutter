@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
 import 'package:mobile_flutter/shared/form.dart';
+import 'package:mobile_flutter/shared/snack_bar.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -57,8 +58,18 @@ class _SettingEmailViewState extends State<SettingEmailView> {
               const SizedBox(height: 5),
               emailForm(controller: emailController),
               const SizedBox(height: 30),
-              fullWidthButton(label: 'Perbarui', onPressed: () {
-                
+              fullWidthButton(label: 'Perbarui', onPressed: () async {
+                if (formKey.currentState!.validate()) {
+                  final String result = await Provider.of<AuthProvider>(context, listen: false).updateEmail(email: emailController.text.trim());
+                  if (result == 'success') {
+                    if(!mounted) return;
+                    snackBar(context, 'Update email sukses');
+                    Navigator.pop(context);
+                  } else {
+                    if(!mounted) return;
+                    snackBar(context, result);
+                  }
+                }
               })
             ],
           ),
