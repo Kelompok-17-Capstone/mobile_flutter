@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/user_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
+import 'package:mobile_flutter/shared/snack_bar.dart';
+import 'package:mobile_flutter/views/auth/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class SettingAddressFormView extends StatefulWidget {
   final bool isEditAddress;
@@ -86,6 +89,12 @@ class _SettingAddressFormViewState extends State<SettingAddressFormView> {
                 children: [
                   TextFormField(
                     controller: provinceController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Isi provinsi terlebih dahulu';
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
                       hintText: 'Provinsi',
                       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -99,6 +108,12 @@ class _SettingAddressFormViewState extends State<SettingAddressFormView> {
                   ),
                   TextFormField(
                     controller: cityController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Isi kota/kabupaten terlebih dahulu';
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
                       hintText: 'Kota/Kabupaten',
                       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -112,6 +127,12 @@ class _SettingAddressFormViewState extends State<SettingAddressFormView> {
                   ),
                   TextFormField(
                     controller: addressController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Isi alamat lengkap terlebih dahulu';
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
                       hintText: 'Alamat beserta Kecamatan',
                       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -128,7 +149,9 @@ class _SettingAddressFormViewState extends State<SettingAddressFormView> {
             ),
             const SizedBox(height: 16),
             
-            Container(
+            !widget.isEditAddress
+            ? const SizedBox()
+            : Container(
               decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -157,7 +180,9 @@ class _SettingAddressFormViewState extends State<SettingAddressFormView> {
             ),
             const SizedBox(height: 16),
 
-            Container(
+            !widget.isEditAddress
+            ? const SizedBox()
+            : Container(
               decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -188,7 +213,27 @@ class _SettingAddressFormViewState extends State<SettingAddressFormView> {
             const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: fullWidthButton(label: 'Simpan', onPressed: () {}),
+              child: fullWidthButton(label: 'Simpan', onPressed: () async {
+                if (formKey.currentState!.validate()) {
+                  if (widget.isEditAddress) {
+                    
+                  } else {
+                    final String result = await Provider.of<AuthProvider>(context, listen: false).addAddress(
+                      province: provinceController.text.trim(),
+                      city: cityController.text.trim(),
+                      address: addressController.text.trim()
+                    );
+                    if (result == 'success') {
+                      if(!mounted) return;
+                      snackBar(context, 'Tambah alamat berhasil');
+                      Navigator.pop(context);
+                    } else {
+                      if(!mounted) return;
+                      snackBar(context, 'Tambah alamat gagal, silahkan coba lagi');
+                    }
+                  }
+                }
+              }),
             )
           ],
         ),

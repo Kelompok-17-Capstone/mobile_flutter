@@ -94,4 +94,10 @@ class AuthProvider extends ChangeNotifier {
     return result;
   }
 
+  Future<String> addAddress({required String province, required String city, required String address}) async {
+    final api = AuthAPI();
+    final String result = await api.addAddress(province: province, city: city, address: address);
+    return result;
+  }
+
 }
