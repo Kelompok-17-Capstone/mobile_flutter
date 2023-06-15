@@ -22,6 +22,16 @@ class _CartViewState extends State<CartView> {
   Widget build(BuildContext context) {
     final List<ItemCartModel> items = Provider.of<CartProvider>(context).items;
 
+    int totalProduct() {
+      int result = 0;
+      for (var item in items) {
+        if (item.isChecked) {
+          result += item.product.price * item.itemCount;
+        }
+      }
+      return result;
+    }
+  
     return Scaffold(
       appBar: customAppBar(context, title: 'Keranjang', isBackButton: true, isElevated: true),
       body: Column(
@@ -72,7 +82,8 @@ class _CartViewState extends State<CartView> {
                         const Text('Semua', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500)),
                         const Spacer(),
                         const Text('Total  ', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500)),
-                        const Text('Rp5.000.000', style: TextStyle(color: Color(0xFF00317B), fontWeight: FontWeight.w500)),
+                        Text(formatRupiah(totalProduct()), style: const TextStyle(color: Color(0xFF00317B), fontWeight: FontWeight.w500)
+                        ),
                         const SizedBox(width: 10)
                       ],
                     )
