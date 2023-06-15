@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
 import 'package:mobile_flutter/shared/form.dart';
+import 'package:mobile_flutter/views/auth/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class SettingEmailView extends StatefulWidget {
   const SettingEmailView({super.key});
@@ -13,14 +15,8 @@ class SettingEmailView extends StatefulWidget {
 class _SettingEmailViewState extends State<SettingEmailView> {
 
   final formKey = GlobalKey<FormState>();
-  final currentEmailController = TextEditingController();
   final emailController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    currentEmailController.text = 'yourcurrentemail@gmail.com';
-  }
+  final currentEmailController = TextEditingController();
 
   @override
   void dispose() {
@@ -30,6 +26,8 @@ class _SettingEmailViewState extends State<SettingEmailView> {
 
   @override
   Widget build(BuildContext context) {
+    currentEmailController.text = Provider.of<AuthProvider>(context, listen: false).user!.email;
+    
     return Scaffold(
       appBar: customAppBar(context, title: 'Alamat Email', isBackButton: true),
       body: Form(
