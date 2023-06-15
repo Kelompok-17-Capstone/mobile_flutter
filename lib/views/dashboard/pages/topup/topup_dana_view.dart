@@ -291,10 +291,10 @@ class _TopupDanaViewState extends State<TopupDanaView> {
                     final String result = await Provider.of<AuthProvider>(context, listen: false).topupBalance(balance: int.parse(amountController.text));
                     if (result == 'success') {
                       if(!mounted) return;
-                      snackBar(context, 'Topup success');
-                      Future.delayed(const Duration(seconds: 2), () {
-                        Navigator.popUntil(context, ModalRoute.withName('/dashboard'));
-                      });
+                      Navigator.pushNamedAndRemoveUntil(context, '/topup_success', ModalRoute.withName('/dashboard'));
+                    } else {
+                      if(!mounted) return;
+                      snackBar(context, 'Failed to topup, try again later.');
                     }
                   }
                 },

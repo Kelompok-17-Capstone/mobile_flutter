@@ -25,6 +25,8 @@ class _DetailProductViewState extends State<DetailProductView> {
   @override
   Widget build(BuildContext context) {
     final ProductModel product = Provider.of<ProductProvider>(context).products[widget.index];
+    final UserModel? user = Provider.of<AuthProvider>(context).user;
+
     return Scaffold(
       backgroundColor: Colors.grey[50],
       body: Column(
@@ -91,7 +93,18 @@ class _DetailProductViewState extends State<DetailProductView> {
                               const SizedBox(width: 10),
                               IconButton(
                                 onPressed: () {
-                                  Navigator.pushNamed(context, '/cart');
+                                  if (user == null) {
+                                    showDialog(
+                                      context: context,
+                                      builder:(context) => popupMessageDialog(
+                                        context,
+                                        judul: 'Maaf',
+                                        content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
+                                      ),
+                                    );
+                                  } else {
+                                    Navigator.pushNamed(context, '/cart');
+                                  }
                                 },
                                 icon: const Icon(Icons.shopping_cart_outlined, color: Color(0xFF264ECA)),
                               )

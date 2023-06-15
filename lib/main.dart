@@ -8,6 +8,7 @@ import 'package:mobile_flutter/views/auth/personal_form_view.dart';
 import 'package:mobile_flutter/views/auth/register_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/topup/topup_dana_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/topup/topup_ovo_view.dart';
+import 'package:mobile_flutter/views/dashboard/pages/topup/topup_success_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/topup/topup_view.dart';
 import 'package:mobile_flutter/views/dashboard/product/cart_view.dart';
 import 'package:mobile_flutter/views/dashboard_view.dart';
@@ -56,9 +57,10 @@ class MyApp extends StatelessWidget {
           '/personal_form':(context) => const PersonalFormView(),
           '/onboarding': (context) => const OnboardingView(),
           '/dashboard': (context) => const DashboardView(), // Dashboard / Homepage
-          '/topup':(context) => const TopupView(),
-          '/topup_dana':(context) => const TopupDanaView(),
-          '/topup_ovo':(context) => const TopupOvoView(),
+          '/topup': (context) => const TopupView(),
+          '/topup_dana': (context) => const TopupDanaView(),
+          '/topup_ovo': (context) => const TopupOvoView(),
+          '/topup_success': (context) => const TopupSuccessView(),
           '/cart': (context) => const CartView(),
           '/user_setting': (context) => const SettingView(),
           '/setting_email': (context) => const SettingEmailView(),

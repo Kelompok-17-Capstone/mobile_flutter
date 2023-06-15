@@ -4,6 +4,7 @@ import 'package:mobile_flutter/models/user_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/format_rupiah.dart';
 import 'package:mobile_flutter/shared/headers.dart';
+import 'package:mobile_flutter/shared/popup_dialog.dart';
 import 'package:mobile_flutter/shared/products_grid.dart';
 import 'package:mobile_flutter/shared/snack_bar.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
@@ -64,7 +65,14 @@ class HomeView extends StatelessWidget {
                           ElevatedButton(
                             onPressed: () {
                               if (user == null) {
-                                snackBar(context, 'Login untuk melakukan topup');
+                                showDialog(
+                                  context: context,
+                                  builder:(context) => popupMessageDialog(
+                                    context,
+                                    judul: 'Maaf',
+                                    content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
+                                  ),
+                                );
                               } else {
                                 Navigator.pushNamed(context, '/topup');
                               }

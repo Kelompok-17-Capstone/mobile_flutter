@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/user_model.dart';
+import 'package:mobile_flutter/shared/popup_dialog.dart';
 import 'dart:math' as math;
 
 import 'package:mobile_flutter/shared/snack_bar.dart';
@@ -94,7 +95,14 @@ Widget homeHeader(BuildContext context) {
                   IconButton(
                     onPressed: () {
                       if (user == null) {
-                        snackBar(context, 'Login untuk melihat keranjang');
+                        showDialog(
+                          context: context,
+                          builder:(context) => popupMessageDialog(
+                            context,
+                            judul: 'Maaf',
+                            content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
+                          ),
+                        );
                       } else {
                         Navigator.pushNamed(context, '/cart');
                       }
