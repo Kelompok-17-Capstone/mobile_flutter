@@ -105,6 +105,7 @@ Widget homeHeader(BuildContext context) {
               ),
               const SizedBox(height: 20),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     child: Column(
@@ -131,21 +132,21 @@ Widget homeHeader(BuildContext context) {
                     child: Stack(
                       children: [
                         Transform.translate(
-                          offset: const Offset(50, 10),
+                          offset: const Offset(50, -30),
                           child: const Image(
-                            image: AssetImage('assets/icons/alta_icon.png'),
+                            image: AssetImage('assets/images/products/monitor.png'),
                           ),
                         ),
                         Transform.translate(
-                          offset: const Offset(5, 70),
+                          offset: const Offset(30, 70),
                           child: const Image(
-                            image: AssetImage('assets/icons/alta_icon.png'),
+                            image: AssetImage('assets/images/products/mouse.png'),
                           ),
                         ),
                         Transform.translate(
-                          offset: const Offset(100, 70),
+                          offset: const Offset(140, 70),
                           child: const Image(
-                            image: AssetImage('assets/icons/alta_icon.png'),
+                            image: AssetImage('assets/images/products/headset.png'),
                           ),
                         ),
                       ],
