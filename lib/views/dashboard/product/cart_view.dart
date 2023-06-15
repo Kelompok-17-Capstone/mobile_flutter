@@ -197,8 +197,14 @@ class _CatalogProductCardState extends State<CatalogProductCard> {
                     IconButton(
                       onPressed: () async {
                         final String result = await Provider.of<CartProvider>(context, listen: false).deleteCartItem(cartId: item.cartId!);
-                        if(!mounted) return;
-                        snackBar(context, '$result delete cart');
+                        if (result == 'cooldown') {
+                          if(!mounted) return;
+                          snackBar(context, 'Please try again in a second');
+                        } else {
+                          if(!mounted) return;
+                          snackBar(context, '$result delete cart');
+                        }
+                        
                       },
                       icon: Icon(Icons.delete_outline, color: Colors.red[600],)
                     ),

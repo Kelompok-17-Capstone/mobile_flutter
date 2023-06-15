@@ -180,15 +180,14 @@ class _DetailProductViewState extends State<DetailProductView> {
             context,
             leftContent: IconButton(
               onPressed: () {
-                showBuyNowDialog(context, product: product);
+                showBuyNowDialog(context, label: 'Tambahkan Keranjang', product: product);
               },
               icon: const Icon(Icons.shopping_cart_outlined, color: Color(0xFF264ECA)),
             ),
             labelButton: 'Beli Sekarang',
             onPressed: () {
               //notAMember(context);
-              // TODO: addToCart
-              showBuyNowDialog(context, product: product, isDirectCheckout: true);
+              showBuyNowDialog(context, label: 'Beli Sekarang', product: product, isDirectCheckout: true);
             },
           )
         ],
@@ -234,7 +233,7 @@ class _DetailProductViewState extends State<DetailProductView> {
     );
   }
 
-  Future<void> showBuyNowDialog(BuildContext context, {required ProductModel product, bool isDirectCheckout = false}) {
+  Future<void> showBuyNowDialog(BuildContext context, {required String label, required ProductModel product, bool isDirectCheckout = false}) {
     final bool guestMode = Provider.of<AuthProvider>(context, listen: false).user == null ? true : false;
     int itemCount = 1;
 
@@ -311,7 +310,7 @@ class _DetailProductViewState extends State<DetailProductView> {
                       ),
               
                       const SizedBox(height: 40),
-                      fullWidthButton(label: 'Tambahkan ke Keranjang', onPressed: () async {
+                      fullWidthButton(label: label, onPressed: () async {
                         if (guestMode) {
                           Navigator.pop(context);
                           notAMember(context);

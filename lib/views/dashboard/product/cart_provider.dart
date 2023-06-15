@@ -35,6 +35,9 @@ class CartProvider extends ChangeNotifier {
   }
 
   Future<String> deleteCartItem({required int cartId}) async {
+    if (_globalCooldown) {
+      return 'cooldown';
+    }
     final api = ProductAPI();
     final String result = await api.deleteCartItem(cartId: cartId);
     if (result == 'success') {
