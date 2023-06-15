@@ -13,13 +13,17 @@ class SettingPasswordView extends StatefulWidget {
 class _SettingPasswordViewState extends State<SettingPasswordView> {
 
   final formKey = GlobalKey<FormState>();
+  final currentPasswordController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmationPasswordController = TextEditingController();
+  bool isCurrentPasswordVisible = false;
   bool isPasswordVisible = false;
+  bool isConfirmationPasswordVisible = false;
 
   @override
   void dispose() {
     super.dispose();
+    currentPasswordController.dispose();
     passwordController.dispose();
     confirmationPasswordController.dispose();
   }
@@ -36,7 +40,21 @@ class _SettingPasswordViewState extends State<SettingPasswordView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Email Saat Ini',
+                'Kata sandi saat ini',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(height: 5),
+              passwordForm(controller: currentPasswordController, isPasswordVisible: isCurrentPasswordVisible, onPressed:() {
+                setState(() {
+                  isCurrentPasswordVisible = !isCurrentPasswordVisible;
+                });
+              }),
+              const SizedBox(height: 15),
+              const Text(
+                'Kata sandi baru',
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
@@ -47,21 +65,22 @@ class _SettingPasswordViewState extends State<SettingPasswordView> {
                 setState(() {
                   isPasswordVisible = !isPasswordVisible;
                 });
-              }),
+              },),
               const SizedBox(height: 15),
               const Text(
-                'Email Baru',
+                'Konfirmasi kata sandi baru ',
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
                 ),
               ),
               const SizedBox(height: 5),
-              passwordForm(controller: confirmationPasswordController, isPasswordVisible: isPasswordVisible, onPressed:() {
+              passwordForm(controller: confirmationPasswordController, isPasswordVisible: isConfirmationPasswordVisible, onPressed:() {
                 setState(() {
-                  isPasswordVisible = !isPasswordVisible;
+                  isConfirmationPasswordVisible = !isConfirmationPasswordVisible;
                 });
-              },),
+              }),
+              const SizedBox(height: 15),
               const SizedBox(height: 30),
               fullWidthButton(label: 'Perbarui', onPressed: () {
                 

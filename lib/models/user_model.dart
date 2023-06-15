@@ -48,7 +48,7 @@ class UserModel {
 class UserAddress {
   final int id;
   final String address;
-  final bool status;
+  bool status;
   bool selected;
 
   UserAddress({required this.id, required this.address, required this.status}) : selected = status == true ? true : false;
