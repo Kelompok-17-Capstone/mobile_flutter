@@ -11,7 +11,7 @@ class ProductsView extends StatefulWidget {
   State<ProductsView> createState() => _ProductsViewState();
 }
 
-class _ProductsViewState extends State<ProductsView> with TickerProviderStateMixin{
+class _ProductsViewState extends State<ProductsView> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
 
   late TabController _tabController;
   
@@ -30,6 +30,7 @@ class _ProductsViewState extends State<ProductsView> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final List<ProductModel> products = Provider.of<ProductProvider>(context).products;
     final PriceState priceState = Provider.of<ProductProvider>(context).priceState;
 
@@ -129,4 +130,7 @@ class _ProductsViewState extends State<ProductsView> with TickerProviderStateMix
       ),
     );
   }
+  
+  @override
+  bool get wantKeepAlive => true;
   }
