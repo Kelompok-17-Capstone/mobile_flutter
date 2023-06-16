@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/shared/headers.dart';
 
 class ListPesananView extends StatefulWidget {
   const ListPesananView({
@@ -6,7 +7,6 @@ class ListPesananView extends StatefulWidget {
   });
 
   @override
-  // ignore: no_logic_in_create_state
   State<ListPesananView> createState() => _ListPesananViewState();
 }
 
@@ -35,6 +35,16 @@ class _ListPesananViewState extends State<ListPesananView> with SingleTickerProv
           padding: const EdgeInsets.all(0),
           child: Column(
             children: [
+              customHeader(
+                context,
+                title: 'Pesanan',
+                content: Image(
+                  width: MediaQuery.of(context).size.width,
+                  fit: BoxFit.fill,
+                  image: const AssetImage('assets/images/diskon.png')
+                ),
+              ),
+
               Container(
                 color: Colors.white,
                 padding: const EdgeInsets.only(top: 0),

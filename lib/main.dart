@@ -7,6 +7,7 @@ import 'package:mobile_flutter/views/auth/login_view.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:mobile_flutter/views/auth/personal_form_view.dart';
 import 'package:mobile_flutter/views/auth/register_view.dart';
+import 'package:mobile_flutter/views/dashboard/pages/list_pesanan_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/topup/topup_dana_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/topup/topup_ovo_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/topup/topup_success_view.dart';
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
           '/topup_ovo': (context) => const TopupOvoView(),
           '/topup_success': (context) => const TopupSuccessView(),
           '/cart': (context) => const CartView(),
+          '/list_pesanan': (context) => const ListPesananView(),
           '/user_setting': (context) => const SettingView(),
           '/setting_email': (context) => const SettingEmailView(),
           '/setting_password': (context) => const SettingPasswordView(),

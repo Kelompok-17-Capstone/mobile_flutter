@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/user_model.dart';
+import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/popup_dialog.dart';
 import 'dart:math' as math;
-
-import 'package:mobile_flutter/shared/snack_bar.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -203,6 +202,55 @@ Container profileHeader(BuildContext context, {String? name, String? imgUrl, voi
           )
         ],
       ),
+    ),
+  );
+}
+
+Widget customHeader(BuildContext context, {required String title, required Widget content}) {
+  return SizedBox(
+    height: MediaQuery.of(context).size.height * 0.29,
+    child: Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        Container(
+          height: 130,
+          width: double.infinity,
+          alignment: Alignment.topCenter,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color.fromARGB(255, 37, 73, 204),
+                Color.fromARGB(255, 0, 0, 0),
+              ],
+            ),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(100),
+              bottomRight: Radius.circular(100),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: AppBar(
+              leading: customBackButton(context, color: Colors.white),
+              title: Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600
+                  ),
+                ),
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              centerTitle: true,
+            )
+          ),
+        ),
+        Positioned(
+          top: 0,
+          child: content
+        )
+      ],
     ),
   );
 }

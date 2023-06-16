@@ -117,7 +117,9 @@ class HomeView extends StatelessWidget {
                       circleButton(
                         icon: Icons.shopping_bag_outlined,
                         label: 'Pesanan',
-                        onPressed: () {}
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/list_pesanan');
+                        }
                       ),
                       circleButton(
                         icon: Icons.monetization_on_outlined,

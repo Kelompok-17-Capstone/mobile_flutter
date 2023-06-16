@@ -61,7 +61,7 @@ class _DetailProductViewState extends State<DetailProductView> {
                           child: Row(
                             children: [
                               const SizedBox(width: 30),
-                              customBackButton(context),
+                              customBackButton(context, color: const Color(0xFF264ECA)),
                             ],
                           ),
                         )
