@@ -30,6 +30,7 @@ class _DashboardViewState extends State<DashboardView> {
     pageList[0] = HomeView(pageController: pageConttroller);
     super.initState();
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
+      Provider.of<ProductProvider>(context, listen: false).getNewProducts();
       Provider.of<ProductProvider>(context, listen: false).getAllProducts();
       Provider.of<CartProvider>(context, listen: false).getCart();
     });

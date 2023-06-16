@@ -6,7 +6,6 @@ import 'package:mobile_flutter/shared/format_rupiah.dart';
 import 'package:mobile_flutter/shared/headers.dart';
 import 'package:mobile_flutter/shared/popup_dialog.dart';
 import 'package:mobile_flutter/shared/products_grid.dart';
-import 'package:mobile_flutter/shared/snack_bar.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +17,8 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserModel? user = Provider.of<AuthProvider>(context).user;
-    final List<ProductModel> products = Provider.of<ProductProvider>(context).products;
+    final List<ProductModel> products = Provider.of<ProductProvider>(context).newProducts;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(

@@ -17,10 +17,12 @@ enum PriceState {
 class ProductProvider extends ChangeNotifier {
 
   List<ProductModel> _products = [];
+  List<ProductModel> _newProducts = [];
   ProductState _state = ProductState.none;
   PriceState _priceState = PriceState.none;
 
   List<ProductModel> get products => _products;
+  List<ProductModel> get newProducts => _newProducts;
   ProductState get state => _state;
   PriceState get priceState => _priceState;
 
@@ -31,6 +33,17 @@ class ProductProvider extends ChangeNotifier {
   void setProductState({required ProductState state}) {
     _state = state;
     notifyListeners();
+  }
+
+  Future<void> getNewProducts() async {
+    setProductState(state: ProductState.loading);
+    ProductAPI api = ProductAPI();
+    _newProducts = await api.getAllProducts(tab: 'terbaru', price: '');
+    if (_newProducts.isEmpty) {
+      setProductState(state: ProductState.failed);
+    } else {
+      setProductState(state: ProductState.none);
+    }
   }
 
   Future<void> getAllProducts() async {
