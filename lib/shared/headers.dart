@@ -228,28 +228,28 @@ Widget customHeader(BuildContext context, {required String title, required Widge
               bottomRight: Radius.circular(100),
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: AppBar(
-              leading: customBackButton(context, color: Colors.white),
-              title: Text(
-                  title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600
-                  ),
-                ),
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              centerTitle: true,
-            )
-          ),
         ),
         Positioned(
           top: 0,
           child: content
-        )
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: AppBar(
+            leading: customBackButton(context, color: Colors.white),
+            title: Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600
+                ),
+              ),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            centerTitle: true,
+          )
+        ),
       ],
     ),
   );
