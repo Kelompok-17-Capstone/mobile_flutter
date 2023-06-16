@@ -4,12 +4,6 @@ import 'package:mobile_flutter/shared/products_grid.dart';
 import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
 import 'package:provider/provider.dart';
 
-enum PriceState {
-  none,
-  ascending,
-  descending
-}
-
 class ProductsView extends StatefulWidget {
   const ProductsView({super.key});
 
@@ -20,7 +14,6 @@ class ProductsView extends StatefulWidget {
 class _ProductsViewState extends State<ProductsView> with TickerProviderStateMixin{
 
   late TabController _tabController;
-  PriceState priceState = PriceState.none;
   
   @override
   void initState() {
@@ -38,6 +31,7 @@ class _ProductsViewState extends State<ProductsView> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     final List<ProductModel> products = Provider.of<ProductProvider>(context).products;
+    final PriceState priceState = Provider.of<ProductProvider>(context).priceState;
 
     return SafeArea(
       child: Scaffold(
@@ -52,6 +46,9 @@ class _ProductsViewState extends State<ProductsView> with TickerProviderStateMix
                   Expanded(
                     child: TabBar(
                       controller: _tabController,
+                      onTap: (value) {
+                        Provider.of<ProductProvider>(context, listen: false).setProductTab(productTab: value == 0 ? 'terbaru': 'terfavorit');
+                      },
                       labelColor: const Color(0xFF264ECA), //<-- selected text color
                       unselectedLabelColor: Colors.grey,
                       indicatorColor: const Color(0xFF264ECA),
@@ -81,11 +78,11 @@ class _ProductsViewState extends State<ProductsView> with TickerProviderStateMix
                     onTap: () {
                       setState(() {
                         if (priceState == PriceState.none) {
-                          priceState = PriceState.ascending;
+                          Provider.of<ProductProvider>(context, listen: false).setPriceState(state: PriceState.ascending);
                         } else if (priceState == PriceState.ascending) {
-                          priceState = PriceState.descending;
+                          Provider.of<ProductProvider>(context, listen: false).setPriceState(state: PriceState.descending);
                         } else {
-                          priceState = PriceState.none;
+                          Provider.of<ProductProvider>(context, listen: false).setPriceState(state: PriceState.none);
                         }
                       });
                       print(priceState);

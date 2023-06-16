@@ -8,10 +8,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ProductAPI {
   final String api = dotenv.env['API']!;
 
-  Future<List<ProductModel>> getAllProducts() async {
+  Future<List<ProductModel>> getAllProducts({required String tab, required String price}) async {
 
     try {
-      final url = Uri.parse('$api/products'); // Real API
+      final url = Uri.parse('$api/products?tab=$tab&price=$price'); // Real API
       //final url = Uri.parse(dotenv.env['DUMMY']!); // Dummy API
       final response = await http.get(url);
       if (response.statusCode == 200) {
