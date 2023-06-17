@@ -133,7 +133,9 @@ class HomeView extends StatelessWidget {
                       circleButton(
                         icon: Icons.favorite_outline,
                         label: 'Favorit',
-                        onPressed: () {}
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/list_favorit');
+                        }
                       ),
                     ],
                   ),
