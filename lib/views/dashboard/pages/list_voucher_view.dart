@@ -13,7 +13,7 @@ class ListVoucherView extends StatelessWidget {
             children: [
               customHeader(
                 context,
-                title: 'Pesanan',
+                title: 'Voucher',
                 content: Image(
                   width: MediaQuery.of(context).size.width,
                   fit: BoxFit.fill,
