@@ -16,6 +16,7 @@ class ListPesananView extends StatefulWidget {
 
 class _ListPesananViewState extends State<ListPesananView> with SingleTickerProviderStateMixin {
   late TabController tabController;
+  int currentIndex = 0;
   final List status = [
     'dikemas',
     'dikirim',
@@ -42,6 +43,7 @@ class _ListPesananViewState extends State<ListPesananView> with SingleTickerProv
   @override
   Widget build(BuildContext context) {
     final List<OrdersModel> orders = Provider.of<OrdersProvider>(context).orders;
+    final OrdersState state = Provider.of<OrdersProvider>(context).ordersState;
 
     return Scaffold(
       backgroundColor: const Color(0xffF4F4F4),
@@ -66,7 +68,12 @@ class _ListPesananViewState extends State<ListPesananView> with SingleTickerProv
                 height: 48,
                 child: TabBar(
                   onTap: (value) {
-                    Provider.of<OrdersProvider>(context, listen: false).getOrders(status: status[tabController.index]);
+                    if (value != currentIndex) {
+                      Provider.of<OrdersProvider>(context, listen: false).getOrders(status: status[tabController.index]);
+                      setState(() {
+                        currentIndex = value;
+                      });
+                    }
                   },
                   controller: tabController,
                   labelColor: const Color(0xff264ECA), //<-- selected text color
@@ -116,7 +123,9 @@ class _ListPesananViewState extends State<ListPesananView> with SingleTickerProv
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                    child: orders.isNotEmpty
+                    child: state == OrdersState.loading
+                    ? const Center(child: CircularProgressIndicator())
+                    : orders.isNotEmpty
                     ? ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,

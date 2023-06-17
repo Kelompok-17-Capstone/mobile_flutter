@@ -32,12 +32,9 @@ class OrdersProvider extends ChangeNotifier {
 
     await Future.delayed(const Duration(seconds: 2), () async {
       final List<OrdersModel> result = await api.getOrders(status: status);
-      if (result.isNotEmpty) {
-        _orders = result;
-        setOrdersState(state: OrdersState.none);
-      } else {
-        setOrdersState(state: OrdersState.failed);
-      }
+      _orders = result;
+      _globalCooldown = false;
+      setOrdersState(state: OrdersState.none);
     });
   }
 
