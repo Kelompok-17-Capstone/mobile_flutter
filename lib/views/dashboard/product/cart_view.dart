@@ -106,7 +106,7 @@ class _CartViewState extends State<CartView> {
                           context,
                           '/checkout',
                           ModalRoute.withName('/dashboard'),
-                          arguments: CheckoutViewArgument(cart: products)
+                          arguments: CheckoutViewArgument(cart: products, isCart: true)
                         );
                         }
                         

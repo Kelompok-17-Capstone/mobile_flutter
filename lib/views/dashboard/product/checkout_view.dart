@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/item_cart_model.dart';
-import 'package:mobile_flutter/models/product_model.dart';
 import 'package:mobile_flutter/models/user_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
 import 'package:mobile_flutter/shared/custom_colors.dart';
 import 'package:mobile_flutter/shared/format_rupiah.dart';
+import 'package:mobile_flutter/shared/popup_dialog.dart';
+import 'package:mobile_flutter/shared/snack_bar.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
+import 'package:mobile_flutter/views/dashboard/pages/provider/orders_provider.dart';
 import 'package:provider/provider.dart';
 
 class CheckoutView extends StatefulWidget {
   final List<ItemCartModel> cart;
-  const CheckoutView({super.key, required this.cart});
+  final bool isCart;
+  const CheckoutView({super.key, required this.cart, required this.isCart});
 
   @override
   State<CheckoutView> createState() => _CheckoutViewState();
@@ -319,8 +322,36 @@ class _CheckoutViewState extends State<CheckoutView> {
               ),
             ),
             labelButton: 'Lakukan Pembayaran',
-            onPressed: () {
-
+            onPressed: () async {
+              if (countTotalPayment(totalProduct: totalProduct(), shippingCost: 0) > user.balance + user.coin) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return popupMessageDialog(context, judul: 'Gagal', content: 'Saldo tidak cukup, silahkan lakukan top-up saldo Anda');
+                  },
+                );
+              } else {
+                final String result = await Provider.of<OrdersProvider>(context, listen: false).createOrder(
+                  address: user.address.where((element) => element.status == true).first.address,
+                  items: widget.cart,
+                  isCoin: isCoinEnabled,
+                  isCart: widget.isCart
+                );
+                if (result == 'success') {
+                  if(!mounted) return;
+                  await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return popupMessageDialog(context, judul: 'Berhasil', content: 'Pembayaran telah berhasil, silahkan cek pesanan Anda.');
+                    },
+                  );
+                  if(!mounted) return;
+                  Navigator.popUntil(context, ModalRoute.withName('/dashboard'));
+                } else {
+                  if(!mounted) return;
+                  snackBar(context, 'gagal, $result');
+                }
+              }
             },
           )
         ],

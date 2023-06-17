@@ -340,9 +340,11 @@ class _DetailProductViewState extends State<DetailProductView> {
                                     productId: product.id,
                                     productName: product.name,
                                     productPrice: product.price,
-                                    imgUrl: product.imgUrl
+                                    imgUrl: product.imgUrl,
+                                    itemCount: itemCount
                                   )
-                                ]
+                                ],
+                                isCart: false
                               )
                             );
                           } else {

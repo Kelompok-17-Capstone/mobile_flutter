@@ -54,7 +54,10 @@ class HomeView extends StatelessWidget {
                                 const SizedBox(width: 5),
                                 Expanded(
                                   child: Text(
-                                    user == null ? 'Login untuk melihat saldo' : formatRupiah(user.balance),
+                                    user == null ? 'Silahkan Login' : formatRupiah(user.balance),
+                                    overflow: TextOverflow.fade,
+                                    maxLines: 1,
+                                    softWrap: false,
                                     style: const TextStyle(color: Colors.black)
                                   ),
                                 ),

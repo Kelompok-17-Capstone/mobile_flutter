@@ -14,6 +14,7 @@ import 'package:mobile_flutter/views/dashboard/pages/list_riwayat_koin_view.dart
 import 'package:mobile_flutter/views/dashboard/pages/list_voucher_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/notification/detail_notification_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/notification/notification_view.dart';
+import 'package:mobile_flutter/views/dashboard/pages/provider/orders_provider.dart';
 import 'package:mobile_flutter/views/dashboard/pages/topup/topup_dana_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/topup/topup_ovo_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/topup/topup_success_view.dart';
@@ -50,7 +51,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create:(context) => AuthProvider()),
         ChangeNotifierProvider(create:(context) => ProductProvider()),
-        ChangeNotifierProvider(create:(context) => CartProvider())
+        ChangeNotifierProvider(create:(context) => CartProvider()),
+        ChangeNotifierProvider(create:(context) => OrdersProvider())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -97,7 +99,7 @@ class MyApp extends StatelessWidget {
             final args = settings.arguments as CheckoutViewArgument;
             return MaterialPageRoute(
               builder: (context) {
-                return CheckoutView(cart: args.cart);
+                return CheckoutView(cart: args.cart, isCart: args.isCart);
               },
             );
           }
