@@ -48,7 +48,7 @@ class ListFavoritView extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-
+                        
                       },
                       child: Column(
                         children: [

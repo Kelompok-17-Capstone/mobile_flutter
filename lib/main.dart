@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mobile_flutter/arguments/checkout_view_argument.dart';
+import 'package:mobile_flutter/arguments/detail_notification_view_argument.dart';
 import 'package:mobile_flutter/arguments/detail_product_view_argument.dart';
 import 'package:mobile_flutter/arguments/setting_address_form_view_argument.dart';
 import 'package:mobile_flutter/views/auth/login_view.dart';
@@ -11,6 +12,8 @@ import 'package:mobile_flutter/views/dashboard/pages/list_favorit_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/list_pesanan_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/list_riwayat_koin_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/list_voucher_view.dart';
+import 'package:mobile_flutter/views/dashboard/pages/notification/detail_notification_view.dart';
+import 'package:mobile_flutter/views/dashboard/pages/notification/notification_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/topup/topup_dana_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/topup/topup_ovo_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/topup/topup_success_view.dart';
@@ -63,6 +66,7 @@ class MyApp extends StatelessWidget {
           '/personal_form':(context) => const PersonalFormView(),
           '/onboarding': (context) => const OnboardingView(),
           '/dashboard': (context) => const DashboardView(), // Dashboard / Homepage
+          '/notification': (context) => const  NotificationView(),
           '/topup': (context) => const TopupView(),
           '/topup_dana': (context) => const TopupDanaView(),
           '/topup_ovo': (context) => const TopupOvoView(),
@@ -105,6 +109,16 @@ class MyApp extends StatelessWidget {
                 return SettingAddressFormView(isEditAddress: args.isEditAddress, address: args.address);
               }
             );
+          }
+
+          if (settings.name == '/detail_notification') {
+            final args = settings.arguments as DetailNotificationViewArgument;
+            return MaterialPageRoute(
+              builder: (context) {
+                return DetailNotificationView(date: args.date, message: args.message);
+              },
+            );
+            
           }
           return null;
         },

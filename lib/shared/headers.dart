@@ -87,7 +87,7 @@ Widget homeHeader(BuildContext context) {
                   ),
                   IconButton(
                     onPressed: () {
-                      
+                      Navigator.pushNamed(context, '/notification');
                     },
                     icon: const Icon(Icons.notifications_outlined, color: Colors.white),
                   ),
