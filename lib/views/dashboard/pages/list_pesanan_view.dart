@@ -124,7 +124,7 @@ class _ListPesananViewState extends State<ListPesananView> with SingleTickerProv
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                     child: state == OrdersState.loading
-                    ? const Center(child: CircularProgressIndicator())
+                    ? CircularProgressIndicator(color: const Color(0xFF264ECA).withOpacity(0.8))
                     : orders.isNotEmpty
                     ? ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
@@ -152,9 +152,11 @@ class _ListPesananViewState extends State<ListPesananView> with SingleTickerProv
                                       color: Color(0xff264ECA),
                                       fontWeight: FontWeight.w500
                                     ),
-                                  )
+                                  ),
                                 ],
-                              )
+                              ),
+                              const Divider(),
+                              const SizedBox(height: 10)
                             ],
                           ),
                         );

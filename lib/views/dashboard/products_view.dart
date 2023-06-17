@@ -32,6 +32,7 @@ class _ProductsViewState extends State<ProductsView> with TickerProviderStateMix
   Widget build(BuildContext context) {
     super.build(context);
     final List<ProductModel> products = Provider.of<ProductProvider>(context).products;
+    final ProductState state = Provider.of<ProductProvider>(context).state;
     final PriceState priceState = Provider.of<ProductProvider>(context).priceState;
 
     return SafeArea(
@@ -86,7 +87,6 @@ class _ProductsViewState extends State<ProductsView> with TickerProviderStateMix
                           Provider.of<ProductProvider>(context, listen: false).setPriceState(state: PriceState.none);
                         }
                       });
-                      print(priceState);
                     },
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.33,
@@ -121,7 +121,9 @@ class _ProductsViewState extends State<ProductsView> with TickerProviderStateMix
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  child: productsGrid(products: products, isProductPage: true),
+                  child: state == ProductState.loading
+                  ? CircularProgressIndicator(color: const Color(0xFF264ECA).withOpacity(0.8))
+                  : productsGrid(products: products, isProductPage: true),
                 ),
               ),
             )

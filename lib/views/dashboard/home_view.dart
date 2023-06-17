@@ -18,6 +18,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserModel? user = Provider.of<AuthProvider>(context).user;
     final List<ProductModel> products = Provider.of<ProductProvider>(context).newProducts;
+    final ProductState state = Provider.of<ProductProvider>(context).state;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -174,7 +175,9 @@ class HomeView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    productsGrid(products: products)
+                    state == ProductState.loading
+                    ? CircularProgressIndicator(color: const Color(0xFF264ECA).withOpacity(0.8))
+                    : productsGrid(products: products)
                   ],
                 ),
               ),
