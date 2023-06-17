@@ -118,18 +118,32 @@ class _ListPesananViewState extends State<ListPesananView> with SingleTickerProv
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                     child: orders.isNotEmpty
                     ? ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
                       itemCount: orders.length,
                       itemBuilder: (context, index) {
                         final OrdersModel order = orders[index];
                         return ListTile(
-                          title: Text('Order ID: ${order.id}'),
+                          title: Text(
+                            'Order ID: ${order.id}',
+                            maxLines: 1,
+                            overflow: TextOverflow.fade,
+                            softWrap: false,
+                          ),
                           subtitle: Column(
                             children: [
                               Text('Alamat pengiriman: ${order.address}'),
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  const Text('Total belanja: '),
-                                  Text(formatRupiah(order.totalPrice))
+                                  const Text('Total belanja: ', style: TextStyle(fontWeight: FontWeight.w500)),
+                                  Text(
+                                    formatRupiah(order.totalPrice),
+                                    style: const TextStyle(
+                                      color: Color(0xff264ECA),
+                                      fontWeight: FontWeight.w500
+                                    ),
+                                  )
                                 ],
                               )
                             ],
