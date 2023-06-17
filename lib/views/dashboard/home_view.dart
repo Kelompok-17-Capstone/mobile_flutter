@@ -58,6 +58,7 @@ class HomeView extends StatelessWidget {
                                     overflow: TextOverflow.fade,
                                     maxLines: 1,
                                     softWrap: false,
+                                    textAlign: TextAlign.center,
                                     style: const TextStyle(color: Colors.black)
                                   ),
                                 ),
