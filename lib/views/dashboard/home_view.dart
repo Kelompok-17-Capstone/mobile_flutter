@@ -126,7 +126,9 @@ class HomeView extends StatelessWidget {
                       circleButton(
                         icon: Icons.monetization_on_outlined,
                         label: 'Koin',
-                        onPressed: () {}
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/list_koin');
+                        }
                       ),
                       circleButton(
                         icon: Icons.favorite_outline,

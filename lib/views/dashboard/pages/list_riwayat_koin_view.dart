@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/shared/headers.dart';
 
-class ListVoucherView extends StatelessWidget {
-  const ListVoucherView({super.key});
+class ListRiwayatKoin extends StatelessWidget {
+  const ListRiwayatKoin({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +13,23 @@ class ListVoucherView extends StatelessWidget {
             children: [
               customHeader(
                 context,
-                title: 'Voucher',
-                content: Image(
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.fill,
-                  image: const AssetImage('assets/images/diskon.png')
-                ),
+                title: 'Koin',
+                content: Container(
+                  margin: const EdgeInsets.only(top: 70),
+                  color: Colors.white,
+                  width: 380,
+                  height: 180,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Image(
+                        image: AssetImage('assets/icons/alta_icon.png'),
+                        height: 73,
+                      ),
+                      Text('Alta Tech', style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500))
+                    ],
+                  ),
+                )
               ),
               const SizedBox(height: 10),
               Container(
@@ -54,10 +65,10 @@ class ListVoucherView extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: 10,
                   itemBuilder: (context, index) {
-                    return ListTile(
+                    return const ListTile(
                       isThreeLine: true,
-                      leading: const Icon(Icons.confirmation_number_outlined, color: Colors.orange, size: 40),
-                      title: const Text(
+                      leading: Icon(Icons.monetization_on_outlined, color: Colors.orange, size: 40),
+                      title: Text(
                         'Cashback 10RB',
                         style: TextStyle(
                           fontSize: 16,
@@ -65,21 +76,12 @@ class ListVoucherView extends StatelessWidget {
                           color: Color(0xFF264ECA)
                         ),
                       ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text('Khusus transaksi fitness'),
-                          Text('Berlaku hingga 09-04-2024')
-                        ],
-                      ),
-                      trailing: ElevatedButton(
-                        onPressed: () {
-                          
-                        },
-                        style: const ButtonStyle(
-                          backgroundColor: MaterialStatePropertyAll(Color(0xFF264ECA))
+                      subtitle: Text('Cashback 1% koin dari transaski'),
+                      trailing: Text(
+                        '+50.000',
+                        style: TextStyle(
+                          color: Color(0xFFF9A913)
                         ),
-                        child: const Text('Klaim'),
                       ),
                     );
                   },
