@@ -26,7 +26,7 @@ class _CartViewState extends State<CartView> {
       int result = 0;
       for (var item in items) {
         if (item.isChecked) {
-          result += item.product.price * item.itemCount;
+          result += item.productPrice * item.itemCount;
         }
       }
       return result;
@@ -171,7 +171,7 @@ class _CatalogProductCardState extends State<CatalogProductCard> {
             color: Colors.grey[100],
             width: 100,
             height: 100, 
-            child: Image(image: NetworkImage(item.product.imgUrl))
+            child: Image(image: NetworkImage(item.imgUrl))
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -179,7 +179,7 @@ class _CatalogProductCardState extends State<CatalogProductCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  item.product.name,
+                  item.productName,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontSize: 16,
@@ -190,7 +190,7 @@ class _CatalogProductCardState extends State<CatalogProductCard> {
                 Row(
                   children: [
                     Text(
-                      formatRupiah(item.product.price),
+                      formatRupiah(item.productPrice),
                       style: const TextStyle(fontSize: 14),
                     ),
                     const Spacer(),

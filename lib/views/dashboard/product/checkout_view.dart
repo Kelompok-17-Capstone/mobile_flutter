@@ -21,7 +21,6 @@ class _CheckoutViewState extends State<CheckoutView> {
 
   late UserModel user;
 
-  final noteController = TextEditingController();
   bool isCoinEnabled = false;
 
   @override
@@ -35,17 +34,9 @@ class _CheckoutViewState extends State<CheckoutView> {
     return (totalProduct + shippingCost - discount).ceil();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    noteController.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
-    // final List<ItemCartModel> items = Provider.of<CartProvider>(context).items;
-    // final int amount = Provider.of<CartProvider>(context).amount;
-    // final int totalProduct = Provider.of<CartProvider>(context).totalProduct;
 
     int amountProuct() {
       int result = 0;
@@ -58,7 +49,7 @@ class _CheckoutViewState extends State<CheckoutView> {
     int totalProduct() {
       int result = 0;
       for (var item in widget.cart) {
-        result += item.product.price * item.itemCount;
+        result += item.productPrice * item.itemCount;
       }
       return result;
     }
@@ -90,9 +81,9 @@ class _CheckoutViewState extends State<CheckoutView> {
                         final ItemCartModel item = widget.cart[index];
                         return ListTile(
                           isThreeLine: true,
-                          leading: Image(image: NetworkImage(item.product.imgUrl), height: 60),
+                          leading: Image(image: NetworkImage(item.imgUrl), height: 60),
                           title: Text(
-                            item.product.name,
+                            item.productName,
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w500

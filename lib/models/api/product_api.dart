@@ -69,12 +69,10 @@ class ProductAPI {
         if (result == null) {
           return [];
         }
-        final List<ItemCartModel> cart = await Future.wait(result.map((item) async {
+        final List<ItemCartModel> cart = result.map((item) {
           final json = jsonEncode(item);
-          final getProductDetail = await http.get(Uri.parse('$api/products/${item['product_id']}'));
-          final ProductModel product = ProductModel.fromJson(json: jsonEncode(jsonDecode(getProductDetail.body)['data']));
-          return ItemCartModel.fromJson(json: json, product: product);
-        }).toList());
+          return ItemCartModel.fromJson(json: json);
+        }).toList();
         return cart;
       }
       

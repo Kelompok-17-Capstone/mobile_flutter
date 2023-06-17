@@ -71,7 +71,7 @@ class CartProvider extends ChangeNotifier {
   void countTotal() {
     int result = 0;
     for (var item in _items) {
-      result += item.product.price * item.itemCount;
+      result += item.productPrice * item.itemCount;
     }
     _totalProduct = result;
     notifyListeners();

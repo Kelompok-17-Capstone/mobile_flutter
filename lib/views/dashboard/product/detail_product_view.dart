@@ -330,7 +330,21 @@ class _DetailProductViewState extends State<DetailProductView> {
                         } else {
                           if (isDirectCheckout) {
                             Navigator.pop(context);
-                            Navigator.pushNamed(context, '/checkout', arguments: CheckoutViewArgument(cart: [ItemCartModel(cartId: null, product: product, itemCount: itemCount)]));
+                            Navigator.pushNamed(
+                              context,
+                              '/checkout',
+                              arguments: CheckoutViewArgument(
+                                cart: [
+                                  ItemCartModel(
+                                    cartId: null,
+                                    productId: product.id,
+                                    productName: product.name,
+                                    productPrice: product.price,
+                                    imgUrl: product.imgUrl
+                                  )
+                                ]
+                              )
+                            );
                           } else {
                             final String result = await Provider.of<CartProvider>(context, listen: false).addToCart(product: product, itemCount: itemCount);
                             if (!mounted) return;
