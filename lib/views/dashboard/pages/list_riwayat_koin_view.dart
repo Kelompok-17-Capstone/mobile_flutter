@@ -1,11 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:mobile_flutter/models/coin_model.dart';
+import 'package:mobile_flutter/shared/format_rupiah.dart';
 import 'package:mobile_flutter/shared/headers.dart';
+import 'package:mobile_flutter/views/dashboard/pages/provider/coin_provider.dart';
+import 'package:provider/provider.dart';
 
-class ListRiwayatKoin extends StatelessWidget {
+class ListRiwayatKoin extends StatefulWidget {
   const ListRiwayatKoin({super.key});
 
   @override
+  State<ListRiwayatKoin> createState() => _ListRiwayatKoinState();
+}
+
+class _ListRiwayatKoinState extends State<ListRiwayatKoin> {
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
+      Provider.of<CoinProvider>(context, listen: false).getHistory();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final List<CoinModel> history = Provider.of<CoinProvider>(context, listen: false).history;
+    final CoinState state = Provider.of<CoinProvider>(context).state;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -60,27 +81,36 @@ class ListRiwayatKoin extends StatelessWidget {
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: ListView.builder(
+                child: state == CoinState.loading
+                ? CircularProgressIndicator(color: const Color(0xFF264ECA).withOpacity(0.8))
+                : ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: 10,
+                  itemCount: history.length,
                   itemBuilder: (context, index) {
-                    return const ListTile(
+                    final CoinModel item = history[index];
+                    return ListTile(
                       isThreeLine: true,
-                      leading: Icon(Icons.monetization_on_outlined, color: Colors.orange, size: 40),
+                      leading: Icon(
+                        Icons.monetization_on_outlined,
+                        color: item.status == 'increase' ? Colors.orange : Colors.grey[350], 
+                        size: 40
+                      ),
                       title: Text(
-                        'Cashback 10RB',
-                        style: TextStyle(
+                        item.status == 'increase' ? 'Diperoleh ${DateFormat('dd-MM-yyyy').format(DateTime.parse(item.date))}' : 'Ditukar ${DateFormat('dd-MM-yyyy').format(DateTime.parse(item.date))}',
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Color(0xFF264ECA)
                         ),
                       ),
-                      subtitle: Text('Cashback 1% koin dari transaski'),
+                      subtitle: item.status == 'increase'
+                      ? const Text('Cashback 1% koin dari topup')
+                      : const Text('Pembelian produk'),
                       trailing: Text(
-                        '+50.000',
+                        item.status == 'increase' ? '+ ${formatRupiah(item.total)}' : '- ${formatRupiah(item.total)}',
                         style: TextStyle(
-                          color: Color(0xFFF9A913)
+                          color: item.status == 'increase' ? Colors.orange : Colors.grey[350]
                         ),
                       ),
                     );
