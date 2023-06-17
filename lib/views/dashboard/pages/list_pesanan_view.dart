@@ -96,8 +96,42 @@ class _ListPesananViewState extends State<ListPesananView> with SingleTickerProv
               ),
               Expanded(
                 child: TabBarView(
+                  physics: const NeverScrollableScrollPhysics(),
                   controller: _tabController,
                   children: [
+                    SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 24,
+                          top: 18,
+                          right: 24,
+                        ),
+                        child: Column(
+                          children: const [
+                            Image(
+                              image: AssetImage('assets/images/pesanan.png'),
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            Text(
+                              'Belum ada pesanan',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.grey
+                              ),
+                            ),
+                            Image(
+                              image: AssetImage('assets/images/pesanan.png'),
+                            ),
+                            Image(
+                              image: AssetImage('assets/images/pesanan.png'),
+                            ),
+                          ],
+                        )
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(
                         left: 24,
@@ -115,9 +149,10 @@ class _ListPesananViewState extends State<ListPesananView> with SingleTickerProv
                           Text(
                             'Belum ada pesanan',
                             style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.grey),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.grey
+                            ),
                           )
                         ],
                       )
@@ -139,9 +174,10 @@ class _ListPesananViewState extends State<ListPesananView> with SingleTickerProv
                           Text(
                             'Belum ada pesanan',
                             style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.grey),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.grey
+                            ),
                           )
                         ],
                       )
@@ -163,33 +199,10 @@ class _ListPesananViewState extends State<ListPesananView> with SingleTickerProv
                           Text(
                             'Belum ada pesanan',
                             style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.grey),
-                          )
-                        ],
-                      )
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 24,
-                        top: 18,
-                        right: 24,
-                      ),
-                      child: Column(
-                        children: const [
-                          Image(
-                            image: AssetImage('assets/images/pesanan.png'),
-                          ),
-                          SizedBox(
-                            height: 16,
-                          ),
-                          Text(
-                            'Belum ada pesanan',
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.grey),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.grey
+                            ),
                           )
                         ],
                       )
