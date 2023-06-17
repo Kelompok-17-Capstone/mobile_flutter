@@ -112,7 +112,9 @@ class HomeView extends StatelessWidget {
                       circleButton(
                         icon: Icons.confirmation_number_outlined,
                         label: 'Voucher',
-                        onPressed: () {}
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/list_voucher');
+                        }
                       ),
                       circleButton(
                         icon: Icons.shopping_bag_outlined,
