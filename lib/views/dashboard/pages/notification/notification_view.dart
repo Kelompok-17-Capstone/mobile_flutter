@@ -68,7 +68,9 @@ class NotificationView extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Positioned(
+                      notification.isRead
+                      ? const SizedBox()
+                      : Positioned(
                         top: 10,
                         left: 10,
                         child: Container(

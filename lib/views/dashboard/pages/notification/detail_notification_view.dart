@@ -12,7 +12,10 @@ class DetailNotificationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NotificationModel notification = Provider.of<NotificationProvider>(context).notifications[index];
+    final NotificationModel notification = Provider.of<NotificationProvider>(context, listen: false).notifications[index];
+    if (!notification.isRead) {
+      Provider.of<NotificationProvider>(context, listen: false).messageRead(id: notification.id);
+    }
     final date = DateFormat('d MMMM y').format(DateTime.parse(notification.date));
     return Scaffold(
       body: SafeArea(

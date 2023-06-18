@@ -32,4 +32,25 @@ class NotificationAPI {
 
     return [];
   }
+
+  Future<String> messageRead({required int id}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    try {
+      final url = Uri.parse('$api/notifications/status/$id');
+      final Map<String, String> headers = {
+        'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
+      };
+
+      final response = await http.put(url, headers: headers);
+      if (response.statusCode == 200) {
+        return 'success';
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    return 'failed';
+  }
+
 }

@@ -17,4 +17,14 @@ class NotificationProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<String> messageRead({required int id}) async {
+    final api = NotificationAPI();
+    final String result = await api.messageRead(id: id);
+    if (result == 'success') {
+      getNotification();
+    }
+    print(result);
+    return result;
+  }
 }

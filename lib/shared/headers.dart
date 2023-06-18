@@ -4,6 +4,7 @@ import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/popup_dialog.dart';
 import 'dart:math' as math;
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
+import 'package:mobile_flutter/views/dashboard/pages/provider/notification_provider.dart';
 import 'package:provider/provider.dart';
 
 Widget customHeaderWithIcon({required String title}) {
@@ -36,6 +37,7 @@ Widget customHeaderWithIcon({required String title}) {
 
 Widget homeHeader(BuildContext context) {
   final UserModel? user = Provider.of<AuthProvider>(context).user;
+  final int notificationCount = Provider.of<NotificationProvider>(context).notifications.where((element) => element.isRead == false).length;
   return Stack(
     children: [
       Stack(
@@ -87,17 +89,41 @@ Widget homeHeader(BuildContext context) {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/notification');
+                      if (user == null) {
+                        showDialog(
+                          context: context,
+                          builder:(context) => popupMessageDialog(
+                            context,
+                            judul: 'Maaf',
+                            content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
+                          ),
+                        );
+                      } else {
+                        Navigator.pushNamed(context, '/notification');
+                      }
                     },
                     child: Stack(
                       children: [
                         IconButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, '/notification');
+                            if (user == null) {
+                              showDialog(
+                                context: context,
+                                builder:(context) => popupMessageDialog(
+                                  context,
+                                  judul: 'Maaf',
+                                  content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
+                                ),
+                              );
+                            } else {
+                              Navigator.pushNamed(context, '/notification');
+                            }
                           },
                           icon: const Icon(Icons.notifications_outlined, color: Colors.white),
                         ),
-                        Positioned(
+                        notificationCount == 0
+                        ? const SizedBox()
+                        : Positioned(
                           right: 11,
                           top: 11,
                           child:  Container(
@@ -110,9 +136,9 @@ Widget homeHeader(BuildContext context) {
                               minWidth: 14,
                               minHeight: 14,
                             ),
-                            child: const Text(
-                              '1',
-                              style: TextStyle(
+                            child: Text(
+                              notificationCount.toString(),
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 8,
                               ),
