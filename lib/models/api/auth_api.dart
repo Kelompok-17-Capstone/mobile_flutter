@@ -83,13 +83,13 @@ class AuthAPI {
       final response = await http.post(url, headers: headers, body: data);
       if (response.statusCode == 200) {
         prefs.setString('status_user', 'validated');
-        return 'create profile success';
+        return 'success';
       }
       
     } catch (e) {
       print(e);
     }
-    return 'create profile failed';
+    return 'failed';
   }
 
   Future<UserModel?> getProfile() async {

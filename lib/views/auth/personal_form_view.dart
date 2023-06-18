@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/form.dart';
 import 'package:mobile_flutter/shared/headers.dart';
+import 'package:mobile_flutter/shared/snack_bar.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -69,15 +70,20 @@ class _PersonalFormViewState extends State<PersonalFormView> {
                       const SizedBox(height: 20),
                       fullWidthButton(label: 'Submit', onPressed: () async {
                         if (formKey.currentState!.validate()) {
-                          await Provider.of<AuthProvider>(context, listen: false).createProfile(
+                          final String result = await Provider.of<AuthProvider>(context, listen: false).createProfile(
                             name: nameController.text.trim(),
                             phoneNumber: phoneController.text,
                             city: cityController.text.trim(),
                             province: provinceController.text.trim(),
                             address: addressController.text.trim()
                           );
-                          if(!mounted) return;
-                          Navigator.pushNamedAndRemoveUntil(context, '/dashboard', (route) => false);
+                          if (result == 'success') {
+                            if(!mounted) return;
+                            Navigator.pushNamedAndRemoveUntil(context, '/onboarding', (route) => false);
+                          } else {
+                            if(!mounted) return;
+                            snackBar(context, 'Gagal membuat profile, coba lagi dalam beberapa saat');
+                          }
                         }
                       }),
                     ],
