@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/user_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/popup_dialog.dart';
+import 'package:mobile_flutter/shared/product_search_delegate.dart';
 import 'dart:math' as math;
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:mobile_flutter/views/dashboard/pages/provider/notification_provider.dart';
@@ -40,6 +41,30 @@ Widget homeHeader(BuildContext context) {
   final UserModel? user = Provider.of<AuthProvider>(context).user;
   final int notificationCount = Provider.of<NotificationProvider>(context).notifications.where((element) => element.isRead == false).length;
   final int cartCount = Provider.of<CartProvider>(context).items.length;
+  TextEditingController searchController = TextEditingController();
+
+  bool globalCooldown = false;
+
+  Future<void> searchProduct({required BuildContext context, required SearchDelegate<void> delegate}) async {
+    if (globalCooldown) {
+      return;
+    }
+
+    globalCooldown = true;
+    await Future.delayed(const Duration(seconds: 2), () async {
+      await showSearch(
+        query: searchController.text,
+        context: context,
+        delegate: delegate
+      );
+      if (context.mounted) {
+        FocusScope.of(context).requestFocus(FocusNode());
+        searchController.text = '';
+      }
+      globalCooldown = false;
+    });
+  }
+
   return Stack(
     children: [
       Stack(
@@ -78,9 +103,12 @@ Widget homeHeader(BuildContext context) {
                 children: [
                   Expanded(
                     child: TextFormField(
+                      controller: searchController,
                       onTapOutside: (event) {
                         FocusScope.of(context).unfocus();
-                        print(event);
+                      },
+                      onChanged: (value) async {
+                        await searchProduct(context: context, delegate: ProductSearchDelegate());
                       },
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.search),
