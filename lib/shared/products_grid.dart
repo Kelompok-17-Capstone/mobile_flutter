@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/arguments/detail_product_view_argument.dart';
 import 'package:mobile_flutter/models/product_model.dart';
+import 'package:mobile_flutter/shared/cached_image.dart';
 import 'package:mobile_flutter/shared/format_rupiah.dart';
 
 Widget productsGrid({required List<ProductModel> products, bool isProductPage = false}) {
@@ -32,7 +33,7 @@ Widget productsGrid({required List<ProductModel> products, bool isProductPage = 
               color: Colors.white,
               child: Hero(
                 tag: '${product.id}-$isProductPage',
-                child: Image(image: NetworkImage(product.imgUrl))
+                child: cachedImage(url: product.imgUrl),
               ),
             ),
             Expanded(

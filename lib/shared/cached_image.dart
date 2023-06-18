@@ -7,7 +7,10 @@ Widget cachedImage({required String url, double? width, double? height, BoxFit? 
     width: width,
     height: height,
     fit: fit,
-    progressIndicatorBuilder: (context, url, downloadProgress) => CircularProgressIndicator(value: downloadProgress.progress),
+    progressIndicatorBuilder: (context, url, downloadProgress) => CircleAvatar(
+      backgroundColor: Colors.transparent,
+      child: CircularProgressIndicator(value: downloadProgress.progress),
+    ),
     errorWidget: (context, url, error) => const Image(image: AssetImage('assets/icons/alta_icon.png')),
   );
 }

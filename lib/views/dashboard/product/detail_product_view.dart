@@ -4,6 +4,7 @@ import 'package:mobile_flutter/models/item_cart_model.dart';
 import 'package:mobile_flutter/models/product_model.dart';
 import 'package:mobile_flutter/models/user_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
+import 'package:mobile_flutter/shared/cached_image.dart';
 import 'package:mobile_flutter/shared/format_rupiah.dart';
 import 'package:mobile_flutter/shared/popup_dialog.dart';
 import 'package:mobile_flutter/shared/snack_bar.dart';
@@ -45,10 +46,11 @@ class _DetailProductViewState extends State<DetailProductView> {
                           height: 420,
                           child: Hero(
                             tag: product.id,
-                            child: Image(
-                              fit: BoxFit.fitWidth,
-                              image: NetworkImage(product.imgUrl),
-                            ),
+                            child: cachedImage(url: product.imgUrl, fit: BoxFit.fitWidth),
+                            // child: Image(
+                            //   fit: BoxFit.fitWidth,
+                            //   image: NetworkImage(product.imgUrl),
+                            // ),
                           ),
                         ),
                         Positioned(
