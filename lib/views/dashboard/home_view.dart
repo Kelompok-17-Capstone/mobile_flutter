@@ -118,28 +118,72 @@ class HomeView extends StatelessWidget {
                         icon: Icons.confirmation_number_outlined,
                         label: 'Voucher',
                         onPressed: () {
-                          Navigator.pushNamed(context, '/list_voucher');
+                          if (user == null) {
+                            showDialog(
+                              context: context,
+                              builder:(context) => popupMessageDialog(
+                                context,
+                                judul: 'Maaf',
+                                content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
+                              ),
+                            );
+                          } else {
+                            Navigator.pushNamed(context, '/list_voucher');
+                          }
                         }
                       ),
                       circleButton(
                         icon: Icons.shopping_bag_outlined,
                         label: 'Pesanan',
                         onPressed: () {
-                          Navigator.pushNamed(context, '/list_pesanan');
+                          if (user == null) {
+                            showDialog(
+                              context: context,
+                              builder:(context) => popupMessageDialog(
+                                context,
+                                judul: 'Maaf',
+                                content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
+                              ),
+                            );
+                          } else {
+                            Navigator.pushNamed(context, '/list_pesanan');
+                          }
                         }
                       ),
                       circleButton(
                         icon: Icons.monetization_on_outlined,
                         label: 'Koin',
                         onPressed: () {
-                          Navigator.pushNamed(context, '/list_koin');
+                          if (user == null) {
+                            showDialog(
+                              context: context,
+                              builder:(context) => popupMessageDialog(
+                                context,
+                                judul: 'Maaf',
+                                content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
+                              ),
+                            );
+                          } else {
+                            Navigator.pushNamed(context, '/list_koin');
+                          }
                         }
                       ),
                       circleButton(
                         icon: Icons.favorite_outline,
                         label: 'Favorit',
                         onPressed: () {
-                          Navigator.pushNamed(context, '/list_favorit');
+                          if (user == null) {
+                            showDialog(
+                              context: context,
+                              builder:(context) => popupMessageDialog(
+                                context,
+                                judul: 'Maaf',
+                                content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
+                              ),
+                            );
+                          } else {
+                            Navigator.pushNamed(context, '/list_favorit');
+                          }
                         }
                       ),
                     ],

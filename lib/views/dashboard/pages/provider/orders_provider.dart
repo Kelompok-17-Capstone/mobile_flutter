@@ -28,7 +28,7 @@ class OrdersProvider extends ChangeNotifier {
     final api = OrderAPI();
     setOrdersState(state: OrdersState.loading);
 
-    await Future.delayed(const Duration(seconds: 2), () async {
+    await Future.delayed(const Duration(seconds: 1), () async {
       final List<OrderModel> result = await api.getOrder(status: status);
       _orders = result;
       _globalCooldown = false;
