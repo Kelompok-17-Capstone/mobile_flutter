@@ -53,7 +53,7 @@ class ProductSearchDelegate extends SearchDelegate {
       itemBuilder: (context, index) {
         final ProductModel product = suggestions[index];
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: ListTile(
             onTap: () {
               Navigator.pushNamedAndRemoveUntil(
