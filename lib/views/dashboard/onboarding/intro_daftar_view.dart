@@ -7,7 +7,7 @@ class IntroDaftarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 200),
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 180),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
