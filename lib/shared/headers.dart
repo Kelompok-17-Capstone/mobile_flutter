@@ -104,6 +104,7 @@ Widget homeHeader(BuildContext context) {
                 children: [
                   Expanded(
                     child: TextFormField(
+                      enabled: user != null ? true : false,
                       controller: searchController,
                       onTapOutside: (event) {
                         FocusScope.of(context).unfocus();
