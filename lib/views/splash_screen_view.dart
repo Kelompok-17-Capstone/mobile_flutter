@@ -15,6 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () async {
+      // Navigator.pushReplacementNamed(context, '/onboarding');
       final String result = await Provider.of<AuthProvider>(context, listen: false).isLoggedIn();
       if (result == 'validated') {
         if(!mounted) return;

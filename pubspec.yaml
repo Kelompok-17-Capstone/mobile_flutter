@@ -42,6 +42,12 @@ dependencies:
   barcode_widget: ^2.0.4
   flutter_dotenv: ^5.0.2
   equatable: ^2.0.5
+  file_picker: ^5.3.1
+  intl: ^0.18.1
+  widgets_to_image: ^0.0.2
+  path: ^1.8.2
+  path_provider: ^2.0.15
+  open_file: ^3.3.2
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +80,7 @@ flutter:
     - assets/icons/
     - assets/fonts/
     - assets/images/
+    - assets/images/products/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

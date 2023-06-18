@@ -98,7 +98,7 @@ class SettingView extends StatelessWidget {
         title: Text(title),
         trailing: Container(
           decoration: BoxDecoration(
-            color: const Color(0xFF264ECA).withOpacity(0.3),
+            color: const Color(0xFF264ECA).withOpacity(0.1),
             border: Border.all(
               color: const Color(0xFF264ECA)
             ),

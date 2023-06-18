@@ -1,30 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/product_model.dart';
+import 'package:mobile_flutter/models/user_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
+import 'package:mobile_flutter/shared/format_rupiah.dart';
 import 'package:mobile_flutter/shared/headers.dart';
+import 'package:mobile_flutter/shared/popup_dialog.dart';
 import 'package:mobile_flutter/shared/products_grid.dart';
+import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
 import 'package:provider/provider.dart';
 
-class HomePageView extends StatelessWidget {
-  const HomePageView({super.key});
+class HomeView extends StatelessWidget {
+  final PageController pageController;
+  const HomeView({super.key, required this.pageController});
 
   @override
   Widget build(BuildContext context) {
-    final List<ProductModel> products = Provider.of<ProductProvider>(context).products;
-    print(products);
+    final UserModel? user = Provider.of<AuthProvider>(context).user;
+    final List<ProductModel> products = Provider.of<ProductProvider>(context).newProducts;
+    final ProductState state = Provider.of<ProductProvider>(context).state;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
             children: [
-      
               // Header
               homeHeader(context),
-      
+
               // Card Saldo & Top Up
               Transform.translate(
-                offset: const Offset(0, -30),
+                offset: const Offset(0, -35),
                 child: Card(
                   elevation: 0,
                   child: Padding(
@@ -34,39 +40,62 @@ class HomePageView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           ElevatedButton(
-                            onPressed: () {
-                              
-                            },
+                            onPressed: () {},
                             style: ButtonStyle(
                               elevation: MaterialStateProperty.all(0),
                               backgroundColor: MaterialStateProperty.all(Colors.transparent),
                               padding: MaterialStateProperty.all(EdgeInsets.zero),
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap
+                              tapTargetSize:MaterialTapTargetSize.shrinkWrap,
+                              fixedSize: MaterialStatePropertyAll(Size(MediaQuery.of(context).size.width * 0.3, 40))
                             ),
                             child: Row(
-                              children: const [
-                                Icon(Icons.account_balance_wallet_outlined, color: Color(0xFF264ECA)),
-                                SizedBox(width: 5),
-                                Text('Rp. 0', style: TextStyle(color: Colors.black)),
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.account_balance_wallet_outlined, color: Color(0xFF264ECA)),
+                                const SizedBox(width: 5),
+                                Expanded(
+                                  child: Text(
+                                    user == null ? 'Silahkan Login' : formatRupiah(user.balance),
+                                    overflow: TextOverflow.fade,
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(color: Colors.black)
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                           const VerticalDivider(color: Color(0xFF264ECA)),
                           ElevatedButton(
                             onPressed: () {
-                              
+                              if (user == null) {
+                                showDialog(
+                                  context: context,
+                                  builder:(context) => popupMessageDialog(
+                                    context,
+                                    judul: 'Maaf',
+                                    content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
+                                  ),
+                                );
+                              } else {
+                                Navigator.pushNamed(context, '/topup');
+                              }
                             },
                             style: ButtonStyle(
                               elevation: MaterialStateProperty.all(0),
                               backgroundColor: MaterialStateProperty.all(Colors.transparent),
                               padding: MaterialStateProperty.all(EdgeInsets.zero),
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              fixedSize: MaterialStatePropertyAll(Size(MediaQuery.of(context).size.width * 0.3, 40))
                             ),
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
                                 Icon(Icons.add_box_outlined, color: Color(0xFF264ECA)),
                                 SizedBox(width: 5),
-                                Text('Top Up', style: TextStyle(color: Colors.black)),
+                                Text('Top Up', style: TextStyle(color: Colors.black)
+                                ),
                               ],
                             ),
                           )
@@ -76,7 +105,7 @@ class HomePageView extends StatelessWidget {
                   ),
                 ),
               ),
-      
+
               // Horizontal Button
               Transform.translate(
                 offset: const Offset(0, -10),
@@ -85,24 +114,40 @@ class HomePageView extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      circleButton(icon: Icons.confirmation_number_outlined, label: 'Voucher', onPressed: () {
-                        
-                      }),
-                      circleButton(icon: Icons.shopping_bag_outlined, label: 'Pesanan', onPressed: () {
-                        
-                      }),
-                      circleButton(icon: Icons.monetization_on_outlined, label: 'Koin', onPressed: () {
-                        
-                      }),
-                      circleButton(icon: Icons.favorite_outline, label: 'Favorit', onPressed: () {
-                        
-                      }),
+                      circleButton(
+                        icon: Icons.confirmation_number_outlined,
+                        label: 'Voucher',
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/list_voucher');
+                        }
+                      ),
+                      circleButton(
+                        icon: Icons.shopping_bag_outlined,
+                        label: 'Pesanan',
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/list_pesanan');
+                        }
+                      ),
+                      circleButton(
+                        icon: Icons.monetization_on_outlined,
+                        label: 'Koin',
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/list_koin');
+                        }
+                      ),
+                      circleButton(
+                        icon: Icons.favorite_outline,
+                        label: 'Favorit',
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/list_favorit');
+                        }
+                      ),
                     ],
                   ),
                 ),
               ),
               const SizedBox(height: 20),
-      
+
               // Products
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -113,14 +158,11 @@ class HomePageView extends StatelessWidget {
                       children: [
                         const Text(
                           'Produk Terbaru',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14
-                          ),
+                          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
                         ),
                         TextButton(
                           onPressed: () {
-                            
+                            pageController.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
                           },
                           child: const Text(
                             'lihat semua',
@@ -131,10 +173,11 @@ class HomePageView extends StatelessWidget {
                             ),
                           )
                         ),
-                        
                       ],
                     ),
-                    productsGrid(products: products)
+                    state == ProductState.loading
+                    ? CircularProgressIndicator(color: const Color(0xFF264ECA).withOpacity(0.8))
+                    : productsGrid(products: products)
                   ],
                 ),
               ),

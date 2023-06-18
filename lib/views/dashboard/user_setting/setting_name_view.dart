@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
 import 'package:mobile_flutter/shared/form.dart';
+import 'package:mobile_flutter/shared/snack_bar.dart';
+import 'package:mobile_flutter/views/auth/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class SettingNameView extends StatefulWidget {
   const SettingNameView({super.key});
@@ -14,15 +17,19 @@ class _SettingNameViewState extends State<SettingNameView> {
 
   final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
+  final currentNameController = TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
     nameController.dispose();
+    currentNameController.dispose();
   }
   
   @override
   Widget build(BuildContext context) {
+    currentNameController.text = Provider.of<AuthProvider>(context, listen: false).user!.name;
+
     return Scaffold(
       appBar: customAppBar(context, title: 'Nama Lengkap', isBackButton: true),
       body: Form(
@@ -33,6 +40,16 @@ class _SettingNameViewState extends State<SettingNameView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
+                'Nama Lengkap Saat Ini',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(height: 5),
+              customForm(controller: currentNameController, hintText: '', enabled: false),
+              const SizedBox(height: 15),
+              const Text(
                 'Nama Lengkap',
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
@@ -40,10 +57,20 @@ class _SettingNameViewState extends State<SettingNameView> {
                 ),
               ),
               const SizedBox(height: 5),
-              customForm(controller: nameController, hintText: 'your name'),
+              customForm(controller: nameController, hintText: 'isi nama lengkap baru Anda'),
               const SizedBox(height: 30),
-              fullWidthButton(label: 'Perbarui', onPressed: () {
-                
+              fullWidthButton(label: 'Perbarui', onPressed: () async {
+                if (formKey.currentState!.validate()) {
+                  final String result = await Provider.of<AuthProvider>(context, listen: false).updateName(name: nameController.text.trim());
+                  if (result == 'success') {
+                    if(!mounted) return;
+                    snackBar(context, 'Update name sukses');
+                    Navigator.pop(context);
+                  } else {
+                    if(!mounted) return;
+                    snackBar(context, result);
+                  }
+                }
               })
             ],
           ),

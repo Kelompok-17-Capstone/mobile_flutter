@@ -17,17 +17,18 @@ class WelcomeView extends StatelessWidget {
               onPressed: () {
                 Navigator.pushReplacementNamed(context, '/dashboard');
               },
-              child: const Text('Lewati',
-                style: TextStyle(fontSize: 12, color: Color(0xFF264ECA))),
+              child: const Text(
+                'Lewati',
+                style: TextStyle(fontSize: 12, color: Color(0xFF264ECA))
+              ),
             ),
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Center(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
                 'Selamat Datang!',
@@ -38,17 +39,21 @@ class WelcomeView extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
-                    fontSize: 14,
+                    fontSize: 16,
                     color: Color(0xFF999999)),
               ),
+              const SizedBox(height: 50),
               const Image(
                 image: AssetImage('assets/images/welcome.png'),
               ),
+              const SizedBox(height: 20),
               fullWidthButton(
-                  label: 'Daftar Akun',
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/register');
-                  }),
+                label: 'Daftar Akun',
+                onPressed: () {
+                  Navigator.pushNamed(context, '/register');
+                }
+              ),
+              const SizedBox(height: 40),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
