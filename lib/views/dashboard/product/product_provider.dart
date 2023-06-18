@@ -18,11 +18,13 @@ class ProductProvider extends ChangeNotifier {
 
   List<ProductModel> _products = [];
   List<ProductModel> _newProducts = [];
+  List<ProductModel> _favoriteProducts = [];
   ProductState _state = ProductState.none;
   PriceState _priceState = PriceState.none;
 
   List<ProductModel> get products => _products;
   List<ProductModel> get newProducts => _newProducts;
+  List<ProductModel> get favoriteProducts => _favoriteProducts;
   ProductState get state => _state;
   PriceState get priceState => _priceState;
 
@@ -46,7 +48,7 @@ class ProductProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getAllProducts() async {
+  void getAllProducts() async {
     if (_globalCooldown) {
       return;
     }
@@ -67,6 +69,16 @@ class ProductProvider extends ChangeNotifier {
       }
       _globalCooldown = false;
     });
+  }
+
+  void getFavoriteProduct() async {
+    final api = ProductAPI();
+    setProductState(state: ProductState.loading);
+    final List<ProductModel> result = await api.getFavoriteProduct();
+    if (result.isNotEmpty) {
+      _favoriteProducts = result;
+    }
+    setProductState(state: ProductState.none);
   }
 
   void setProductTab({required String productTab}) {

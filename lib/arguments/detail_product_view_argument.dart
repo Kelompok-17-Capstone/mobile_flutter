@@ -1,4 +1,6 @@
+import 'package:mobile_flutter/models/product_model.dart';
+
 class DetailProductViewArgument {
-  final int index;
-  const DetailProductViewArgument({required this.index});
+  final ProductModel product;
+  const DetailProductViewArgument({required this.product});
 }

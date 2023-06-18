@@ -9,12 +9,11 @@ import 'package:mobile_flutter/shared/popup_dialog.dart';
 import 'package:mobile_flutter/shared/snack_bar.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:mobile_flutter/views/dashboard/product/cart_provider.dart';
-import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
 import 'package:provider/provider.dart';
 
 class DetailProductView extends StatefulWidget {
-  final int index;
-  const DetailProductView({super.key, required this.index});
+  final ProductModel product;
+  const DetailProductView({super.key, required this.product});
 
   @override
   State<DetailProductView> createState() => _DetailProductViewState();
@@ -24,7 +23,7 @@ class _DetailProductViewState extends State<DetailProductView> {
 
   @override
   Widget build(BuildContext context) {
-    final ProductModel product = Provider.of<ProductProvider>(context).products[widget.index];
+    final ProductModel product = widget.product;
     final UserModel? user = Provider.of<AuthProvider>(context).user;
 
     return Scaffold(

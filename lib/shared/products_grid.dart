@@ -21,7 +21,7 @@ Widget productsGrid({required List<ProductModel> products, bool isProductPage = 
           Navigator.pushNamed(
             context, 
             '/detail_product',
-            arguments: DetailProductViewArgument(index: index)
+            arguments: DetailProductViewArgument(product: product)
           );
         },
         child: Column(

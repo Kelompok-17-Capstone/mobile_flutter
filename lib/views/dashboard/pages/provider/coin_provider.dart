@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_final_fields
-
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/api/coin_api.dart';
 import 'package:mobile_flutter/models/coin_model.dart';

@@ -94,7 +94,7 @@ class MyApp extends StatelessWidget {
             final args = settings.arguments as DetailProductViewArgument;
             return MaterialPageRoute(
               builder: (context) {
-                return DetailProductView(index: args.index);
+                return DetailProductView(product: args.product);
               },
             );
           }

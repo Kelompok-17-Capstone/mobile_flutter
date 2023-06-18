@@ -46,7 +46,6 @@ class ProductAPI {
       };
 
       final response = await http.post(url, headers: headers, body: jsonEncode(data));
-      print(response.body);
       if (response.statusCode == 200) {
         return 'success';
       }
@@ -131,6 +130,33 @@ class ProductAPI {
       print(e);
     }
     return 'failed';
+  }
+
+  Future<List<ProductModel>> getFavoriteProduct() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    try {
+      final url = Uri.parse('$api/favorite'); // Real API
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
+      };
+      final response = await http.get(url, headers: headers);
+      if (response.statusCode == 200) {
+        final List? result = jsonDecode(response.body)['products'];
+        if (result == null) {
+          return [];
+        }
+        final List<ProductModel> products = result.map((item) {
+          final json = jsonEncode(item);
+          return ProductModel.fromJson(json: json);
+        }).toList();
+        return products;
+      }
+    } catch (e) {
+      print(e);
+    }
+    return [];
   }
 
 }
