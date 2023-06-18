@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/user_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
+import 'package:mobile_flutter/shared/cached_image.dart';
 import 'package:mobile_flutter/shared/popup_dialog.dart';
 import 'package:mobile_flutter/shared/product_search_delegate.dart';
 import 'dart:math' as math;
@@ -323,10 +324,16 @@ Container profileHeader(BuildContext context, {String? name, String? imgUrl, voi
             child: CircleAvatar(
               radius: MediaQuery.of(context).size.width * 0.2,
               backgroundColor: Colors.white.withOpacity(0.2),
-              backgroundImage: imgUrl == null || imgUrl.isEmpty ? null : NetworkImage(imgUrl),
+              //backgroundImage: imgUrl == null || imgUrl.isEmpty ? null : NetworkImage(imgUrl),
               child: imgUrl == null || imgUrl.isEmpty
               ? Text(name != null ? name[0] : 'G', style: const TextStyle(fontSize: 48))
-              : const SizedBox()
+              : ClipOval(
+                child: SizedBox(
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: cachedImage(url: imgUrl)
+                )
+              )
             ),
           ),
           const SizedBox(height: 15),

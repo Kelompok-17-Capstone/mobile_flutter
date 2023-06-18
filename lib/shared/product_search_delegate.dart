@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/arguments/detail_product_view_argument.dart';
 import 'package:mobile_flutter/models/product_model.dart';
+import 'package:mobile_flutter/shared/cached_image.dart';
 import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +46,9 @@ class ProductSearchDelegate extends SearchDelegate {
       return result.contains(input);
     }).toList();
 
-    return ListView.builder(
+    return suggestions.isEmpty
+    ? const Center(child: Text('Produk tidak tersedia'))
+    : ListView.builder(
       itemCount: suggestions.length,
       itemBuilder: (context, index) {
         final ProductModel product = suggestions[index];
@@ -61,15 +64,11 @@ class ProductSearchDelegate extends SearchDelegate {
               );
               FocusScope.of(context).requestFocus(FocusNode());
             },
-            leading: Image(
-              image: NetworkImage(product.imgUrl),
-              width: 100,
-            ),
+            leading: cachedImage(url: product.imgUrl, width: 100),
             title: Text(product.name),
           ),
         );
       },
     );
   }
-
 }
