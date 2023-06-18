@@ -35,8 +35,9 @@ class _CheckoutViewState extends State<CheckoutView> {
   }
 
   int countTotalPayment({required int totalProduct, required int shippingCost}) {
-    int discount = isCoinEnabled ? user.coin >= totalProduct ? totalProduct : user.coin : 0;
-    return (totalProduct + shippingCost - discount).ceil();
+    int coin = isCoinEnabled ? user.coin >= totalProduct ? totalProduct : user.coin : 0;
+    double diskon = totalProduct * 0.3;
+    return (totalProduct - diskon + shippingCost - coin).ceil();
   }
 
 
@@ -284,6 +285,13 @@ class _CheckoutViewState extends State<CheckoutView> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                const Text('Diskon 30%'),
+                                Text(formatRupiah((totalProduct() * 0.3).ceil()))
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
                                 const Text('Total Pembayaran', style: TextStyle(color: Colors.black)),
                                 Text(formatRupiah(countTotalPayment(totalProduct: totalProduct(), shippingCost: 0)), style: const TextStyle(color: Color(0xFF264ECA)))
                               ],
@@ -343,6 +351,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                   if(!mounted) return;
                   Provider.of<NotificationProvider>(context, listen: false).getNotification();
                   Provider.of<CartProvider>(context, listen: false).getCart();
+                  Provider.of<AuthProvider>(context, listen: false).getProfile();
                   await showDialog(
                     context: context,
                     builder: (context) {
