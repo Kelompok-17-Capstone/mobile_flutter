@@ -1,6 +1,5 @@
 class DetailNotificationViewArgument {
-  final String date;
-  final String message;
+  final int index;
 
-  const DetailNotificationViewArgument({required this.date, required this.message});
+  const DetailNotificationViewArgument({required this.index});
 }

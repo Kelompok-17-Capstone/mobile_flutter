@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:mobile_flutter/models/notification_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
+import 'package:mobile_flutter/views/dashboard/pages/provider/notification_provider.dart';
+import 'package:provider/provider.dart';
 
 class DetailNotificationView extends StatelessWidget {
-  final String date;
-  final String message;
+  final int index;
 
-  const DetailNotificationView({super.key, required this.date, required this.message});
+  const DetailNotificationView({super.key, required this.index});
 
   @override
   Widget build(BuildContext context) {
+    final NotificationModel notification = Provider.of<NotificationProvider>(context).notifications[index];
+    final date = DateFormat('d MMMM y').format(DateTime.parse(notification.date));
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -61,7 +66,7 @@ class DetailNotificationView extends StatelessWidget {
                   children: [
                     Text(date),
                     const Divider(),
-                    Text(message)
+                    Text(notification.message)
                   ],
                 ),
               ),

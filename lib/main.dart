@@ -15,6 +15,7 @@ import 'package:mobile_flutter/views/dashboard/pages/list_voucher_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/notification/detail_notification_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/notification/notification_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/provider/coin_provider.dart';
+import 'package:mobile_flutter/views/dashboard/pages/provider/notification_provider.dart';
 import 'package:mobile_flutter/views/dashboard/pages/provider/orders_provider.dart';
 import 'package:mobile_flutter/views/dashboard/pages/topup/topup_dana_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/topup/topup_ovo_view.dart';
@@ -54,7 +55,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create:(context) => ProductProvider()),
         ChangeNotifierProvider(create:(context) => CartProvider()),
         ChangeNotifierProvider(create:(context) => OrdersProvider()),
-        ChangeNotifierProvider(create:(context) => CoinProvider())
+        ChangeNotifierProvider(create:(context) => CoinProvider()),
+        ChangeNotifierProvider(create:(context) => NotificationProvider())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -119,7 +121,7 @@ class MyApp extends StatelessWidget {
             final args = settings.arguments as DetailNotificationViewArgument;
             return MaterialPageRoute(
               builder: (context) {
-                return DetailNotificationView(date: args.date, message: args.message);
+                return DetailNotificationView(index: args.index);
               },
             );
             

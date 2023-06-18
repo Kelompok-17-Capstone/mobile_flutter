@@ -85,11 +85,43 @@ Widget homeHeader(BuildContext context) {
                       ),
                     )
                   ),
-                  IconButton(
-                    onPressed: () {
+                  GestureDetector(
+                    onTap: () {
                       Navigator.pushNamed(context, '/notification');
                     },
-                    icon: const Icon(Icons.notifications_outlined, color: Colors.white),
+                    child: Stack(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/notification');
+                          },
+                          icon: const Icon(Icons.notifications_outlined, color: Colors.white),
+                        ),
+                        Positioned(
+                          right: 11,
+                          top: 11,
+                          child:  Container(
+                            padding: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            constraints: const BoxConstraints(
+                              minWidth: 14,
+                              minHeight: 14,
+                            ),
+                            child: const Text(
+                              '1',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 8,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                   IconButton(
                     onPressed: () {

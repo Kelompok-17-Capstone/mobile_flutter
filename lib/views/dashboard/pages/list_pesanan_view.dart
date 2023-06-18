@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_flutter/models/orders_model.dart';
+import 'package:mobile_flutter/models/order_model.dart';
 import 'package:mobile_flutter/shared/format_rupiah.dart';
 import 'package:mobile_flutter/shared/headers.dart';
 import 'package:mobile_flutter/views/dashboard/pages/provider/orders_provider.dart';
@@ -42,7 +42,7 @@ class _ListPesananViewState extends State<ListPesananView> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-    final List<OrdersModel> orders = Provider.of<OrdersProvider>(context).orders;
+    final List<OrderModel> orders = Provider.of<OrdersProvider>(context).orders;
     final OrdersState state = Provider.of<OrdersProvider>(context).ordersState;
 
     return Scaffold(
@@ -131,7 +131,7 @@ class _ListPesananViewState extends State<ListPesananView> with SingleTickerProv
                       shrinkWrap: true,
                       itemCount: orders.length,
                       itemBuilder: (context, index) {
-                        final OrdersModel order = orders[index];
+                        final OrderModel order = orders[index];
                         return ListTile(
                           title: Text(
                             'Order ID: ${order.id}',

@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mobile_flutter/models/item_cart_model.dart';
-import 'package:mobile_flutter/models/orders_model.dart';
+import 'package:mobile_flutter/models/order_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-class OrdersApi {
+class OrderAPI {
   final String api = dotenv.env['API']!;
 
-  Future<List<OrdersModel>> getOrders({required String status}) async {
+  Future<List<OrderModel>> getOrder({required String status}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     try {
@@ -23,7 +23,7 @@ class OrdersApi {
         final List result = jsonDecode(response.body)['data'];
         return result.map((item) {
           final json = jsonEncode(item);
-          return OrdersModel.fromJson(json: json);
+          return OrderModel.fromJson(json: json);
         }).toList();
       }
     } catch (e) {

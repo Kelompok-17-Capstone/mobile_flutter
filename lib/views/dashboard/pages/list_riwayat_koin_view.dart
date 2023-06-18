@@ -89,6 +89,8 @@ class _ListRiwayatKoinState extends State<ListRiwayatKoin> {
                   itemCount: history.length,
                   itemBuilder: (context, index) {
                     final CoinModel item = history[index];
+                    final date = DateFormat('dd-MM-yyyy').format(DateTime.parse(item.date));
+                    final String total = formatRupiah(item.total);
                     return ListTile(
                       isThreeLine: true,
                       leading: Icon(
@@ -97,7 +99,7 @@ class _ListRiwayatKoinState extends State<ListRiwayatKoin> {
                         size: 40
                       ),
                       title: Text(
-                        item.status == 'increase' ? 'Diperoleh ${DateFormat('dd-MM-yyyy').format(DateTime.parse(item.date))}' : 'Ditukar ${DateFormat('dd-MM-yyyy').format(DateTime.parse(item.date))}',
+                        item.status == 'increase' ? 'Diperoleh $date' : 'Ditukar $date',
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -108,7 +110,7 @@ class _ListRiwayatKoinState extends State<ListRiwayatKoin> {
                       ? const Text('Cashback 1% koin dari topup')
                       : const Text('Pembelian produk'),
                       trailing: Text(
-                        item.status == 'increase' ? '+ ${formatRupiah(item.total)}' : '- ${formatRupiah(item.total)}',
+                        item.status == 'increase' ? '+ $total' : '- $total',
                         style: TextStyle(
                           color: item.status == 'increase' ? Colors.orange : Colors.grey[350]
                         ),
