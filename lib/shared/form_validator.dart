@@ -5,7 +5,7 @@ class FormValidator {
     }
 
     if (name.isEmpty) {
-      return 'Name can\'t be empty';
+      return 'Form can\'t be empty';
     }
 
     return null;
