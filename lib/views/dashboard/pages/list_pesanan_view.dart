@@ -21,13 +21,12 @@ class _ListPesananViewState extends State<ListPesananView> with SingleTickerProv
     'dikemas',
     'dikirim',
     'diterima',
-    'dibatalkan'
   ];
 
   @override
   void initState() {
     // Specifies number of Tabs here
-    tabController = TabController(length: 4, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
     super.initState();
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
       Provider.of<OrdersProvider>(context, listen: false).getOrders(status: 'dikemas');
@@ -101,15 +100,6 @@ class _ListPesananViewState extends State<ListPesananView> with SingleTickerProv
                     Tab(
                       child: Text(
                         'Diterima',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        )
-                      ),
-                    ),
-                    Tab(
-                      child: Text(
-                        'Dibatalkan',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,

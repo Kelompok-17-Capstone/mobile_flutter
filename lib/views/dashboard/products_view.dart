@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/product_model.dart';
 import 'package:mobile_flutter/shared/products_grid.dart';
 import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 class ProductsView extends StatefulWidget {
@@ -14,6 +15,7 @@ class ProductsView extends StatefulWidget {
 class _ProductsViewState extends State<ProductsView> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
 
   late TabController _tabController;
+  int currentIndex = 0;
   
   @override
   void initState() {
@@ -49,7 +51,12 @@ class _ProductsViewState extends State<ProductsView> with TickerProviderStateMix
                     child: TabBar(
                       controller: _tabController,
                       onTap: (value) {
-                        Provider.of<ProductProvider>(context, listen: false).setProductTab(productTab: value == 0 ? 'terbaru': 'terfavorit');
+                        if (currentIndex != value) {
+                          Provider.of<ProductProvider>(context, listen: false).setProductTab(productTab: value == 0 ? 'terbaru': 'terfavorit');
+                          setState(() {
+                            currentIndex = value;
+                          });
+                        }
                       },
                       labelColor: const Color(0xFF264ECA), //<-- selected text color
                       unselectedLabelColor: Colors.grey,

@@ -7,8 +7,9 @@ class ProductModel {
   final String description;
   final int price;
   final String imgUrl;
+  final int? favoriteCount;
 
-  const ProductModel({required this.id, required this.name, required this.description, required this.price, required this.imgUrl});
+  const ProductModel({required this.id, required this.name, required this.description, required this.price, required this.imgUrl, required this.favoriteCount});
 
   static ProductModel fromJson({required json}) {
     final result = jsonDecode(json);
@@ -17,7 +18,8 @@ class ProductModel {
       name: result['name'],
       description: result['description'],
       price: result['price'],
-      imgUrl: result['image']
+      imgUrl: result['image'],
+      favoriteCount: result['favorit']
     );
   }
 

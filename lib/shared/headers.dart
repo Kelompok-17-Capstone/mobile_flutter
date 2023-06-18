@@ -78,6 +78,10 @@ Widget homeHeader(BuildContext context) {
                 children: [
                   Expanded(
                     child: TextFormField(
+                      onTapOutside: (event) {
+                        FocusScope.of(context).unfocus();
+                        print(event);
+                      },
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.search),
                         hintText: 'Cari Produk',

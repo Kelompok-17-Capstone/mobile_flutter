@@ -7,7 +7,7 @@ class IntroInformasiView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 200),
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 180),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -26,6 +26,7 @@ class IntroInformasiView extends StatelessWidget {
               const Text(
                 'Gunakan barcode khusus member untuk menikmati diskon 30%',
                 textAlign: TextAlign.center,
+                maxLines: 2,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
