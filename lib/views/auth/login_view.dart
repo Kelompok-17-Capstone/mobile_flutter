@@ -81,10 +81,10 @@ class _LoginViewState extends State<LoginView> {
                         );
                         if (result == 'login success') {
                           if(!mounted) return;
-                          Navigator.pushReplacementNamed(context, '/dashboard');
+                          Navigator.pushNamedAndRemoveUntil(context, '/dashboard', (route) => false);
                         } else if(result == 'user unvalidated') {
                           if(!mounted) return;
-                          Navigator.pushReplacementNamed(context, '/personal_form');
+                          Navigator.pushNamedAndRemoveUntil(context, '/personal_form', (route) => false);
                         } 
                         else {
                           if(!mounted) return;
