@@ -8,6 +8,7 @@ import 'package:mobile_flutter/views/auth/login_view.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:mobile_flutter/views/auth/personal_form_view.dart';
 import 'package:mobile_flutter/views/auth/register_view.dart';
+import 'package:mobile_flutter/views/dashboard/pages/cetak_member_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/list_favorit_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/list_pesanan_view.dart';
 import 'package:mobile_flutter/views/dashboard/pages/list_riwayat_koin_view.dart';
@@ -82,6 +83,7 @@ class MyApp extends StatelessWidget {
           '/list_pesanan': (context) => const ListPesananView(),
           '/list_koin': (context) => const ListRiwayatKoin(),
           '/list_favorit': (context) => const ListFavoritView(),
+          '/cetak_member': (context) => const CetakMemberView(),
           '/user_setting': (context) => const SettingView(),
           '/setting_email': (context) => const SettingEmailView(),
           '/setting_password': (context) => const SettingPasswordView(),

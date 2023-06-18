@@ -102,7 +102,9 @@ class MemberView extends StatelessWidget {
                     ? fullWidthButton(label: 'Daftar Member', onPressed: () async {
                       await Provider.of<AuthProvider>(context, listen: false).registerMember();
                     })
-                    : const SizedBox() // Empty Widget
+                    : fullWidthButton(label: 'Cetak Member', onPressed: () {
+                      Navigator.pushNamed(context, '/cetak_member');
+                    })
                   ],
                 ),
               ),

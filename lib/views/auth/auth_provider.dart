@@ -1,3 +1,9 @@
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:path_provider/path_provider.dart'; 
+import 'package:path/path.dart' as path;
+import 'package:open_file/open_file.dart';
+
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/api/auth_api.dart';
 import 'package:mobile_flutter/models/user_model.dart';
@@ -159,6 +165,19 @@ class AuthProvider extends ChangeNotifier {
       getProfile();
     }
     return result;
+  }
+
+  Future<String> saveMemberCard({required Uint8List bytes}) async {
+    try {
+      Directory? externalStorageDirectory = await getExternalStorageDirectory();
+      File file = File(path.join(externalStorageDirectory!.path, path.basename('membercard.png')));
+      await file.writeAsBytes(bytes);
+      OpenFile.open(file.absolute.path);
+      return 'success';
+    } catch (e) {
+      print(e);
+    }
+    return 'failed';
   }
 
 }
