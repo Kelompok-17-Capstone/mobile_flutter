@@ -291,7 +291,7 @@ class _TopupOvoViewState extends State<TopupOvoView> {
                     final String result = await Provider.of<AuthProvider>(context, listen: false).topupBalance(balance: int.parse(amountController.text));
                     if (result == 'success') {
                       if(!mounted) return;
-                      Navigator.pushNamedAndRemoveUntil(context, '/topup_success', ModalRoute.withName('/dashboard'));
+                      Navigator.pushNamed(context, '/topup_success');
                     } else {
                       if(!mounted) return;
                       snackBar(context, 'Failed to topup, try again later.');

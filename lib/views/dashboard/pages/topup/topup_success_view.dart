@@ -26,11 +26,11 @@ class TopupSuccessView extends StatelessWidget {
             const Image(image: AssetImage('assets/images/topup.png')),
             const SizedBox(height: 100),
             fullWidthButton(label: 'Lihat Koin', onPressed: () {
-      
+              Navigator.pushNamedAndRemoveUntil(context, '/list_koin', ModalRoute.withName('/dashboard'));
             }),
             const SizedBox(height: 20),
             fullWidthButton(label: 'Dashboard', onPressed: () {
-              Navigator.pop(context);
+              Navigator.popUntil(context, ModalRoute.withName('/dashboard'));
             })
           ],
         ),
