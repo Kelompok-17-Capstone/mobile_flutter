@@ -166,8 +166,8 @@ class _CatalogProductCardState extends State<CatalogProductCard> {
           ),
           Container(
             color: Colors.grey[100],
-            width: 100,
-            height: 100, 
+            width: 80,
+            height: 80, 
             child: Image(image: NetworkImage(item.imgUrl))
           ),
           const SizedBox(width: 16),
@@ -179,18 +179,23 @@ class _CatalogProductCardState extends State<CatalogProductCard> {
                   item.productName,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 16,
+                  style: const TextStyle(
+                    fontSize: 16,
                     fontWeight: FontWeight.bold
                   ),
                 ),
                 const Spacer(),
                 Row(
                   children: [
-                    Text(
-                      formatRupiah(item.productPrice),
-                      style: const TextStyle(fontSize: 14),
+                    Expanded(
+                      child: Text(
+                        formatRupiah(item.productPrice),
+                        maxLines: 1,
+                        softWrap: false,
+                        overflow: TextOverflow.fade,
+                        style: const TextStyle(fontSize: 14),
+                      ),
                     ),
-                    const Spacer(),
                     IconButton(
                       onPressed: () async {
                         final String result = await Provider.of<CartProvider>(context, listen: false).deleteCartItem(cartId: item.cartId!);
