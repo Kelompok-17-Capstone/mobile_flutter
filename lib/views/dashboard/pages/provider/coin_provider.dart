@@ -22,8 +22,8 @@ class CoinProvider extends ChangeNotifier {
     final List<CoinModel> result = await api.getHistory();
     if (result.isNotEmpty) {
       _history = result;
-      setState(state: CoinState.none);
     }
+    setState(state: CoinState.none);
   }
 
   void setState({required CoinState state}) {

@@ -19,7 +19,10 @@ class CoinAPI {
 
       final response = await http.get(url, headers: headers);
       if (response.statusCode == 200) {
-        final List result = jsonDecode(response.body)['history'];
+        final List? result = jsonDecode(response.body)['history'];
+        if (result == null) {
+          return [];
+        }
         final List<CoinModel> history = result.map((element) {
           final json = jsonEncode(element);
           return CoinModel.fromJson(json: json);
