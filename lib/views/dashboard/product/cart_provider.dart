@@ -9,9 +9,11 @@ class CartProvider extends ChangeNotifier {
 
   List<ItemCartModel> _items = [];
   int _totalProduct = 0;
+  bool _isCheckedall = false;
 
   List<ItemCartModel> get items => _items;
   int get totalProduct => _totalProduct;
+  bool get isCheckedall => _isCheckedall;
 
   bool _globalCooldown = false;
 
@@ -79,6 +81,11 @@ class CartProvider extends ChangeNotifier {
 
   void checkItem({required int cartId, required bool isChecked}) {
     _items.where((element) => element.cartId == cartId).first.isChecked = isChecked;
+    if (_items.where((element) => element.isChecked).length == _items.length) {
+      _isCheckedall = true;
+    } else {
+      _isCheckedall = false;
+    }
     notifyListeners();
   }
 
@@ -86,6 +93,7 @@ class CartProvider extends ChangeNotifier {
     for (var element in _items) {
       element.isChecked = checkAll;
     }
+    _isCheckedall = checkAll;
     notifyListeners();
   }
 

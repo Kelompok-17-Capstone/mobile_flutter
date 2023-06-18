@@ -16,11 +16,11 @@ class CartView extends StatefulWidget {
 }
 
 class _CartViewState extends State<CartView> {
-  bool isCheckedall = false;
   
   @override
   Widget build(BuildContext context) {
     final List<ItemCartModel> items = Provider.of<CartProvider>(context).items;
+    final bool isCheckedall = Provider.of<CartProvider>(context).isCheckedall;
 
     int totalProduct() {
       int result = 0;
@@ -72,10 +72,7 @@ class _CartViewState extends State<CartView> {
                           fillColor: MaterialStatePropertyAll(const Color(0xFF264ECA).withOpacity(0.9)),
                           onChanged: (bool? value) {
                             if (value != null) {
-                              setState(() {
-                                isCheckedall = value;
-                              });
-                              Provider.of<CartProvider>(context, listen: false).checkAll(checkAll: isCheckedall);
+                              Provider.of<CartProvider>(context, listen: false).checkAll(checkAll: value);
                             }
                           },
                         ),
