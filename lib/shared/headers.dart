@@ -5,6 +5,7 @@ import 'package:mobile_flutter/shared/popup_dialog.dart';
 import 'dart:math' as math;
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:mobile_flutter/views/dashboard/pages/provider/notification_provider.dart';
+import 'package:mobile_flutter/views/dashboard/product/cart_provider.dart';
 import 'package:provider/provider.dart';
 
 Widget customHeaderWithIcon({required String title}) {
@@ -38,6 +39,7 @@ Widget customHeaderWithIcon({required String title}) {
 Widget homeHeader(BuildContext context) {
   final UserModel? user = Provider.of<AuthProvider>(context).user;
   final int notificationCount = Provider.of<NotificationProvider>(context).notifications.where((element) => element.isRead == false).length;
+  final int cartCount = Provider.of<CartProvider>(context).items.length;
   return Stack(
     children: [
       Stack(
@@ -149,8 +151,8 @@ Widget homeHeader(BuildContext context) {
                       ],
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {
+                  GestureDetector(
+                    onTap: () {
                       if (user == null) {
                         showDialog(
                           context: context,
@@ -164,7 +166,52 @@ Widget homeHeader(BuildContext context) {
                         Navigator.pushNamed(context, '/cart');
                       }
                     },
-                    icon: const Icon(Icons.shopping_cart_outlined, color: Colors.white),
+                    child: Stack(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            if (user == null) {
+                              showDialog(
+                                context: context,
+                                builder:(context) => popupMessageDialog(
+                                  context,
+                                  judul: 'Maaf',
+                                  content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
+                                ),
+                              );
+                            } else {
+                              Navigator.pushNamed(context, '/cart');
+                            }
+                          },
+                          icon: const Icon(Icons.shopping_cart_outlined, color: Colors.white),
+                        ),
+                        cartCount == 0
+                        ? const SizedBox()
+                        : Positioned(
+                          right: 11,
+                          top: 11,
+                          child:  Container(
+                            padding: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            constraints: const BoxConstraints(
+                              minWidth: 14,
+                              minHeight: 14,
+                            ),
+                            child: Text(
+                              cartCount.toString(),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 8,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ],
               ),
