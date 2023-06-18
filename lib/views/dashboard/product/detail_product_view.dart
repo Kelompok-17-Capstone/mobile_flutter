@@ -159,12 +159,20 @@ class _DetailProductViewState extends State<DetailProductView> {
                                 color: Color(0xFF264ECA)
                               ),
                             ),
-                            Text(
-                              '100+ Terfavorit',
-                              style: TextStyle(
-                                color: Colors.grey[500],
-                                fontSize: 16
-                              ),
+                            product.favoriteCount == 0
+                            ? const SizedBox()
+                            : Row(
+                              children: [
+                                const Icon(Icons.favorite, color: Colors.red,),
+                                const SizedBox(width: 5),
+                                Text(
+                                  '${product.favoriteCount} terfavorit',
+                                  style: TextStyle(
+                                    color: Colors.grey[500],
+                                    fontSize: 16
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
