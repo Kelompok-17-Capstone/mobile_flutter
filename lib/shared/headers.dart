@@ -332,7 +332,7 @@ Container profileHeader(BuildContext context, {String? name, String? imgUrl, voi
                 child: SizedBox(
                   width: double.infinity,
                   height: double.infinity,
-                  child: cachedImage(url: imgUrl)
+                  child: cachedImage(url: imgUrl, fit: BoxFit.cover)
                 )
               )
             ),
