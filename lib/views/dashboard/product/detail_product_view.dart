@@ -29,192 +29,194 @@ class _DetailProductViewState extends State<DetailProductView> {
 
     return Scaffold(
       backgroundColor: Colors.grey[50],
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Stack(
-                    children: [
-                      Container(
-                        color: Colors.white,
-                        width: double.infinity,
-                        height: 420,
-                        child: Hero(
-                          tag: product.id,
-                          child: Image(
-                            fit: BoxFit.fitWidth,
-                            image: NetworkImage(product.imgUrl),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Stack(
+                      children: [
+                        Container(
+                          color: Colors.white,
+                          width: double.infinity,
+                          height: 420,
+                          child: Hero(
+                            tag: product.id,
+                            child: Image(
+                              fit: BoxFit.fitWidth,
+                              image: NetworkImage(product.imgUrl),
+                            ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        top: 30,
-                        left: -20,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(100)
-                          ),
-                          child: Row(
-                            children: [
-                              const SizedBox(width: 30),
-                              customBackButton(context, color: const Color(0xFF264ECA)),
-                            ],
-                          ),
-                        )
-                      ),
-                      Positioned(
-                        top: 30,
-                        right: -40,
-                        child: Container(
-                          padding: const EdgeInsets.only(right: 50, left: 10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(100)
-                          ),
-                          child: Row(
-                            children: [
-                              IconButton(
-                                onPressed: () async {
-                                  if (user == null) {
-                                    showDialog(
-                                      context: context,
-                                      builder:(context) => popupMessageDialog(
-                                        context,
-                                        judul: 'Maaf',
-                                        content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
-                                      ),
-                                    );
-                                  } else {
-                                    final String result = await Provider.of<ProductProvider>(context, listen: false).addFavoriteProduct(productId: product.id);
-                                    if (result == 'success') {
-                                      if(!mounted) return;
-                                      snackBar(context, 'Berhasil menambahkan produk ke favorit');
+                        Positioned(
+                          top: 30,
+                          left: -20,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(100)
+                            ),
+                            child: Row(
+                              children: [
+                                const SizedBox(width: 30),
+                                customBackButton(context, color: const Color(0xFF264ECA)),
+                              ],
+                            ),
+                          )
+                        ),
+                        Positioned(
+                          top: 30,
+                          right: -40,
+                          child: Container(
+                            padding: const EdgeInsets.only(right: 50, left: 10),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(100)
+                            ),
+                            child: Row(
+                              children: [
+                                IconButton(
+                                  onPressed: () async {
+                                    if (user == null) {
+                                      showDialog(
+                                        context: context,
+                                        builder:(context) => popupMessageDialog(
+                                          context,
+                                          judul: 'Maaf',
+                                          content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
+                                        ),
+                                      );
                                     } else {
-                                      if(!mounted) return;
-                                      snackBar(context, result);
+                                      final String result = await Provider.of<ProductProvider>(context, listen: false).addFavoriteProduct(productId: product.id);
+                                      if (result == 'success') {
+                                        if(!mounted) return;
+                                        snackBar(context, 'Berhasil menambahkan produk ke favorit');
+                                      } else {
+                                        if(!mounted) return;
+                                        snackBar(context, result);
+                                      }
                                     }
-                                  }
-                                },
-                                icon: const Icon(Icons.favorite_outline, color: Color(0xFF264ECA)),
-                              ),
-                              const SizedBox(width: 10),
-                              IconButton(
-                                onPressed: () {
-                                  if (user == null) {
-                                    showDialog(
-                                      context: context,
-                                      builder:(context) => popupMessageDialog(
-                                        context,
-                                        judul: 'Maaf',
-                                        content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
-                                      ),
-                                    );
-                                  } else {
-                                    Navigator.pushNamed(context, '/cart');
-                                  }
-                                },
-                                icon: const Icon(Icons.shopping_cart_outlined, color: Color(0xFF264ECA)),
-                              )
-                            ],
+                                  },
+                                  icon: const Icon(Icons.favorite_outline, color: Color(0xFF264ECA)),
+                                ),
+                                const SizedBox(width: 10),
+                                IconButton(
+                                  onPressed: () {
+                                    if (user == null) {
+                                      showDialog(
+                                        context: context,
+                                        builder:(context) => popupMessageDialog(
+                                          context,
+                                          judul: 'Maaf',
+                                          content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
+                                        ),
+                                      );
+                                    } else {
+                                      Navigator.pushNamed(context, '/cart');
+                                    }
+                                  },
+                                  icon: const Icon(Icons.shopping_cart_outlined, color: Color(0xFF264ECA)),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: const Offset(0, -1), // changes position of shadow
                         ),
                       ],
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            product.name,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w400
-                            ),
-                          ),
-                          Text(
-                            formatRupiah(product.price),
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xFF264ECA)
-                            ),
-                          ),
-                          Text(
-                            '100+ Terfavorit',
-                            style: TextStyle(
-                              color: Colors.grey[500],
-                              fontSize: 16
-                            ),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: const Offset(0, -1), // changes position of shadow
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Container(
-                    color: Colors.white,
-                    width: double.infinity,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Deskripsi',
-                            style: TextStyle(
-                              fontSize: 16
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              product.name,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w400
+                              ),
                             ),
-                          ),
-                          const Divider(),
-                          Text(
-                            product.description,
-                            style: const TextStyle(
-                              fontSize: 16
+                            Text(
+                              formatRupiah(product.price),
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xFF264ECA)
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 20)
-                        ],
+                            Text(
+                              '100+ Terfavorit',
+                              style: TextStyle(
+                                color: Colors.grey[500],
+                                fontSize: 16
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  )
-                ],
+                    const SizedBox(height: 10),
+                    Container(
+                      color: Colors.white,
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Deskripsi',
+                              style: TextStyle(
+                                fontSize: 16
+                              ),
+                            ),
+                            const Divider(),
+                            Text(
+                              product.description,
+                              style: const TextStyle(
+                                fontSize: 16
+                              ),
+                            ),
+                            const SizedBox(height: 20)
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-          buyNowButton(
-            context,
-            leftContent: IconButton(
+            buyNowButton(
+              context,
+              leftContent: IconButton(
+                onPressed: () {
+                  showBuyNowDialog(context, label: 'Tambahkan Keranjang', product: product);
+                },
+                icon: const Icon(Icons.shopping_cart_outlined, color: Color(0xFF264ECA)),
+              ),
+              labelButton: 'Beli Sekarang',
               onPressed: () {
-                showBuyNowDialog(context, label: 'Tambahkan Keranjang', product: product);
+                //notAMember(context);
+                showBuyNowDialog(context, label: 'Beli Sekarang', product: product, isDirectCheckout: true);
               },
-              icon: const Icon(Icons.shopping_cart_outlined, color: Color(0xFF264ECA)),
-            ),
-            labelButton: 'Beli Sekarang',
-            onPressed: () {
-              //notAMember(context);
-              showBuyNowDialog(context, label: 'Beli Sekarang', product: product, isDirectCheckout: true);
-            },
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
