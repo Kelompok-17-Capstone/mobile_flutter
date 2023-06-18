@@ -60,7 +60,7 @@ class _OnboardingViewState extends State<OnboardingView> with TickerProviderStat
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: TextButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/dashboard');
+                Navigator.pushNamedAndRemoveUntil(context, '/dashboard', (route) => false);
               },
               child: const Text(
                 'Lewati',
@@ -155,7 +155,7 @@ class _OnboardingViewState extends State<OnboardingView> with TickerProviderStat
             child: currentIndex == 2
             ? TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/dashboard');
+                Navigator.pushNamedAndRemoveUntil(context, '/dashboard', (route) => false);
               },
               child: const Text('Finish', style: TextStyle(color: Color(0xFF264ECA)))
             )

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/arguments/checkout_view_argument.dart';
 import 'package:mobile_flutter/models/item_cart_model.dart';
 import 'package:mobile_flutter/models/product_model.dart';
 import 'package:mobile_flutter/models/user_model.dart';
@@ -12,8 +13,8 @@ import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
 import 'package:provider/provider.dart';
 
 class DetailProductView extends StatefulWidget {
-  final int index;
-  const DetailProductView({super.key, required this.index});
+  final ProductModel product;
+  const DetailProductView({super.key, required this.product});
 
   @override
   State<DetailProductView> createState() => _DetailProductViewState();
@@ -23,7 +24,9 @@ class _DetailProductViewState extends State<DetailProductView> {
 
   @override
   Widget build(BuildContext context) {
-    final ProductModel product = Provider.of<ProductProvider>(context).products[widget.index];
+    final ProductModel product = widget.product;
+    final UserModel? user = Provider.of<AuthProvider>(context).user;
+
     return Scaffold(
       backgroundColor: Colors.grey[50],
       body: Column(
@@ -58,7 +61,7 @@ class _DetailProductViewState extends State<DetailProductView> {
                           child: Row(
                             children: [
                               const SizedBox(width: 30),
-                              customBackButton(context),
+                              customBackButton(context, color: const Color(0xFF264ECA)),
                             ],
                           ),
                         )
@@ -75,22 +78,44 @@ class _DetailProductViewState extends State<DetailProductView> {
                           child: Row(
                             children: [
                               IconButton(
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder:(context) => popupMessageDialog(
-                                      context,
-                                      judul: 'Maaf',
-                                      content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
-                                    ),
-                                  );
+                                onPressed: () async {
+                                  if (user == null) {
+                                    showDialog(
+                                      context: context,
+                                      builder:(context) => popupMessageDialog(
+                                        context,
+                                        judul: 'Maaf',
+                                        content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
+                                      ),
+                                    );
+                                  } else {
+                                    final String result = await Provider.of<ProductProvider>(context, listen: false).addFavoriteProduct(productId: product.id);
+                                    if (result == 'success') {
+                                      if(!mounted) return;
+                                      snackBar(context, 'Berhasil menambahkan produk ke favorit');
+                                    } else {
+                                      if(!mounted) return;
+                                      snackBar(context, result);
+                                    }
+                                  }
                                 },
                                 icon: const Icon(Icons.favorite_outline, color: Color(0xFF264ECA)),
                               ),
                               const SizedBox(width: 10),
                               IconButton(
                                 onPressed: () {
-                                  Navigator.pushNamed(context, '/cart');
+                                  if (user == null) {
+                                    showDialog(
+                                      context: context,
+                                      builder:(context) => popupMessageDialog(
+                                        context,
+                                        judul: 'Maaf',
+                                        content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
+                                      ),
+                                    );
+                                  } else {
+                                    Navigator.pushNamed(context, '/cart');
+                                  }
                                 },
                                 icon: const Icon(Icons.shopping_cart_outlined, color: Color(0xFF264ECA)),
                               )
@@ -179,16 +204,14 @@ class _DetailProductViewState extends State<DetailProductView> {
             context,
             leftContent: IconButton(
               onPressed: () {
-                showBuyNowDialog(context, product);
+                showBuyNowDialog(context, label: 'Tambahkan Keranjang', product: product);
               },
               icon: const Icon(Icons.shopping_cart_outlined, color: Color(0xFF264ECA)),
             ),
             labelButton: 'Beli Sekarang',
             onPressed: () {
               //notAMember(context);
-              // TODO: addToCart
-              //Provider.of<CartProvider>(context, listen: false).addToCart(item);
-              Navigator.pushNamed(context, '/checkout');
+              showBuyNowDialog(context, label: 'Beli Sekarang', product: product, isDirectCheckout: true);
             },
           )
         ],
@@ -234,7 +257,7 @@ class _DetailProductViewState extends State<DetailProductView> {
     );
   }
 
-  Future<void> showBuyNowDialog(BuildContext context, ProductModel product) {
+  Future<void> showBuyNowDialog(BuildContext context, {required String label, required ProductModel product, bool isDirectCheckout = false}) {
     final bool guestMode = Provider.of<AuthProvider>(context, listen: false).user == null ? true : false;
     int itemCount = 1;
 
@@ -311,17 +334,38 @@ class _DetailProductViewState extends State<DetailProductView> {
                       ),
               
                       const SizedBox(height: 40),
-                      fullWidthButton(label: 'Tambahkan ke Keranjang', onPressed: () async {
+                      fullWidthButton(label: label, onPressed: () async {
                         if (guestMode) {
                           Navigator.pop(context);
                           notAMember(context);
                         } else {
-                          final String result = await Provider.of<CartProvider>(context, listen: false).addToCart(product: product, itemCount: itemCount);
-                          if (!mounted) return;
-                          Navigator.pop(context);
-                          snackBar(context, '$result add to cart.');
+                          if (isDirectCheckout) {
+                            Navigator.pop(context);
+                            Navigator.pushNamed(
+                              context,
+                              '/checkout',
+                              arguments: CheckoutViewArgument(
+                                cart: [
+                                  ItemCartModel(
+                                    cartId: null,
+                                    productId: product.id,
+                                    productName: product.name,
+                                    productPrice: product.price,
+                                    imgUrl: product.imgUrl,
+                                    itemCount: itemCount
+                                  )
+                                ],
+                                isCart: false
+                              )
+                            );
+                          } else {
+                            final String result = await Provider.of<CartProvider>(context, listen: false).addToCart(product: product, itemCount: itemCount);
+                            if (!mounted) return;
+                            Navigator.pop(context);
+                            snackBar(context, '$result add to cart.');
+                          }
                         }
-                      },)
+                      })
                     ],
                   ),
                 ),

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_final_fields
-
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/api/product_api.dart';
 import 'package:mobile_flutter/models/item_cart_model.dart';
@@ -9,9 +7,11 @@ class CartProvider extends ChangeNotifier {
 
   List<ItemCartModel> _items = [];
   int _totalProduct = 0;
+  bool _isCheckedall = false;
 
   List<ItemCartModel> get items => _items;
   int get totalProduct => _totalProduct;
+  bool get isCheckedall => _isCheckedall;
 
   bool _globalCooldown = false;
 
@@ -35,6 +35,9 @@ class CartProvider extends ChangeNotifier {
   }
 
   Future<String> deleteCartItem({required int cartId}) async {
+    if (_globalCooldown) {
+      return 'cooldown';
+    }
     final api = ProductAPI();
     final String result = await api.deleteCartItem(cartId: cartId);
     if (result == 'success') {
@@ -46,7 +49,7 @@ class CartProvider extends ChangeNotifier {
 
   Future<void> updateItemCount({required int index}) async {
     final api = ProductAPI();
-    await api.updateItemCount(cartId: _items[index].cartId, count: _items[index].itemCount);
+    await api.updateItemCount(cartId: _items[index].cartId!, count: _items[index].itemCount);
     countTotal();
   }
 
@@ -68,9 +71,27 @@ class CartProvider extends ChangeNotifier {
   void countTotal() {
     int result = 0;
     for (var item in _items) {
-      result += item.product.price * item.itemCount;
+      result += item.productPrice * item.itemCount;
     }
     _totalProduct = result;
+    notifyListeners();
+  }
+
+  void checkItem({required int cartId, required bool isChecked}) {
+    _items.where((element) => element.cartId == cartId).first.isChecked = isChecked;
+    if (_items.where((element) => element.isChecked).length == _items.length) {
+      _isCheckedall = true;
+    } else {
+      _isCheckedall = false;
+    }
+    notifyListeners();
+  }
+
+  void checkAll({required bool checkAll}) {
+    for (var element in _items) {
+      element.isChecked = checkAll;
+    }
+    _isCheckedall = checkAll;
     notifyListeners();
   }
 

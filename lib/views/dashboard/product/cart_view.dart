@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/arguments/checkout_view_argument.dart';
 import 'package:mobile_flutter/models/item_cart_model.dart';
 import 'package:mobile_flutter/shared/buttons.dart';
 import 'package:mobile_flutter/shared/custom_appbar.dart';
@@ -15,99 +16,107 @@ class CartView extends StatefulWidget {
 }
 
 class _CartViewState extends State<CartView> {
-  bool isCheckedall = false;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
-      Provider.of<CartProvider>(context, listen: false).getCart();
-    });
-  }
   
   @override
   Widget build(BuildContext context) {
     final List<ItemCartModel> items = Provider.of<CartProvider>(context).items;
+    final bool isCheckedall = Provider.of<CartProvider>(context).isCheckedall;
 
+    int totalProduct() {
+      int result = 0;
+      for (var item in items) {
+        if (item.isChecked) {
+          result += item.productPrice * item.itemCount;
+        }
+      }
+      return result;
+    }
+  
     return Scaffold(
       appBar: customAppBar(context, title: 'Keranjang', isBackButton: true, isElevated: true),
-      body: items.isEmpty
-      ? const Center(
-        child: Text('Cart is Empty'),
-      )
-      : ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return CatalogProductCard(index: index);
-        },
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 1, 
-                blurRadius: 1, 
-                offset: const Offset(0, 2), 
-              ),
-            ]
+      body: Column(
+        children: [
+          Expanded(
+            child: items.isEmpty
+            ? const Center(
+              child: Text('Cart is Empty'),
+            )
+            : ListView.builder(
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                return CatalogProductCard(index: index);
+              },
+            ),
           ),
-          width: 428,
-          height: 66,
-          child: Row(
-            children: [
-              Checkbox(
-                value: isCheckedall,
-                onChanged: (bool? value) {
-                  setState(() {
-                    isCheckedall = value ?? false;
-                  });
-                },
-              ),
-              const Text('Semua', style: TextStyle(
-                color: Colors.grey,
-                fontWeight: FontWeight.w500
-              ),),
-              const SizedBox(width:27),
-              const Text('Total', style: TextStyle(
-                color: Colors.grey,
-                fontWeight: FontWeight.w500
-              ),),
-              const SizedBox(width:4),
-              Text(
-                formatRupiah(Provider.of<CartProvider>(context).totalProduct),
-                  style: const TextStyle(
-                  color: Color.fromRGBO(0, 49, 123, 1),
-                  fontWeight: FontWeight.w500
+          Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3), // changes position of shadow
                 ),
-              ),
-              const SizedBox(width:8),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                   
-                  } ,
+              ],
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF264ECA)
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'Bayar',
-                        style: TextStyle(
-                          color: Colors.white
+                    color: Colors.white,
+                    child: Row(
+                      children: [
+                        Checkbox(
+                          value: isCheckedall,
+                          fillColor: MaterialStatePropertyAll(const Color(0xFF264ECA).withOpacity(0.9)),
+                          onChanged: (bool? value) {
+                            if (value != null) {
+                              Provider.of<CartProvider>(context, listen: false).checkAll(checkAll: value);
+                            }
+                          },
                         ),
-                      ),
-                    ),     
+                        const Text('Semua', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500)),
+                        const Spacer(),
+                        const Text('Total  ', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500)),
+                        Text(formatRupiah(totalProduct()), style: const TextStyle(color: Color(0xFF00317B), fontWeight: FontWeight.w500)
+                        ),
+                        const SizedBox(width: 10)
+                      ],
+                    )
                   ),
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF264ECA),
+                      border: Border.all(width: 0.5, color: const Color(0xFF264ECA))
+                    ),
+                    child: TextButton(
+                      key: const Key('buy-button-key'),
+                      onPressed: () {
+                        final List<ItemCartModel> products = List.from(items.where((element) => element.isChecked == true));
+                        if (products.isEmpty) {
+                          snackBar(context, 'Silahkan pilih produk');
+                        } else {
+                          Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          '/checkout',
+                          ModalRoute.withName('/dashboard'),
+                          arguments: CheckoutViewArgument(cart: products, isCart: true)
+                        );
+                        }
+                        
+                      },
+                      child: const Text('Bayar', style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+      )
     );
   }
 }
@@ -121,7 +130,6 @@ class CatalogProductCard extends StatefulWidget {
 }
 
 class _CatalogProductCardState extends State<CatalogProductCard> {
-  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -148,17 +156,19 @@ class _CatalogProductCardState extends State<CatalogProductCard> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Checkbox(
-            value: isChecked,
+            value: item.isChecked,
+            fillColor: MaterialStatePropertyAll(const Color(0xFF264ECA).withOpacity(0.9)),
             onChanged: (bool? value) {
-              setState(() {
-                isChecked = value ?? false;
-              });
+              if (value != null) {
+                Provider.of<CartProvider>(context, listen: false).checkItem(cartId: item.cartId!, isChecked: value);
+              }
             },
           ),
-          SizedBox(
+          Container(
+            color: Colors.grey[100],
             width: 100,
             height: 100, 
-            child: Image(image: NetworkImage(item.product.imgUrl))
+            child: Image(image: NetworkImage(item.imgUrl))
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -166,7 +176,7 @@ class _CatalogProductCardState extends State<CatalogProductCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  item.product.name,
+                  item.productName,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontSize: 16,
@@ -177,15 +187,21 @@ class _CatalogProductCardState extends State<CatalogProductCard> {
                 Row(
                   children: [
                     Text(
-                      formatRupiah(item.product.price),
+                      formatRupiah(item.productPrice),
                       style: const TextStyle(fontSize: 14),
                     ),
                     const Spacer(),
                     IconButton(
                       onPressed: () async {
-                        final String result = await Provider.of<CartProvider>(context, listen: false).deleteCartItem(cartId: item.cartId);
-                        if(!mounted) return;
-                        snackBar(context, '$result delete cart');
+                        final String result = await Provider.of<CartProvider>(context, listen: false).deleteCartItem(cartId: item.cartId!);
+                        if (result == 'cooldown') {
+                          if(!mounted) return;
+                          snackBar(context, 'Please try again in a second');
+                        } else {
+                          if(!mounted) return;
+                          snackBar(context, '$result delete cart');
+                        }
+                        
                       },
                       icon: Icon(Icons.delete_outline, color: Colors.red[600],)
                     ),

@@ -83,13 +83,13 @@ class AuthAPI {
       final response = await http.post(url, headers: headers, body: data);
       if (response.statusCode == 200) {
         prefs.setString('status_user', 'validated');
-        return 'create profile success';
+        return 'success';
       }
       
     } catch (e) {
       print(e);
     }
-    return 'create profile failed';
+    return 'failed';
   }
 
   Future<UserModel?> getProfile() async {
@@ -125,7 +125,6 @@ class AuthAPI {
     } catch (e) {
       print(e);
     }
-
     return 'failed';
   }
 
@@ -150,9 +149,213 @@ class AuthAPI {
     } catch (e) {
       print(e);
     }
-
     return 'failed';
   }
 
+  Future<String> topupBalance({required int balance}) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    try {
+      final url = Uri.parse('$api/topup');
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
+      };
+      final Map data = {
+        'total': balance
+      };
+
+      final response = await http.post(url, headers: headers, body: jsonEncode(data));
+      if (response.statusCode == 200) {
+        return 'success';
+      }
+    } catch (e) {
+      print(e);
+    }
+    return 'failed';
+  }
+
+  Future<String> addAddress({required String province, required String city, required String address}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    try {
+      final url = Uri.parse('$api/profile/address');
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
+      };
+      final Map data = {
+        'address' : address,
+        'city' : city,
+        'province' : province
+      };
+
+      final response = await http.post(url, headers: headers, body: jsonEncode(data));
+      if (response.statusCode == 200) {
+        return 'success';
+      }
+    } catch (e) {
+      print(e);
+    }
+    return 'failed';
+  }
+
+  Future<String> editAddress({required int addressId, required String province, required String city, required String address, required bool isPrimaryAddress}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    try {
+      final url = Uri.parse('$api/profile/address/$addressId');
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
+      };
+      final Map data = {
+        'status': isPrimaryAddress
+      };
+      if (province.isNotEmpty) {
+        data.addEntries({'province': province}.entries); 
+      }
+      if (city.isNotEmpty) {
+        data.addEntries({'city': city}.entries);
+      }
+      if (address.isNotEmpty) {
+        data.addEntries({'address': address}.entries);
+      }
+
+      final response = await http.put(url, headers: headers, body: jsonEncode(data));
+      if (response.statusCode == 200) {
+        return 'success';
+      } else {
+        return jsonDecode(response.body)['message'];
+      }
+    } catch (e) {
+      print(e);
+      
+    }
+    return 'failed';
+  }
+
+  Future<String> deleteAddress({required int addressId}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    try {
+      final url = Uri.parse('$api/profile/address/$addressId');
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
+      };
+
+
+      final response = await http.delete(url, headers: headers);
+      if (response.statusCode == 200) {
+        return 'success';
+      } else {
+        return jsonDecode(response.body)['message'];
+      }
+    } catch (e) {
+      print(e);
+      
+    }
+    return 'failed';
+  }
+
+  Future<String> updateEmail({required String email}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    try {
+      final url = Uri.parse('$api/profile/email');
+      final Map<String, String> headers = {
+        'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
+      };
+      final Map data = {
+        'email': email
+      };
+
+      final response = await http.put(url, headers: headers, body: data);
+      if (response.statusCode == 200) {
+        return 'success';
+      }
+      print(response.body);
+      return jsonDecode(response.body)['message'];
+    } catch (e) {
+      print(e);
+    }
+    return 'failed';
+  }
+
+  Future<String> updateName({required String name}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    try {
+      final url = Uri.parse('$api/profile/name');
+      final Map<String, String> headers = {
+        'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
+      };
+      final Map data = {
+        'name': name
+      };
+
+      final response = await http.put(url, headers: headers, body: data);
+      if (response.statusCode == 200) {
+        return 'success';
+      }
+      print(response.body);
+      return jsonDecode(response.body)['message'];
+    } catch (e) {
+      print(e);
+    }
+    return 'failed';
+  }
+
+  Future<String> updatePhoneNumber({required String phoneNumber}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    try {
+      final url = Uri.parse('$api/profile/phone-number');
+      final Map<String, String> headers = {
+        'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
+      };
+      final Map data = {
+        'phone_number': phoneNumber
+      };
+
+      final response = await http.put(url, headers: headers, body: data);
+      if (response.statusCode == 200) {
+        return 'success';
+      }
+      print(response.body);
+      return jsonDecode(response.body)['message'];
+    } catch (e) {
+      print(e);
+    }
+    return 'failed';
+  }
+
+  Future<String> changePassword({required String currentPassword, required String newPassword, required String newConfirmationPassword}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    try {
+      final url = Uri.parse('$api/profile/password');
+      final Map<String, String> headers = {
+        'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
+      };
+      final Map data = {
+        'old_password': currentPassword,
+        'new_password': newPassword,
+        'retype_password': newConfirmationPassword
+      };
+
+      final response = await http.put(url, headers: headers, body: data);
+      if (response.statusCode == 200) {
+        return 'success';
+      }
+      print(response.body);
+      return jsonDecode(response.body)['message'];
+    } catch (e) {
+      print(e);
+    }
+    return 'failed';
+  }
 
 }
