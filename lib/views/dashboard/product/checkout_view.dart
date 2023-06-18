@@ -8,7 +8,9 @@ import 'package:mobile_flutter/shared/format_rupiah.dart';
 import 'package:mobile_flutter/shared/popup_dialog.dart';
 import 'package:mobile_flutter/shared/snack_bar.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
+import 'package:mobile_flutter/views/dashboard/pages/provider/notification_provider.dart';
 import 'package:mobile_flutter/views/dashboard/pages/provider/orders_provider.dart';
+import 'package:mobile_flutter/views/dashboard/product/cart_provider.dart';
 import 'package:provider/provider.dart';
 
 class CheckoutView extends StatefulWidget {
@@ -339,6 +341,8 @@ class _CheckoutViewState extends State<CheckoutView> {
                 );
                 if (result == 'success') {
                   if(!mounted) return;
+                  Provider.of<NotificationProvider>(context, listen: false).getNotification();
+                  Provider.of<CartProvider>(context, listen: false).getCart();
                   await showDialog(
                     context: context,
                     builder: (context) {
