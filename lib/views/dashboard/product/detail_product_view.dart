@@ -9,6 +9,7 @@ import 'package:mobile_flutter/shared/popup_dialog.dart';
 import 'package:mobile_flutter/shared/snack_bar.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
 import 'package:mobile_flutter/views/dashboard/product/cart_provider.dart';
+import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
 import 'package:provider/provider.dart';
 
 class DetailProductView extends StatefulWidget {
@@ -77,15 +78,26 @@ class _DetailProductViewState extends State<DetailProductView> {
                           child: Row(
                             children: [
                               IconButton(
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder:(context) => popupMessageDialog(
-                                      context,
-                                      judul: 'Maaf',
-                                      content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
-                                    ),
-                                  );
+                                onPressed: () async {
+                                  if (user == null) {
+                                    showDialog(
+                                      context: context,
+                                      builder:(context) => popupMessageDialog(
+                                        context,
+                                        judul: 'Maaf',
+                                        content: ' Akun Anda belum terdaftar. Silahkan daftar akun untuk menikmati fitur ini.'
+                                      ),
+                                    );
+                                  } else {
+                                    final String result = await Provider.of<ProductProvider>(context, listen: false).addFavoriteProduct(productId: product.id);
+                                    if (result == 'success') {
+                                      if(!mounted) return;
+                                      snackBar(context, 'Berhasil menambahkan produk ke favorit');
+                                    } else {
+                                      if(!mounted) return;
+                                      snackBar(context, result);
+                                    }
+                                  }
                                 },
                                 icon: const Icon(Icons.favorite_outline, color: Color(0xFF264ECA)),
                               ),

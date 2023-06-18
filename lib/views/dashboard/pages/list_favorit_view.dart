@@ -3,6 +3,7 @@ import 'package:mobile_flutter/arguments/detail_product_view_argument.dart';
 import 'package:mobile_flutter/models/product_model.dart';
 import 'package:mobile_flutter/shared/format_rupiah.dart';
 import 'package:mobile_flutter/shared/headers.dart';
+import 'package:mobile_flutter/shared/snack_bar.dart';
 import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -98,8 +99,16 @@ class _ListFavoritViewState extends State<ListFavoritView> {
                                         actions: [
                                           TextButton(
                                             onPressed: () async {
-                                              if(!mounted) return;
-                                              Navigator.pop(context);
+                                              final String result = await Provider.of<ProductProvider>(context, listen: false).deleteFavoriteProduct(id: product.id);
+                                              if (result == 'success') {
+                                                if(!mounted) return;
+                                                snackBar(context, 'Produk sudah dihapus dari favorit');
+                                                Navigator.pop(context);
+                                              } else {
+                                                if(!mounted) return;
+                                                Navigator.pop(context);
+                                                snackBar(context, 'Gagal menghapus produk dari favorit');
+                                              }
                                             },
                                             child: const Text('Yes', style: TextStyle(color: Colors.redAccent))
                                           ),

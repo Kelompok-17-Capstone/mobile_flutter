@@ -159,4 +159,49 @@ class ProductAPI {
     return [];
   }
 
+  Future<String> addFavoriteProduct({required String productId}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    try {
+      final url = Uri.parse('$api/favorite');
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
+      };
+      final Map data = {
+        'product_id': productId
+      };
+
+      final response = await http.post(url, headers: headers, body: jsonEncode(data));
+      if (response.statusCode == 201) {
+        return 'success';
+      } else {
+        return jsonDecode(response.body)['message'];
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    return 'failed';
+  }
+
+  Future<String> deleteFavoriteProduct({required int id}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    try {
+    final url = Uri.parse('$api/favorite/$id');
+    final Map<String, String> headers = {
+      'Authorization': 'Bearer ${prefs.getString('TOKEN')}'
+    };
+
+    final response = await http.delete(url, headers: headers);
+    if (response.statusCode == 200) {
+      return 'success';
+    }
+    } catch (e) {
+      print(e);
+    }
+    return 'failed';
+  }
+
 }

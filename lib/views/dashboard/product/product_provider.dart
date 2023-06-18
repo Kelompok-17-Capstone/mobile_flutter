@@ -75,10 +75,26 @@ class ProductProvider extends ChangeNotifier {
     final api = ProductAPI();
     setProductState(state: ProductState.loading);
     final List<ProductModel> result = await api.getFavoriteProduct();
-    if (result.isNotEmpty) {
-      _favoriteProducts = result;
-    }
+    _favoriteProducts = result;
     setProductState(state: ProductState.none);
+  }
+
+  Future<String> addFavoriteProduct({required String productId}) async {
+    final api = ProductAPI();
+    final String result = await api.addFavoriteProduct(productId: productId);
+    if (result == 'success') {
+      getFavoriteProduct();
+    }
+    return result;
+  }
+
+  Future<String> deleteFavoriteProduct({required int id}) async {
+    final api = ProductAPI();
+    final String result = await api.deleteFavoriteProduct(id: id);
+    if (result == 'success') {
+      getFavoriteProduct();
+    }
+    return result;
   }
 
   void setProductTab({required String productTab}) {
