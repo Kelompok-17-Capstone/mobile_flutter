@@ -39,19 +39,19 @@ Column circleButton(
   );
 }
 
-IconButton customBackButton(BuildContext context) {
+IconButton customBackButton(BuildContext context, {required Color color}) {
   return IconButton(
     key: const Key('back-button-key'),
     onPressed: () => Navigator.maybePop(context),
     icon: Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-          border: Border.all(color: const Color(0xFF264ECA)),
+          border: Border.all(color: color),
           borderRadius: BorderRadius.circular(100)),
-      child: const Icon(
-        Icons.arrow_back_ios_new_outlined,
-        color: Color(0xFF264ECA),
-        size: 13,
+      child: Image(
+        image: const AssetImage('assets/icons/CaretCircleLeft.png'),
+        color: color,
+        width: 13,
       ),
     ),
   );
@@ -77,32 +77,36 @@ Widget buyNowButton(BuildContext context,
     {required Widget leftContent,
     required String labelButton,
     required void Function()? onPressed}) {
-  return Row(
-    children: [
-      Expanded(
-        child: Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(width: 0.5, color: const Color(0xFF264ECA))),
-            child: leftContent),
-      ),
-      Expanded(
-        flex: 2,
-        child: Container(
-          decoration: BoxDecoration(
-              color: const Color(0xFF264ECA),
-              border: Border.all(width: 0.5, color: const Color(0xFF264ECA))),
-          child: TextButton(
-            key: const Key('buy-button-key'),
-            onPressed: onPressed,
-            child: Text(labelButton,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500)),
-          ),
+  return Container(
+    color: const Color(0xFF264ECA),
+    child: Row(
+      children: [
+        Expanded(
+          child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border:
+                      Border.all(width: 0.5, color: const Color(0xFF264ECA))),
+              child: leftContent),
         ),
-      )
-    ],
+        Expanded(
+          flex: 2,
+          child: Container(
+            decoration: BoxDecoration(
+                color: const Color(0xFF264ECA),
+                border: Border.all(width: 0.5, color: const Color(0xFF264ECA))),
+            child: TextButton(
+              key: const Key('buy-button-key'),
+              onPressed: onPressed,
+              child: Text(labelButton,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500)),
+            ),
+          ),
+        )
+      ],
+    ),
   );
 }

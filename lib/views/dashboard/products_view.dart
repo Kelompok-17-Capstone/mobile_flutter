@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/product_model.dart';
 import 'package:mobile_flutter/shared/products_grid.dart';
 import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 class ProductsView extends StatefulWidget {
@@ -11,14 +12,15 @@ class ProductsView extends StatefulWidget {
   State<ProductsView> createState() => _ProductsViewState();
 }
 
-class _ProductsViewState extends State<ProductsView> with TickerProviderStateMixin{
+class _ProductsViewState extends State<ProductsView> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
 
   late TabController _tabController;
+  int currentIndex = 0;
   
   @override
   void initState() {
     // Specifies number of Tabs here
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
 
@@ -30,7 +32,10 @@ class _ProductsViewState extends State<ProductsView> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final List<ProductModel> products = Provider.of<ProductProvider>(context).products;
+    final ProductState state = Provider.of<ProductProvider>(context).state;
+    final PriceState priceState = Provider.of<ProductProvider>(context).priceState;
 
     return SafeArea(
       child: Scaffold(
@@ -40,78 +45,101 @@ class _ProductsViewState extends State<ProductsView> with TickerProviderStateMix
             Container(
               color: Colors.white,
               height: 40,
-              child: TabBar(
-                controller: _tabController,
-                labelColor: const Color(0xFF264ECA), //<-- selected text color
-                unselectedLabelColor: const Color(0xFF7D828C),
-                indicatorColor: const Color(0xFF264ECA),
-                tabs: [
-                  const Tab(
-                    child: Text(
-                      'Terbaru',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      )
-                    ),
-                  ),
-                  const Tab(
-                    child: Text(
-                      'Terfavorit',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      )
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'Harga',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TabBar(
+                      controller: _tabController,
+                      onTap: (value) {
+                        if (currentIndex != value) {
+                          Provider.of<ProductProvider>(context, listen: false).setProductTab(productTab: value == 0 ? 'terbaru': 'terfavorit');
+                          setState(() {
+                            currentIndex = value;
+                          });
+                        }
+                      },
+                      labelColor: const Color(0xFF264ECA), //<-- selected text color
+                      unselectedLabelColor: Colors.grey,
+                      indicatorColor: const Color(0xFF264ECA),
+                      tabs: const [
+                        Tab(
+                          child: Text(
+                            'Terbaru',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                            )
+                          ),
                         ),
+                        Tab(
+                          child: Text(
+                            'Terfavorit',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                            )
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (priceState == PriceState.none) {
+                          Provider.of<ProductProvider>(context, listen: false).setPriceState(state: PriceState.ascending);
+                        } else if (priceState == PriceState.ascending) {
+                          Provider.of<ProductProvider>(context, listen: false).setPriceState(state: PriceState.descending);
+                        } else {
+                          Provider.of<ProductProvider>(context, listen: false).setPriceState(state: PriceState.none);
+                        }
+                      });
+                    },
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.33,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Harga',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: priceState == PriceState.none ? Colors.grey : const Color(0xFF264ECA)
+                            ),
+                          ),
+                          Icon(
+                            priceState == PriceState.none
+                            ? Icons.unfold_more_outlined
+                            : priceState == PriceState.ascending
+                            ? Icons.expand_less_outlined
+                            : Icons.expand_more_outlined, // unfold_more_rounded
+                            size: 18,
+                            color: priceState == PriceState.none ? Colors.grey : const Color(0xFF264ECA),
+                          ),
+                        ]
                       ),
-                      Icon(
-                        Icons.unfold_more_rounded,
-                        size: 18,
-                      ),
-                    ]
+                    ),
                   ),
                 ],
               ),
             ),
             Expanded(
-              child: TabBarView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: _tabController,
-                children: [
-                  SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                      child: productsGrid(products: products, isProductPage: true)
-                    ),
-                  ),
-                  SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                      child: productsGrid(products: products, isProductPage: true),
-                    ),
-                  ),
-                  SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                      child: productsGrid(products: products, isProductPage: true),
-                    ),
-                  ),
-                ],
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  child: state == ProductState.loading
+                  ? CircularProgressIndicator(color: const Color(0xFF264ECA).withOpacity(0.8))
+                  : productsGrid(products: products, isProductPage: true),
+                ),
               ),
-            ),
+            )
           ],
         ),
       ),
     );
   }
+  
+  @override
+  bool get wantKeepAlive => true;
   }

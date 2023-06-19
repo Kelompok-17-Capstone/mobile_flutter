@@ -1,3 +1,9 @@
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:path_provider/path_provider.dart'; 
+import 'package:path/path.dart' as path;
+import 'package:open_file/open_file.dart';
+
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/models/api/auth_api.dart';
 import 'package:mobile_flutter/models/user_model.dart';
@@ -83,8 +89,95 @@ class AuthProvider extends ChangeNotifier {
   Future<String> uploadPicture({required String imagePath}) async {
     final auth = AuthAPI();
     final result = await auth.uploadPicture(imagePath: imagePath);
-    getProfile();
+    if (result == 'success') {
+      getProfile(); 
+    }
     return result;
+  }
+
+  Future<String> topupBalance({required int balance}) async {
+    final api = AuthAPI();
+    final String result = await api.topupBalance(balance: balance);
+    if (result == 'success') {
+      getProfile(); 
+    }
+    return result;
+  }
+
+  Future<String> addAddress({required String province, required String city, required String address}) async {
+    final api = AuthAPI();
+    final String result = await api.addAddress(province: province, city: city, address: address);
+    if (result == 'success') {
+      getProfile(); 
+    }
+    return result;
+  }
+
+  Future<String> editAddress({required int addressId, required String province, required String city, required String address, required bool isPrimaryAddress}) async {
+    final api = AuthAPI();
+    final String result = await api.editAddress(addressId: addressId, province: province, city: city, address: address, isPrimaryAddress: isPrimaryAddress);
+    if (result == 'success') {
+      getProfile();
+    }
+    return result;
+  }
+
+  Future<String> deleteAddress({required int addressId}) async {
+    final api = AuthAPI();
+    final String result = await api.deleteAddress(addressId: addressId);
+    if (result == 'success') {
+      getProfile();
+    }
+    return result;
+  }
+
+  Future<String> updateEmail({required String email}) async {
+    final api = AuthAPI();
+    final String result = await api.updateEmail(email: email);
+    if (result == 'success') {
+      getProfile();
+    }
+    return result;
+  }
+
+  Future<String> updateName({required String name}) async {
+    final api = AuthAPI();
+    final String result = await api.updateName(name: name);
+    if (result == 'success') {
+      getProfile();
+    }
+    return result;
+  }
+
+  Future<String> updatePhoneNumber({required String phoneNumber}) async {
+    final api = AuthAPI();
+    final String result = await api.updatePhoneNumber(phoneNumber: phoneNumber);
+    if (result == 'success') {
+      getProfile();
+    }
+    return result;
+  }
+
+  Future<String> changePassword({required String currentPassword, required String newPassword, required String newConfirmationPassword}) async {
+    final api = AuthAPI();
+    final String result = await api.changePassword(currentPassword: currentPassword, newPassword: newPassword, newConfirmationPassword: newConfirmationPassword);
+    if (result == 'success') {
+      getProfile();
+    }
+    return result;
+  }
+
+  Future<String> saveMemberCard({required Uint8List bytes}) async {
+    try {
+      Directory? externalStorageDirectory = await getExternalStorageDirectory();
+      File file = File(path.join(externalStorageDirectory!.path, path.basename('membercard.png')));
+      await file.writeAsBytes(bytes);
+      OpenFile.open(file.absolute.path);
+      return 'success';
+    } catch (e) {
+      print(e);
+    }
+    return 'failed';
   }
 
 }

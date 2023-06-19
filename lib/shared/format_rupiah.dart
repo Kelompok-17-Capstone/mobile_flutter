@@ -15,5 +15,5 @@
       }
     }
 
-    return 'Rp${priceInText.trim()}';
+    return 'Rp ${priceInText.trim()}';
   }

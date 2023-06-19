@@ -65,8 +65,8 @@ class MemberView extends StatelessWidget {
                             onPressed: () {
                               Navigator.pushNamed(context, '/user_setting');
                             },
-                            icon: const Icon(Icons.manage_accounts_outlined,
-                                size: 32, color: Colors.white),
+                            icon: Image.asset('assets/icons/User.png',
+                                color: Colors.white),
                           )
                         : IconButton(
                             onPressed: () {
@@ -76,7 +76,7 @@ class MemberView extends StatelessWidget {
                             icon: Image.asset('assets/icons/Gear.png',
                                 color: Colors.white),
                           ),
-                  ),
+                  )
                 ],
               ),
               const SizedBox(height: 40),
@@ -113,7 +113,11 @@ class MemberView extends StatelessWidget {
                                       listen: false)
                                   .registerMember();
                             })
-                        : const SizedBox() // Empty Widget
+                        : fullWidthButton(
+                            label: 'Cetak Member',
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/cetak_member');
+                            })
                   ],
                 ),
               ),

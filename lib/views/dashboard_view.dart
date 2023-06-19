@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/views/dashboard/home_view.dart';
 import 'package:mobile_flutter/views/dashboard/member_view.dart';
+import 'package:mobile_flutter/views/dashboard/pages/provider/notification_provider.dart';
+import 'package:mobile_flutter/views/dashboard/product/cart_provider.dart';
 import 'package:mobile_flutter/views/dashboard/product/product_provider.dart';
 import 'package:mobile_flutter/views/dashboard/products_view.dart';
 import 'package:provider/provider.dart';
@@ -18,19 +20,22 @@ class _DashboardViewState extends State<DashboardView> {
   int currentIndex = 0;
 
   List<Widget> pageList = [
-    const HomePageView(),
+    const CircularProgressIndicator(),
     const ProductsView(),
     const MemberView()
   ];
 
   @override
   void initState() {
+    pageList[0] = HomeView(pageController: pageConttroller);
     super.initState();
-    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback(
-      (timeStamp) {
-        Provider.of<ProductProvider>(context, listen: false).getAllProducts();
-      },
-    );
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
+      Provider.of<ProductProvider>(context, listen: false).getNewProducts();
+      Provider.of<ProductProvider>(context, listen: false).getAllProducts();
+      Provider.of<CartProvider>(context, listen: false).getCart();
+      Provider.of<NotificationProvider>(context, listen: false)
+          .getNotification();
+    });
   }
 
   @override
@@ -46,13 +51,11 @@ class _DashboardViewState extends State<DashboardView> {
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.grey[500],
         onTap: (value) {
-          setState(
-            () {
-              pageConttroller.animateToPage(value,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut);
-            },
-          );
+          setState(() {
+            pageConttroller.animateToPage(value,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut);
+          });
         },
         items: [
           BottomNavigationBarItem(

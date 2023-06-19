@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 
 Dialog popupMessageDialog(BuildContext context ,{required String judul, required String content}) {
-  final screenSize = MediaQuery.of(context).size;
-  final boxWidth = screenSize.width * 0.8;
-  final boxHeight = screenSize.height * 0.3;
 
   return Dialog(
     child: Container(
-      width: boxWidth,
-      height: boxHeight,
+      padding: const EdgeInsets.symmetric(vertical: 20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(6),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             judul,
