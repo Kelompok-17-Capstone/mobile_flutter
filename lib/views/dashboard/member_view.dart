@@ -36,6 +36,7 @@ class MemberView extends StatelessWidget {
                             title: const Text('Upload new profile picture?'),
                             actions: [
                               TextButton(
+                                key: const Key('yes-button'),
                                 onPressed: () async {
                                   await uploadPicture(context);
                                   if (context.mounted) {
@@ -45,6 +46,7 @@ class MemberView extends StatelessWidget {
                                 child: const Text('Yes')
                               ),
                               TextButton(
+                                key: const Key('no-button'),
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
@@ -61,12 +63,14 @@ class MemberView extends StatelessWidget {
                     top: 10,
                     child: user != null
                     ? IconButton(
+                      key: const Key('setting-button'),
                       onPressed: () {
                         Navigator.pushNamed(context, '/user_setting');
                       },
                       icon: const Icon(Icons.manage_accounts_outlined, size: 32, color: Colors.white),
                     )
                     : IconButton(
+                      key: const Key('welcome-button'),
                       onPressed: () {
                         Navigator.pushNamedAndRemoveUntil(context, '/welcome', (route) => false);
                       },

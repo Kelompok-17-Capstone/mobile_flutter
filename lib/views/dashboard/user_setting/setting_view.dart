@@ -11,6 +11,7 @@ class SettingView extends StatelessWidget {
     return Scaffold(
       appBar: customAppBar(context, title: 'Pengaturan', isBackButton: true, actions: [
         IconButton(
+          key: const Key('logout-button'),
           onPressed: () {
             showDialog<void>(
               context: context,
@@ -22,12 +23,14 @@ class SettingView extends StatelessWidget {
                   ),
                   actions: <Widget>[
                     TextButton(
+                      key: const Key('cancel-button'),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
                       child: const Text('Cancel', style: TextStyle(color: Colors.grey)),
                     ),
                     TextButton(
+                      key: const Key('confirm-logout-button'),
                       onPressed: () {
                         Provider.of<AuthProvider>(context, listen: false).logout();
                         Navigator.pushNamedAndRemoveUntil(context, '/welcome', (route) => false);
@@ -90,6 +93,7 @@ class SettingView extends StatelessWidget {
         border: Border(bottom: BorderSide(width: 0.1))
       ),
       child: ListTile(
+        key: const Key('title-button'),
         onTap: onTap,
         leading: Icon(
           icon,

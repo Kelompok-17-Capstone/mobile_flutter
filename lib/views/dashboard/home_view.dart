@@ -68,6 +68,7 @@ class HomeView extends StatelessWidget {
                           ),
                           const VerticalDivider(color: Color(0xFF264ECA)),
                           ElevatedButton(
+                            key: const Key('topup-button'),
                             onPressed: () {
                               if (user == null) {
                                 showDialog(
@@ -205,6 +206,7 @@ class HomeView extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
                         ),
                         TextButton(
+                          key: const Key('lihat-semua-button'),
                           onPressed: () {
                             pageController.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
                           },

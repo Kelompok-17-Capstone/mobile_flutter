@@ -82,7 +82,7 @@ class _PersonalFormViewState extends State<PersonalFormView> {
                             Navigator.pushNamedAndRemoveUntil(context, '/onboarding', (route) => false);
                           } else {
                             if(!mounted) return;
-                            snackBar(context, 'Gagal membuat profile, coba lagi dalam beberapa saat');
+                            snackBar(context, result);
                           }
                         }
                       }),

@@ -68,6 +68,7 @@ class _CartViewState extends State<CartView> {
                     child: Row(
                       children: [
                         Checkbox(
+                          key: const Key('all-product-checkbox'),
                           value: isCheckedall,
                           fillColor: MaterialStatePropertyAll(const Color(0xFF264ECA).withOpacity(0.9)),
                           onChanged: (bool? value) {
@@ -156,6 +157,7 @@ class _CatalogProductCardState extends State<CatalogProductCard> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Checkbox(
+            key: Key('product-$item-checkbutton'),
             value: item.isChecked,
             fillColor: MaterialStatePropertyAll(const Color(0xFF264ECA).withOpacity(0.9)),
             onChanged: (bool? value) {
@@ -197,6 +199,7 @@ class _CatalogProductCardState extends State<CatalogProductCard> {
                       ),
                     ),
                     IconButton(
+                      key: const Key('delete-cart-button'),
                       onPressed: () async {
                         final String result = await Provider.of<CartProvider>(context, listen: false).deleteCartItem(cartId: item.cartId!);
                         if (result == 'cooldown') {

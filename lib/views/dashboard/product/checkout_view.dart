@@ -228,6 +228,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                       trailing: user.coin <= 0
                       ? const SizedBox()
                       : Switch(
+                        key: const Key('coin-switch'),
                         activeColor: const Color(0xFF33DF3A),
                         inactiveTrackColor: Colors.grey[300],
                         value: isCoinEnabled,

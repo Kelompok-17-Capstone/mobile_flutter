@@ -167,6 +167,7 @@ class _SettingAddressFormViewState extends State<SettingAddressFormView> {
                 title: const Text('Pengaturan', style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.w400)),
                 subtitle: const Text('Jadikan alamat utama'),
                 trailing: Switch(
+                  key: const Key('primary-switch'),
                   activeColor: const Color(0xFF33DF3A),
                   inactiveTrackColor: Colors.grey[300],
                   value: isPrimaryAddress,
@@ -195,6 +196,7 @@ class _SettingAddressFormViewState extends State<SettingAddressFormView> {
                 ],
               ),
               child: TextButton(
+                key: const Key('hapus-alamat-button'),
                 onPressed: () async {
                   final String result = await Provider.of<AuthProvider>(context, listen: false).deleteAddress(addressId: widget.address.id);
                   if (result == 'success') {

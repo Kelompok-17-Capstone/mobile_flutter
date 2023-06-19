@@ -117,6 +117,9 @@ class _RegisterViewState extends State<RegisterView> {
                           if (result == 'register success') {
                             if(!mounted) return;
                             Navigator.pushReplacementNamed(context, '/personal_form');
+                          } else {
+                            if(!mounted) return;
+                            snackBar(context, result);
                           }
                         }
                       }
