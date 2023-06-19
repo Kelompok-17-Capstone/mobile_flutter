@@ -84,14 +84,20 @@ class MemberView extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
                   children: [
-                    const Text(
-                      'Silahkan mendaftar sebagai member dan nikmati diskon 30% untuk setiap transaksi serta dapatkan keuntungan lainnya',
+                    Text(
+                      user == null || user.memberCode.isEmpty
+                      ? 'Silahkan mendaftar sebagai member dan nikmati diskon 30% untuk setiap transaksi serta dapatkan keuntungan lainnya'
+                      : 'Anda dapat menggunakan barcode ini saat membeli produk secara langsung di toko kami untuk menikmati diskon 30% sebagai member',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16
                       ),
                     ),
                     const SizedBox(height: 60),
+                    user == null || user.memberCode.isEmpty
+                    ? const SizedBox()
+                    : const Text('Scan Barcode', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w400)),
+                    const SizedBox(height: 10),
                     BarcodeWidget(
                       color: user == null || user.memberCode.isEmpty ? Colors.grey : Colors.black,
                       height: 100,
