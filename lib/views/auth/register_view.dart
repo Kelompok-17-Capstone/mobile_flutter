@@ -33,6 +33,8 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthState state = Provider.of<AuthProvider>(context).state;
+    
     return Scaffold(
       body: SingleChildScrollView(
       child: Padding(
@@ -99,8 +101,9 @@ class _RegisterViewState extends State<RegisterView> {
                       },
                     ),
                     const SizedBox(height: 25),
-
-                    fullWidthButton(label: 'Daftar Akun', onPressed: () async {
+                    state == AuthState.loading
+                    ? CircularProgressIndicator(color: const Color(0xFF264ECA).withOpacity(0.8))
+                    : fullWidthButton(label: 'Daftar Akun', onPressed: () async {
 
                       if (formKey.currentState!.validate()) {
 

@@ -30,6 +30,8 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthState state = Provider.of<AuthProvider>(context).state;
+
     return Scaffold(
       body: SingleChildScrollView(
       child: Padding(
@@ -72,8 +74,9 @@ class _LoginViewState extends State<LoginView> {
                       },
                     ),
                     const SizedBox(height: 45),
-
-                    fullWidthButton(label: 'Masuk Akun', onPressed: () async {
+                    state == AuthState.loading
+                    ? CircularProgressIndicator(color: const Color(0xFF264ECA).withOpacity(0.8))
+                    : fullWidthButton(label: 'Masuk Akun', onPressed: () async {
                       if (formKey.currentState!.validate()) {
                         String result = await Provider.of<AuthProvider>(context, listen: false).login(
                           email: emailController.text.trim(), 

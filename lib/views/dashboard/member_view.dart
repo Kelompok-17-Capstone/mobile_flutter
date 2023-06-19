@@ -15,6 +15,7 @@ class MemberView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserModel? user = Provider.of<AuthProvider>(context).user;
+    final AuthState state = Provider.of<AuthProvider>(context).state;
 
     return Scaffold(
       appBar: customAppBar(context, title: 'Informasi Member', isElevated: false),
@@ -108,7 +109,9 @@ class MemberView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 70),
-                    user != null && user.memberCode.isEmpty
+                    state == AuthState.loading
+                    ? CircularProgressIndicator(color: const Color(0xFF264ECA).withOpacity(0.8))
+                    : user != null && user.memberCode.isEmpty
                     ? fullWidthButton(label: 'Daftar Member', onPressed: () async {
                       await Provider.of<AuthProvider>(context, listen: false).registerMember();
                     })

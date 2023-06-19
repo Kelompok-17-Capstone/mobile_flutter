@@ -34,6 +34,8 @@ class _PersonalFormViewState extends State<PersonalFormView> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthState state = Provider.of<AuthProvider>(context).state;
+    
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -68,7 +70,9 @@ class _PersonalFormViewState extends State<PersonalFormView> {
                       const SizedBox(height: 5),
                       customForm(controller: addressController, hintText: 'isi beserta kecamatan & kode pos', maxLines: 3),
                       const SizedBox(height: 20),
-                      fullWidthButton(label: 'Submit', onPressed: () async {
+                      state == AuthState.loading
+                      ? CircularProgressIndicator(color: const Color(0xFF264ECA).withOpacity(0.8))
+                      : fullWidthButton(label: 'Submit', onPressed: () async {
                         if (formKey.currentState!.validate()) {
                           final String result = await Provider.of<AuthProvider>(context, listen: false).createProfile(
                             name: nameController.text.trim(),
