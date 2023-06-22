@@ -70,13 +70,14 @@ class MemberView extends StatelessWidget {
                       },
                       icon: const Icon(Icons.manage_accounts_outlined, size: 32, color: Colors.white),
                     )
-                    : IconButton(
-                      key: const Key('welcome-button'),
-                      onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(context, '/welcome', (route) => false);
-                      },
-                      icon: const Icon(Icons.login_outlined, size: 32, color: Colors.white),
-                    )
+                    : const SizedBox()
+                    // IconButton(
+                    //   key: const Key('welcome-button'),
+                    //   onPressed: () {
+                    //     Navigator.pushNamedAndRemoveUntil(context, '/welcome', (route) => false);
+                    //   },
+                    //   icon: const Icon(Icons.login_outlined, size: 32, color: Colors.white),
+                    // )
                   )
                 ],
               ),
@@ -109,7 +110,11 @@ class MemberView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 70),
-                    state == AuthState.loading
+                    user == null
+                    ? fullWidthButton(label: 'Buat Akun', onPressed: () {
+                      Navigator.pushNamedAndRemoveUntil(context, '/welcome', (route) => false);
+                    })
+                    : state == AuthState.loading
                     ? CircularProgressIndicator(color: const Color(0xFF264ECA).withOpacity(0.8))
                     : user != null && user.memberCode.isEmpty
                     ? fullWidthButton(label: 'Daftar Member', onPressed: () async {
