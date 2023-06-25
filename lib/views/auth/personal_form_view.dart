@@ -71,7 +71,7 @@ class _PersonalFormViewState extends State<PersonalFormView> {
                       customForm(controller: addressController, hintText: 'isi beserta kecamatan & kode pos', maxLines: 3),
                       const SizedBox(height: 20),
                       state == AuthState.loading
-                      ? CircularProgressIndicator(color: const Color(0xFF264ECA).withOpacity(0.8))
+                      ? Center(child: CircularProgressIndicator(color: const Color(0xFF264ECA).withOpacity(0.8)))
                       : fullWidthButton(label: 'Submit', onPressed: () async {
                         if (formKey.currentState!.validate()) {
                           final String result = await Provider.of<AuthProvider>(context, listen: false).createProfile(

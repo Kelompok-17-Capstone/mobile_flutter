@@ -75,7 +75,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     const SizedBox(height: 45),
                     state == AuthState.loading
-                    ? CircularProgressIndicator(color: const Color(0xFF264ECA).withOpacity(0.8))
+                    ? Center(child: CircularProgressIndicator(color: const Color(0xFF264ECA).withOpacity(0.8)))
                     : fullWidthButton(label: 'Masuk Akun', onPressed: () async {
                       if (formKey.currentState!.validate()) {
                         String result = await Provider.of<AuthProvider>(context, listen: false).login(
