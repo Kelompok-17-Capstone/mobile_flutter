@@ -38,6 +38,7 @@ class _SettingAddressViewState extends State<SettingAddressView> {
                     child: Column(
                       children: [
                         ListTile(
+                          key: Key('edit-alamat-$index-button'),
                           onTap: () {
                             Navigator.pushNamed(
                               context,
@@ -72,6 +73,7 @@ class _SettingAddressViewState extends State<SettingAddressView> {
               Container(
                 color: Colors.white,
                 child: ElevatedButton(
+                  key: const Key('tambah-alamat-button'),
                   onPressed: () {
                     Navigator.pushNamed(
                       context,

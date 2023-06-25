@@ -5,6 +5,7 @@ import 'package:mobile_flutter/shared/custom_appbar.dart';
 import 'package:mobile_flutter/shared/format_rupiah.dart';
 import 'package:mobile_flutter/shared/snack_bar.dart';
 import 'package:mobile_flutter/views/auth/auth_provider.dart';
+import 'package:mobile_flutter/views/dashboard/pages/provider/notification_provider.dart';
 import 'package:provider/provider.dart';
 
 class TopupOvoView extends StatefulWidget {
@@ -291,6 +292,7 @@ class _TopupOvoViewState extends State<TopupOvoView> {
                     final String result = await Provider.of<AuthProvider>(context, listen: false).topupBalance(balance: int.parse(amountController.text));
                     if (result == 'success') {
                       if(!mounted) return;
+                      Provider.of<NotificationProvider>(context, listen: false).getNotification();
                       Navigator.pushNamed(context, '/topup_success');
                     } else {
                       if(!mounted) return;

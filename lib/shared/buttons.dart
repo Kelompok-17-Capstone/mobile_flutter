@@ -25,7 +25,7 @@ Column circleButton({required IconData icon, required String label, required voi
           borderRadius: BorderRadius.circular(100),
         ),
         child: IconButton(
-          key: Key('$label-key'),
+          key: Key('$label-button'),
           onPressed: onPressed,
           icon: Icon(icon, color: const Color(0xFF264ECA)),
         ),

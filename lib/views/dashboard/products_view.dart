@@ -63,6 +63,7 @@ class _ProductsViewState extends State<ProductsView> with TickerProviderStateMix
                       indicatorColor: const Color(0xFF264ECA),
                       tabs: const [
                         Tab(
+                          key: Key('tab-terbaru'),
                           child: Text(
                             'Terbaru',
                             style: TextStyle(
@@ -72,6 +73,7 @@ class _ProductsViewState extends State<ProductsView> with TickerProviderStateMix
                           ),
                         ),
                         Tab(
+                          key: Key('tab-terfavorit'),
                           child: Text(
                             'Terfavorit',
                             style: TextStyle(
@@ -84,6 +86,7 @@ class _ProductsViewState extends State<ProductsView> with TickerProviderStateMix
                     ),
                   ),
                   GestureDetector(
+                    key: const Key('price-sorting-button'),
                     onTap: () {
                       setState(() {
                         if (priceState == PriceState.none) {

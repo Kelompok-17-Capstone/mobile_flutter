@@ -81,10 +81,10 @@ class _ListRiwayatKoinState extends State<ListRiwayatKoin> {
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: history.isEmpty
-                ? const Center(child: Text('Saat ini tidak ada riwayat koin'))
-                : state == CoinState.loading
+                child: state == CoinState.loading
                 ? CircularProgressIndicator(color: const Color(0xFF264ECA).withOpacity(0.8))
+                : history.isEmpty
+                ? const Center(child: Text('Saat ini tidak ada riwayat koin'))
                 : ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,

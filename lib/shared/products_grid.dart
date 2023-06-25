@@ -18,6 +18,7 @@ Widget productsGrid({required List<ProductModel> products, bool isProductPage = 
     itemBuilder: (context, index) {
       final ProductModel product = products[index];
       return GestureDetector(
+        key: Key('${product.id}-button'),
         onTap: () {
           Navigator.pushNamed(
             context, 

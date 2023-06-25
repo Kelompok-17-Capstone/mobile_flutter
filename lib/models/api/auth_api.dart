@@ -24,6 +24,8 @@ class AuthAPI {
         prefs.setString('TOKEN', result['token']);
         prefs.setString('status_user', 'unvalidated');
         return 'register success';
+      } else {
+        return jsonDecode(response.body)['message'];
       }
 
     } catch (e) {
@@ -84,6 +86,8 @@ class AuthAPI {
       if (response.statusCode == 200) {
         prefs.setString('status_user', 'validated');
         return 'success';
+      } else {
+        return jsonDecode(response.body)['message'];
       }
       
     } catch (e) {

@@ -15,6 +15,7 @@ class MemberView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserModel? user = Provider.of<AuthProvider>(context).user;
+    final AuthState state = Provider.of<AuthProvider>(context).state;
 
     return Scaffold(
       appBar: customAppBar(context, title: 'Informasi Member', isElevated: false),
@@ -36,6 +37,7 @@ class MemberView extends StatelessWidget {
                             title: const Text('Upload new profile picture?'),
                             actions: [
                               TextButton(
+                                key: const Key('yes-button'),
                                 onPressed: () async {
                                   await uploadPicture(context);
                                   if (context.mounted) {
@@ -45,6 +47,7 @@ class MemberView extends StatelessWidget {
                                 child: const Text('Yes')
                               ),
                               TextButton(
+                                key: const Key('no-button'),
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
@@ -61,17 +64,20 @@ class MemberView extends StatelessWidget {
                     top: 10,
                     child: user != null
                     ? IconButton(
+                      key: const Key('setting-button'),
                       onPressed: () {
                         Navigator.pushNamed(context, '/user_setting');
                       },
                       icon: const Icon(Icons.manage_accounts_outlined, size: 32, color: Colors.white),
                     )
-                    : IconButton(
-                      onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(context, '/welcome', (route) => false);
-                      },
-                      icon: const Icon(Icons.login_outlined, size: 32, color: Colors.white),
-                    )
+                    : const SizedBox()
+                    // IconButton(
+                    //   key: const Key('welcome-button'),
+                    //   onPressed: () {
+                    //     Navigator.pushNamedAndRemoveUntil(context, '/welcome', (route) => false);
+                    //   },
+                    //   icon: const Icon(Icons.login_outlined, size: 32, color: Colors.white),
+                    // )
                   )
                 ],
               ),
@@ -80,14 +86,20 @@ class MemberView extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
                   children: [
-                    const Text(
-                      'Silahkan mendaftar sebagai member dan nikmati diskon 30% untuk setiap transaksi serta dapatkan keuntungan lainnya',
+                    Text(
+                      user == null || user.memberCode.isEmpty
+                      ? 'Silahkan mendaftar sebagai member dan nikmati diskon 30% untuk setiap transaksi serta dapatkan keuntungan lainnya'
+                      : 'Anda dapat menggunakan barcode ini saat membeli produk secara langsung di toko kami untuk menikmati diskon 30% sebagai member',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16
                       ),
                     ),
                     const SizedBox(height: 60),
+                    user == null || user.memberCode.isEmpty
+                    ? const SizedBox()
+                    : const Text('Scan Barcode', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w400)),
+                    const SizedBox(height: 10),
                     BarcodeWidget(
                       color: user == null || user.memberCode.isEmpty ? Colors.grey : Colors.black,
                       height: 100,
@@ -98,7 +110,13 @@ class MemberView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 70),
-                    user != null && user.memberCode.isEmpty
+                    user == null
+                    ? fullWidthButton(label: 'Buat Akun', onPressed: () {
+                      Navigator.pushNamedAndRemoveUntil(context, '/welcome', (route) => false);
+                    })
+                    : state == AuthState.loading
+                    ? CircularProgressIndicator(color: const Color(0xFF264ECA).withOpacity(0.8))
+                    : user != null && user.memberCode.isEmpty
                     ? fullWidthButton(label: 'Daftar Member', onPressed: () async {
                       await Provider.of<AuthProvider>(context, listen: false).registerMember();
                     })

@@ -104,7 +104,7 @@ Widget homeHeader(BuildContext context) {
                 children: [
                   Expanded(
                     child: TextFormField(
-                      enabled: user != null ? true : false,
+                      //enabled: user != null ? true : false,
                       controller: searchController,
                       onTapOutside: (event) {
                         FocusScope.of(context).unfocus();
@@ -124,6 +124,7 @@ Widget homeHeader(BuildContext context) {
                     )
                   ),
                   GestureDetector(
+                    key: const Key('notification-button'),
                     onTap: () {
                       if (user == null) {
                         showDialog(
@@ -141,6 +142,7 @@ Widget homeHeader(BuildContext context) {
                     child: Stack(
                       children: [
                         IconButton(
+                          key: const Key('notification-2nd-button'),
                           onPressed: () {
                             if (user == null) {
                               showDialog(
@@ -186,6 +188,7 @@ Widget homeHeader(BuildContext context) {
                     ),
                   ),
                   GestureDetector(
+                    key: const Key('cart-button'),
                     onTap: () {
                       if (user == null) {
                         showDialog(
@@ -203,6 +206,7 @@ Widget homeHeader(BuildContext context) {
                     child: Stack(
                       children: [
                         IconButton(
+                          key: const Key('cart-2nd-button'),
                           onPressed: () {
                             if (user == null) {
                               showDialog(
@@ -321,6 +325,7 @@ Container profileHeader(BuildContext context, {String? name, String? imgUrl, voi
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           GestureDetector(
+            key: const Key('profile-button'),
             onTap: onTap,
             child: CircleAvatar(
               radius: MediaQuery.of(context).size.width * 0.2,

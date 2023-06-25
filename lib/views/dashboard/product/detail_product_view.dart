@@ -81,6 +81,7 @@ class _DetailProductViewState extends State<DetailProductView> {
                             child: Row(
                               children: [
                                 IconButton(
+                                  key: const Key('favorit-button'),
                                   onPressed: () async {
                                     if (user == null) {
                                       showDialog(
@@ -106,6 +107,7 @@ class _DetailProductViewState extends State<DetailProductView> {
                                 ),
                                 const SizedBox(width: 10),
                                 IconButton(
+                                  key: const Key('cart-button'),
                                   onPressed: () {
                                     if (user == null) {
                                       showDialog(
