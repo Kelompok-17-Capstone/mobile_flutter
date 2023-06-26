@@ -48,6 +48,8 @@ class ProductAPI {
       final response = await http.post(url, headers: headers, body: jsonEncode(data));
       if (response.statusCode == 200) {
         return 'success';
+      } else {
+        return jsonDecode(response.body)['message'];
       }
 
     } catch (e) {

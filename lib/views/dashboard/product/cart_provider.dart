@@ -30,8 +30,9 @@ class CartProvider extends ChangeNotifier {
     if (result == 'success') {
       _globalCooldown = false;
       getCart();
+      return '$result add to cart';
     }
-    return result;
+    return '$result. current stock is ${product.stock}.';
   }
 
   Future<String> deleteCartItem({required int cartId}) async {

@@ -354,29 +354,34 @@ class _DetailProductViewState extends State<DetailProductView> {
                           notAMember(context);
                         } else {
                           if (isDirectCheckout) {
-                            Navigator.pop(context);
-                            Navigator.pushNamed(
-                              context,
-                              '/checkout',
-                              arguments: CheckoutViewArgument(
-                                cart: [
-                                  ItemCartModel(
-                                    cartId: null,
-                                    productId: product.id,
-                                    productName: product.name,
-                                    productPrice: product.price,
-                                    imgUrl: product.imgUrl,
-                                    itemCount: itemCount
-                                  )
-                                ],
-                                isCart: false
-                              )
-                            );
+                            if (product.stock >= itemCount) {
+                              Navigator.pop(context);
+                              Navigator.pushNamed(
+                                context,
+                                '/checkout',
+                                arguments: CheckoutViewArgument(
+                                  cart: [
+                                    ItemCartModel(
+                                      cartId: null,
+                                      productId: product.id,
+                                      productName: product.name,
+                                      productPrice: product.price,
+                                      imgUrl: product.imgUrl,
+                                      itemCount: itemCount
+                                    )
+                                  ],
+                                  isCart: false
+                                )
+                              );
+                            } else {
+                              Navigator.pop(context);
+                              snackBar(context, 'Product stock is not available. Current stock is ${product.stock}');
+                            }
                           } else {
                             final String result = await Provider.of<CartProvider>(context, listen: false).addToCart(product: product, itemCount: itemCount);
                             if (!mounted) return;
                             Navigator.pop(context);
-                            snackBar(context, '$result add to cart.');
+                            snackBar(context, result);
                           }
                         }
                       })
