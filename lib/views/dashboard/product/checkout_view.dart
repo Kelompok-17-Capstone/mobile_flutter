@@ -36,8 +36,7 @@ class _CheckoutViewState extends State<CheckoutView> {
 
   int countTotalPayment({required int totalProduct, required int shippingCost}) {
     int coin = isCoinEnabled ? user.coin >= totalProduct ? totalProduct : user.coin : 0;
-    double diskon = totalProduct * 0.3;
-    return (totalProduct - diskon + shippingCost - coin).ceil();
+    return (totalProduct + shippingCost - coin).ceil();
   }
 
 
@@ -58,6 +57,11 @@ class _CheckoutViewState extends State<CheckoutView> {
         result += item.productPrice * item.itemCount;
       }
       return result;
+    }
+
+    int subTotal() {
+      double discount = totalProduct() * 0.3;
+      return (totalProduct() - discount).ceil();
     }
 
     return Scaffold(
@@ -221,8 +225,8 @@ class _CheckoutViewState extends State<CheckoutView> {
                       dense: true,
                       leading: Icon(Icons.percent_outlined, color: CustomColors.primary),
                       title: Text('Tukarkan ${
-                        user.coin >= totalProduct()
-                        ? formatRupiah(totalProduct())
+                        user.coin >= subTotal()
+                        ? formatRupiah(subTotal())
                         : formatRupiah(user.coin)
                       } koin', style: const TextStyle(fontWeight: FontWeight.w500)),
                       trailing: user.coin <= 0
@@ -277,8 +281,8 @@ class _CheckoutViewState extends State<CheckoutView> {
                               children: [
                                 const Text('Tukar Koin'),
                                 Text(
-                                  user.coin >= totalProduct()
-                                  ? formatRupiah(totalProduct())
+                                  user.coin >= subTotal()
+                                  ? formatRupiah(subTotal())
                                   : formatRupiah(user.coin)
                                 )
                               ],
@@ -294,7 +298,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 const Text('Total Pembayaran', style: TextStyle(color: Colors.black)),
-                                Text(formatRupiah(countTotalPayment(totalProduct: totalProduct(), shippingCost: 0)), style: const TextStyle(color: Color(0xFF264ECA)))
+                                Text(formatRupiah(countTotalPayment(totalProduct: subTotal(), shippingCost: 0)), style: const TextStyle(color: Color(0xFF264ECA)))
                               ],
                             )
                           ],
