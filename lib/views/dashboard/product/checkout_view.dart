@@ -271,6 +271,13 @@ class _CheckoutViewState extends State<CheckoutView> {
                               ],
                             ),
                             const SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text('Diskon 30%'),
+                                Text(formatRupiah((totalProduct() * 0.3).toInt()))
+                              ],
+                            ),
                             !isCoinEnabled
                             ? const SizedBox()
                             : Row(
@@ -282,13 +289,6 @@ class _CheckoutViewState extends State<CheckoutView> {
                                   ? formatRupiah(subTotal())
                                   : formatRupiah(user.coin)
                                 )
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text('Diskon 30%'),
-                                Text(formatRupiah((totalProduct() * 0.3).toInt()))
                               ],
                             ),
                             Row(
