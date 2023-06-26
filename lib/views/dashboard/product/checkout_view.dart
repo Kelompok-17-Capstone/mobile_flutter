@@ -48,7 +48,7 @@ class _CheckoutViewState extends State<CheckoutView> {
     }
 
     int subTotal() {
-      double discount = totalProduct() * 0.3;
+      double discount = user.memberCode.isEmpty ? 0 : totalProduct() * 0.3;
       return (totalProduct() - discount).toInt();
     }
 
@@ -271,7 +271,9 @@ class _CheckoutViewState extends State<CheckoutView> {
                               ],
                             ),
                             const SizedBox(height: 5),
-                            Row(
+                            user.memberCode.isEmpty
+                            ? const SizedBox()
+                            : Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 const Text('Diskon 30%'),
