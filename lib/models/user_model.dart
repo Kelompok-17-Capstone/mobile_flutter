@@ -49,7 +49,6 @@ class UserAddress {
   final int id;
   final String address;
   bool status;
-  bool selected;
 
-  UserAddress({required this.id, required this.address, required this.status}) : selected = status == true ? true : false;
+  UserAddress({required this.id, required this.address, required this.status});
 }

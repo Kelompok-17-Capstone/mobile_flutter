@@ -24,25 +24,12 @@ class CheckoutView extends StatefulWidget {
 
 class _CheckoutViewState extends State<CheckoutView> {
 
-  late UserModel user;
-
   bool isCoinEnabled = false;
-
-  @override
-  void initState() {
-    super.initState();
-    user = Provider.of<AuthProvider>(context, listen: false).user!;
-  }
-
-  int countTotalPayment({required int totalProduct, required int shippingCost}) {
-    int coin = isCoinEnabled ? user.coin >= totalProduct ? totalProduct : user.coin : 0;
-    double diskon = totalProduct * 0.3;
-    return (totalProduct - diskon + shippingCost - coin).ceil();
-  }
 
 
   @override
   Widget build(BuildContext context) {
+    UserModel user = Provider.of<AuthProvider>(context).user!;
 
     int amountProuct() {
       int result = 0;
@@ -60,6 +47,17 @@ class _CheckoutViewState extends State<CheckoutView> {
       return result;
     }
 
+    int subTotal() {
+      double discount = totalProduct() * 0.3;
+      return (totalProduct() - discount).toInt();
+    }
+
+    int countTotalPayment() {
+      int shippingCost = 0;
+      int coin = isCoinEnabled ? user.coin >= subTotal() ? subTotal() : user.coin : 0;
+      return (subTotal() + shippingCost - coin).toInt();
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: customAppBar(context, title: 'Rincian Pesanan', isBackButton: true),
@@ -72,9 +70,12 @@ class _CheckoutViewState extends State<CheckoutView> {
                 child: Column(
                   children: [
                     ListTile(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/setting_address');
+                      },
                       leading: Icon(Icons.pin_drop_outlined, color: CustomColors.primary),
                       title: const Text('Alamat Pengiriman', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13)),
-                      subtitle: Text(user.address.where((element) => element.selected = true).first.address, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
+                      subtitle: Text(user.address.singleWhere((element) => element.status == true).address, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
                       trailing: Icon(Icons.arrow_forward_ios_outlined, size: 16, color: CustomColors.primary),
                       isThreeLine: true,
                     ),
@@ -221,8 +222,8 @@ class _CheckoutViewState extends State<CheckoutView> {
                       dense: true,
                       leading: Icon(Icons.percent_outlined, color: CustomColors.primary),
                       title: Text('Tukarkan ${
-                        user.coin >= totalProduct()
-                        ? formatRupiah(totalProduct())
+                        user.coin >= subTotal()
+                        ? formatRupiah(subTotal())
                         : formatRupiah(user.coin)
                       } koin', style: const TextStyle(fontWeight: FontWeight.w500)),
                       trailing: user.coin <= 0
@@ -277,8 +278,8 @@ class _CheckoutViewState extends State<CheckoutView> {
                               children: [
                                 const Text('Tukar Koin'),
                                 Text(
-                                  user.coin >= totalProduct()
-                                  ? formatRupiah(totalProduct())
+                                  user.coin >= subTotal()
+                                  ? formatRupiah(subTotal())
                                   : formatRupiah(user.coin)
                                 )
                               ],
@@ -287,14 +288,14 @@ class _CheckoutViewState extends State<CheckoutView> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 const Text('Diskon 30%'),
-                                Text(formatRupiah((totalProduct() * 0.3).ceil()))
+                                Text(formatRupiah((totalProduct() * 0.3).toInt()))
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 const Text('Total Pembayaran', style: TextStyle(color: Colors.black)),
-                                Text(formatRupiah(countTotalPayment(totalProduct: totalProduct(), shippingCost: 0)), style: const TextStyle(color: Color(0xFF264ECA)))
+                                Text(formatRupiah(countTotalPayment()), style: const TextStyle(color: Color(0xFF264ECA)))
                               ],
                             )
                           ],
@@ -323,7 +324,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                       ),
                     ),
                     Text(
-                      formatRupiah(countTotalPayment(totalProduct: totalProduct(), shippingCost: 0)),
+                      formatRupiah(countTotalPayment()),
                       style: const TextStyle(
                         color: Color(0xFF264ECA)
                       ),
@@ -334,7 +335,7 @@ class _CheckoutViewState extends State<CheckoutView> {
             ),
             labelButton: 'Lakukan Pembayaran',
             onPressed: () async {
-              if (countTotalPayment(totalProduct: totalProduct(), shippingCost: 0) > user.balance + user.coin) {
+              if (countTotalPayment() > user.balance + user.coin) {
                 showDialog(
                   context: context,
                   builder: (context) {
